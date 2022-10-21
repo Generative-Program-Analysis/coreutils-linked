@@ -1284,7 +1284,7 @@ for.cond:                                         ; preds = %for.inc, %entry
   store i8 %2, i8* %c, align 1
   %3 = load i8, i8* %c, align 1
   %conv = sext i8 %3 to i64
-  %call1 = call i32 @llsc_is_symbolic(i64 %conv)
+  %call1 = call i32 @gs_is_symbolic(i64 %conv)
   %tobool = icmp ne i32 %call1, 0
   br i1 %tobool, label %if.end4, label %if.then
 
@@ -1324,7 +1324,7 @@ if.then11:                                        ; preds = %if.else
 
 if.else14:                                        ; preds = %if.end4
   %conv15 = sext i8 %7 to i64
-  %call16 = call i64 @llsc_get_valuel(i64 %conv15)
+  %call16 = call i64 @gs_get_valuel(i64 %conv15)
   %conv17 = trunc i64 %call16 to i8
   store i8 %conv17, i8* %cc, align 1
   %11 = load i8, i8* %cc, align 1
@@ -1332,7 +1332,7 @@ if.else14:                                        ; preds = %if.end4
   %12 = load i8, i8* %c, align 1
   %conv19 = sext i8 %12 to i32
   %cmp20 = icmp eq i32 %conv18, %conv19
-  call void @llsc_assume(i1 zeroext %cmp20)
+  call void @gs_assume(i1 zeroext %cmp20)
   %13 = load i8, i8* %cc, align 1
   %14 = load i8*, i8** %sc, align 8
   store i8 %13, i8* %14, align 1
@@ -1364,12 +1364,12 @@ entry:
   store i8* %p, i8** %p.addr, align 8
   %0 = load i8*, i8** %p.addr, align 8
   %1 = ptrtoint i8* %0 to i64
-  %call = call i32 @llsc_is_symbolic(i64 %1)
+  %call = call i32 @gs_is_symbolic(i64 %1)
   %tobool = icmp ne i32 %call, 0
   br i1 %tobool, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @llsc_report_error(i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 1386, i8* getelementptr inbounds ([37 x i8], [37 x i8]* @.str.27, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.28, i64 0, i64 0)) #24
+  call void @gs_report_error(i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 1386, i8* getelementptr inbounds ([37 x i8], [37 x i8]* @.str.27, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.28, i64 0, i64 0)) #24
   unreachable
 
 if.end:                                           ; preds = %entry
@@ -1377,14 +1377,14 @@ if.end:                                           ; preds = %entry
   ret i8* %2
 }
 
-declare dso_local i32 @llsc_is_symbolic(i64) #5
+declare dso_local i32 @gs_is_symbolic(i64) #5
 
-declare dso_local i64 @llsc_get_valuel(i64) #5
+declare dso_local i64 @gs_get_valuel(i64) #5
 
-declare dso_local void @llsc_assume(i1 zeroext) #5
+declare dso_local void @gs_assume(i1 zeroext) #5
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define internal void @llsc_report_error(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
+define internal void @gs_report_error(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
 entry:
   %file.addr = alloca i8*, align 8
   %line.addr = alloca i32, align 4
@@ -1520,12 +1520,12 @@ entry:
   %sc = alloca i64, align 8
   store i64 %s, i64* %s.addr, align 8
   %0 = load i64, i64* %s.addr, align 8
-  %call = call i64 @llsc_get_valuel(i64 %0)
+  %call = call i64 @gs_get_valuel(i64 %0)
   store i64 %call, i64* %sc, align 8
   %1 = load i64, i64* %sc, align 8
   %2 = load i64, i64* %s.addr, align 8
   %cmp = icmp eq i64 %1, %2
-  call void @llsc_assume(i1 zeroext %cmp)
+  call void @gs_assume(i1 zeroext %cmp)
   %3 = load i64, i64* %sc, align 8
   ret i64 %3
 }
@@ -1644,7 +1644,7 @@ land.lhs.true19:                                  ; preds = %if.end16
   br i1 %tobool21, label %if.then22, label %if.end24
 
 if.then22:                                        ; preds = %land.lhs.true19
-  call void @llsc_warning(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str.5, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str.5, i64 0, i64 0))
   %call23 = call i32* @__errno_location() #25
   store i32 13, i32* %call23, align 4
   store i32 -1, i32* %retval, align 4
@@ -1663,7 +1663,7 @@ land.lhs.true27:                                  ; preds = %if.end24
   br i1 %tobool29, label %if.end32, label %if.then30
 
 if.then30:                                        ; preds = %land.lhs.true27
-  call void @llsc_warning(i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.1.6, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.1.6, i64 0, i64 0))
   %call31 = call i32* @__errno_location() #25
   store i32 13, i32* %call31, align 4
   store i32 -1, i32* %retval, align 4
@@ -1777,7 +1777,7 @@ return:                                           ; preds = %if.end72, %if.then5
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define internal void @llsc_warning(i8* %message) #3 {
+define internal void @gs_warning(i8* %message) #3 {
 entry:
   %message.addr = alloca i8*, align 8
   store i8* %message, i8** %message.addr, align 8
@@ -1934,7 +1934,7 @@ if.else:                                          ; preds = %if.then
   br i1 %tobool3, label %if.then4, label %if.end6
 
 if.then4:                                         ; preds = %if.else
-  call void @llsc_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
   %call5 = call i32* @__errno_location() #25
   store i32 2, i32* %call5, align 4
   store i32 -1, i32* %retval, align 4
@@ -2228,7 +2228,7 @@ if.else:                                          ; preds = %if.then
   br i1 %tobool3, label %if.then4, label %if.end6
 
 if.then4:                                         ; preds = %if.else
-  call void @llsc_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
   %call5 = call i32* @__errno_location() #25
   store i32 2, i32* %call5, align 4
   store i32 -1, i32* %retval, align 4
@@ -2801,7 +2801,7 @@ if.end72:                                         ; preds = %if.then69, %if.end6
   br i1 %cmp73, label %if.then75, label %if.end76
 
 if.then75:                                        ; preds = %if.end72
-  call void @llsc_warning(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.str.7, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.str.7, i64 0, i64 0))
   br label %if.end76
 
 if.end76:                                         ; preds = %if.then75, %if.end72
@@ -3091,7 +3091,7 @@ if.else:                                          ; preds = %if.then
   br i1 %tobool3, label %if.then4, label %if.end6
 
 if.then4:                                         ; preds = %if.else
-  call void @llsc_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
   %call5 = call i32* @__errno_location() #25
   store i32 2, i32* %call5, align 4
   store i32 -1, i32* %retval, align 4
@@ -3206,7 +3206,7 @@ entry:
   br i1 %tobool, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
   %call1 = call i32* @__errno_location() #25
   store i32 2, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
@@ -3253,7 +3253,7 @@ if.end:                                           ; preds = %entry
   br i1 %tobool2, label %if.then3, label %if.end5
 
 if.then3:                                         ; preds = %if.end
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
   %call4 = call i32* @__errno_location() #25
   store i32 2, i32* %call4, align 4
   store i32 -1, i32* %retval, align 4
@@ -3522,7 +3522,7 @@ entry:
   store %struct.exe_disk_file_t* %df, %struct.exe_disk_file_t** %df.addr, align 8
   store i32 %owner, i32* %owner.addr, align 4
   store i32 %group, i32* %group.addr, align 4
-  call void @llsc_warning(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.26, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.26, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -3735,7 +3735,7 @@ if.end5:                                          ; preds = %land.lhs.true, %if.
   br i1 %tobool6, label %if.then7, label %if.end9
 
 if.then7:                                         ; preds = %if.end5
-  call void @llsc_warning(i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.str.10, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.str.10, i64 0, i64 0))
   %call8 = call i32* @__errno_location() #25
   store i32 5, i32* %call8, align 4
   store i32 -1, i32* %retval, align 4
@@ -3797,7 +3797,7 @@ if.end:                                           ; preds = %entry
   br i1 %tobool2, label %if.then3, label %if.else
 
 if.then3:                                         ; preds = %if.end
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
   %call4 = call i32* @__errno_location() #25
   store i32 22, i32* %call4, align 4
   store i32 -1, i32* %retval, align 4
@@ -4166,7 +4166,7 @@ sw.bb:                                            ; preds = %NodeBlock13
   %15 = load i8*, i8** %buf, align 8
   %16 = bitcast i8* %15 to %struct.termios*
   store %struct.termios* %16, %struct.termios** %ts, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([41 x i8], [41 x i8]* @.str.14, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([41 x i8], [41 x i8]* @.str.14, i64 0, i64 0))
   %17 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode = getelementptr inbounds %struct.stat64, %struct.stat64* %17, i32 0, i32 3
   %18 = load i32, i32* %st_mode, align 8
@@ -4276,7 +4276,7 @@ if.else:                                          ; preds = %sw.bb
   br label %return
 
 sw.bb48:                                          ; preds = %NodeBlock11
-  call void @llsc_warning_once(i8* getelementptr inbounds ([42 x i8], [42 x i8]* @.str.15, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([42 x i8], [42 x i8]* @.str.15, i64 0, i64 0))
   %43 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode49 = getelementptr inbounds %struct.stat64, %struct.stat64* %43, i32 0, i32 3
   %44 = load i32, i32* %st_mode49, align 8
@@ -4295,7 +4295,7 @@ if.else53:                                        ; preds = %sw.bb48
   br label %return
 
 sw.bb55:                                          ; preds = %NodeBlock9
-  call void @llsc_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.16, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.16, i64 0, i64 0))
   %45 = load i32, i32* %fd.addr, align 4
   %cmp56 = icmp eq i32 %45, 0
   br i1 %cmp56, label %if.then57, label %if.else58
@@ -4311,7 +4311,7 @@ if.else58:                                        ; preds = %sw.bb55
   br label %return
 
 sw.bb60:                                          ; preds = %NodeBlock7
-  call void @llsc_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.17, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.17, i64 0, i64 0))
   %46 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode61 = getelementptr inbounds %struct.stat64, %struct.stat64* %46, i32 0, i32 3
   %47 = load i32, i32* %st_mode61, align 8
@@ -4339,7 +4339,7 @@ sw.bb67:                                          ; preds = %NodeBlock5
   %51 = load %struct.winsize*, %struct.winsize** %ws, align 8
   %ws_col = getelementptr inbounds %struct.winsize, %struct.winsize* %51, i32 0, i32 1
   store i16 80, i16* %ws_col, align 2
-  call void @llsc_warning_once(i8* getelementptr inbounds ([45 x i8], [45 x i8]* @.str.18, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([45 x i8], [45 x i8]* @.str.18, i64 0, i64 0))
   %52 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode68 = getelementptr inbounds %struct.stat64, %struct.stat64* %52, i32 0, i32 3
   %53 = load i32, i32* %st_mode68, align 8
@@ -4358,7 +4358,7 @@ if.else72:                                        ; preds = %sw.bb67
   br label %return
 
 sw.bb74:                                          ; preds = %NodeBlock3
-  call void @llsc_warning_once(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str.19, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str.19, i64 0, i64 0))
   %54 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode75 = getelementptr inbounds %struct.stat64, %struct.stat64* %54, i32 0, i32 3
   %55 = load i32, i32* %st_mode75, align 8
@@ -4381,7 +4381,7 @@ sw.bb82:                                          ; preds = %NodeBlock1
   %56 = load i8*, i8** %buf, align 8
   %57 = bitcast i8* %56 to i32*
   store i32* %57, i32** %res, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.20, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.20, i64 0, i64 0))
   %58 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode83 = getelementptr inbounds %struct.stat64, %struct.stat64* %58, i32 0, i32 3
   %59 = load i32, i32* %st_mode83, align 8
@@ -4434,7 +4434,7 @@ if.else98:                                        ; preds = %sw.bb82
   br label %return
 
 sw.bb100:                                         ; preds = %NodeBlock
-  call void @llsc_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.21, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.21, i64 0, i64 0))
   %call101 = call i32* @__errno_location() #25
   store i32 22, i32* %call101, align 4
   store i32 -1, i32* %retval, align 4
@@ -4444,7 +4444,7 @@ newDefault:                                       ; preds = %NodeBlock
   br label %sw.default
 
 sw.default:                                       ; preds = %newDefault
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
   %call102 = call i32* @__errno_location() #25
   store i32 22, i32* %call102, align 4
   store i32 -1, i32* %retval, align 4
@@ -4471,7 +4471,7 @@ declare void @llvm.va_start(i8*) #11
 ; Function Attrs: nounwind
 declare void @llvm.va_end(i8*) #11
 
-declare dso_local void @llsc_warning_once(i8*) #5
+declare dso_local void @gs_warning_once(i8*) #5
 
 ; Function Attrs: noinline nounwind uwtable
 define dso_local i32 @fcntl(i32 %fd, i32 %cmd, ...) #3 {
@@ -4692,7 +4692,7 @@ newDefault:                                       ; preds = %NodeBlock
   br label %sw.default
 
 sw.default:                                       ; preds = %newDefault
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
   %call59 = call i32* @__errno_location() #25
   store i32 22, i32* %call59, align 4
   store i32 -1, i32* %retval, align 4
@@ -4731,7 +4731,7 @@ entry:
   br i1 %tobool, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
   %call1 = call i32* @__errno_location() #25
   store i32 2, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
@@ -4781,7 +4781,7 @@ if.end:                                           ; preds = %entry
   br i1 %tobool2, label %if.then3, label %if.end5
 
 if.then3:                                         ; preds = %if.end
-  call void @llsc_warning(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.22, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.22, i64 0, i64 0))
   %call4 = call i32* @__errno_location() #25
   store i32 9, i32* %call4, align 4
   store i32 -1, i32* %retval, align 4
@@ -5022,7 +5022,7 @@ if.else:                                          ; preds = %if.then
   br label %return
 
 if.end:                                           ; preds = %entry
-  call void @llsc_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
   %call4 = call i32* @__errno_location() #25
   store i32 1, i32* %call4, align 4
   store i32 -1, i32* %retval, align 4
@@ -5085,7 +5085,7 @@ if.else9:                                         ; preds = %if.else
   br label %return
 
 if.end:                                           ; preds = %entry
-  call void @llsc_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
   %call11 = call i32* @__errno_location() #25
   store i32 1, i32* %call11, align 4
   store i32 -1, i32* %retval, align 4
@@ -5152,7 +5152,7 @@ if.else9:                                         ; preds = %if.else
   br label %return
 
 if.end:                                           ; preds = %entry
-  call void @llsc_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
   %call11 = call i32* @__errno_location() #25
   store i32 1, i32* %call11, align 4
   store i32 -1, i32* %retval, align 4
@@ -5879,7 +5879,7 @@ if.then10:                                        ; preds = %land.lhs.true
   br label %return
 
 if.end11:                                         ; preds = %land.lhs.true, %if.end
-  call void @llsc_warning(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.24, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.24, i64 0, i64 0))
   %call12 = call i32* @__errno_location() #25
   store i32 2, i32* %call12, align 4
   store i32 -1, i32* %retval, align 4
@@ -6609,7 +6609,7 @@ if.end71:                                         ; preds = %if.then70, %lor.lhs
   %55 = load i32, i32* %min_argvs, align 4
   %56 = load i32, i32* %max_argvs, align 4
   %add72 = add i32 %56, 1
-  %call73 = call i32 @llsc_range(i32 %55, i32 %add72, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.10.39, i64 0, i64 0))
+  %call73 = call i32 @gs_range(i32 %55, i32 %add72, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.10.39, i64 0, i64 0))
   store i32 %call73, i32* %n_args, align 4
   %57 = load i32, i32* %sym_arg_num, align 4
   %58 = load i32, i32* %max_argvs, align 4
@@ -7060,7 +7060,7 @@ entry:
   %msg.addr = alloca i8*, align 8
   store i8* %msg, i8** %msg.addr, align 8
   %0 = load i8*, i8** %msg.addr, align 8
-  call void @llsc_report_error.59(i8* getelementptr inbounds ([88 x i8], [88 x i8]* @.str.32, i64 0, i64 0), i32 21, i8* %0, i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.33, i64 0, i64 0)) #24
+  call void @gs_report_error.59(i8* getelementptr inbounds ([88 x i8], [88 x i8]* @.str.32, i64 0, i64 0), i32 21, i8* %0, i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.33, i64 0, i64 0)) #24
   unreachable
 }
 
@@ -7179,7 +7179,7 @@ for.body:                                         ; preds = %for.cond
   %10 = load i8, i8* %arrayidx, align 1
   %call4 = call i32 @__isprint(i8 signext %10)
   %tobool5 = icmp ne i32 %call4, 0
-  call void @llsc_posix_prefer_cex(i8* %7, i1 zeroext %tobool5)
+  call void @gs_posix_prefer_cex(i8* %7, i1 zeroext %tobool5)
   %11 = load i32, i32* %i, align 4
   %inc = add nsw i32 %11, 1
   store i32 %inc, i32* %i, align 4
@@ -7234,7 +7234,7 @@ if.end:                                           ; preds = %if.else, %if.then
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define internal i32 @llsc_range(i32 %begin, i32 %end, i8* %name) #3 {
+define internal i32 @gs_range(i32 %begin, i32 %end, i8* %name) #3 {
 entry:
   %begin.addr = alloca i32, align 4
   %end.addr = alloca i32, align 4
@@ -7249,11 +7249,11 @@ entry:
   %2 = load i32, i32* %x, align 4
   %3 = load i32, i32* %begin.addr, align 4
   %cmp = icmp sge i32 %2, %3
-  call void @llsc_assume(i1 zeroext %cmp)
+  call void @gs_assume(i1 zeroext %cmp)
   %4 = load i32, i32* %x, align 4
   %5 = load i32, i32* %end.addr, align 4
   %cmp1 = icmp slt i32 %4, %5
-  call void @llsc_assume(i1 zeroext %cmp1)
+  call void @gs_assume(i1 zeroext %cmp1)
   %6 = load i32, i32* %x, align 4
   ret i32 %6
 }
@@ -7277,10 +7277,10 @@ entry:
   ret i32 %and
 }
 
-declare dso_local void @llsc_posix_prefer_cex(i8*, i1 zeroext) #5
+declare dso_local void @gs_posix_prefer_cex(i8*, i1 zeroext) #5
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define internal void @llsc_report_error.59(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
+define internal void @gs_report_error.59(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
 entry:
   %file.addr = alloca i8*, align 8
   %line.addr = alloca i32, align 4
@@ -17653,7 +17653,7 @@ entry:
   br i1 %or.cond, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  call void @llsc_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 124, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
+  call void @gs_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 124, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
   unreachable
 
 if.end:                                           ; preds = %entry
@@ -17698,7 +17698,7 @@ if.then7:                                         ; preds = %for.end
   br i1 %tobool9, label %if.end11, label %if.then10
 
 if.then10:                                        ; preds = %if.then7
-  call void @llsc_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 135, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
+  call void @gs_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 135, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
   unreachable
 
 if.end11:                                         ; preds = %if.then7
@@ -17753,7 +17753,7 @@ if.then14:                                        ; preds = %if.end12
   br i1 %or.cond4, label %if.end30, label %if.then29
 
 if.then29:                                        ; preds = %if.then14
-  call void @llsc_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 150, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
+  call void @gs_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 150, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
   unreachable
 
 if.end30:                                         ; preds = %if.then14
@@ -17788,7 +17788,7 @@ if.then33:                                        ; preds = %if.end31
   br i1 %tobool35, label %if.end37, label %if.then36
 
 if.then36:                                        ; preds = %if.then33
-  call void @llsc_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 163, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
+  call void @gs_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 163, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
   unreachable
 
 if.end37:                                         ; preds = %if.then33
@@ -17810,12 +17810,12 @@ if.end39:                                         ; preds = %if.else38, %if.end3
   store i32 %call40, i32* getelementptr inbounds (%struct.exe_sym_env_t, %struct.exe_sym_env_t* bitcast ({ <{ %struct.exe_file_t, %struct.exe_file_t, %struct.exe_file_t, [29 x %struct.exe_file_t] }>, i32, i32, i32, [4 x i8] }* @__exe_env to %struct.exe_sym_env_t*), i32 0, i32 2), align 4
   %48 = load i32, i32* getelementptr inbounds (%struct.exe_sym_env_t, %struct.exe_sym_env_t* bitcast ({ <{ %struct.exe_file_t, %struct.exe_file_t, %struct.exe_file_t, [29 x %struct.exe_file_t] }>, i32, i32, i32, [4 x i8] }* @__exe_env to %struct.exe_sym_env_t*), i32 0, i32 2), align 4
   %cmp41 = icmp eq i32 %48, 1
-  call void @llsc_assume(i1 zeroext %cmp41)
+  call void @gs_assume(i1 zeroext %cmp41)
   ret void
 }
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define internal void @llsc_report_error.145(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
+define internal void @gs_report_error.145(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
 entry:
   %file.addr = alloca i8*, align 8
   %line.addr = alloca i32, align 4
@@ -17860,7 +17860,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  call void @llsc_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 47, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
+  call void @gs_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 47, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
   unreachable
 
 if.end:                                           ; preds = %entry
@@ -17924,7 +17924,7 @@ if.end8:                                          ; preds = %for.end
   br i1 %tobool13, label %if.end15, label %if.then14
 
 if.then14:                                        ; preds = %if.end8
-  call void @llsc_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 60, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
+  call void @gs_report_error.145(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.142, i64 0, i64 0), i32 60, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.143, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.144, i64 0, i64 0)) #24
   unreachable
 
 if.end15:                                         ; preds = %if.end8
@@ -17944,7 +17944,7 @@ if.end15:                                         ; preds = %if.end8
   %27 = load %struct.stat64*, %struct.stat64** %s, align 8
   %st_ino = getelementptr inbounds %struct.stat64, %struct.stat64* %27, i32 0, i32 1
   %28 = load i64, i64* %st_ino, align 8
-  %call19 = call i32 @llsc_is_symbolic(i64 %28)
+  %call19 = call i32 @gs_is_symbolic(i64 %28)
   %tobool20 = icmp ne i32 %call19, 0
   br i1 %tobool20, label %if.end26, label %land.lhs.true
 
@@ -17971,13 +17971,13 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %35 = load i64, i64* %st_ino27, align 8
   %and28 = and i64 %35, 2147483647
   %cmp29 = icmp ne i64 %and28, 0
-  call void @llsc_assume(i1 zeroext %cmp29)
+  call void @gs_assume(i1 zeroext %cmp29)
   %36 = load %struct.stat64*, %struct.stat64** %s, align 8
   %st_blksize = getelementptr inbounds %struct.stat64, %struct.stat64* %36, i32 0, i32 9
   %37 = load i64, i64* %st_blksize, align 8
   %and31 = and i64 %37, -65536
   %cmp32 = icmp eq i64 %and31, 0
-  call void @llsc_assume(i1 zeroext %cmp32)
+  call void @gs_assume(i1 zeroext %cmp32)
   %38 = load %struct.stat64*, %struct.stat64** %s, align 8
   %39 = bitcast %struct.stat64* %38 to i8*
   %40 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17986,7 +17986,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %and34 = and i32 %41, -61952
   %tobool35 = icmp ne i32 %and34, 0
   %lnot = xor i1 %tobool35, true
-  call void @llsc_prefer_cex(i8* %39, i1 zeroext %lnot)
+  call void @gs_prefer_cex(i8* %39, i1 zeroext %lnot)
   %42 = load %struct.stat64*, %struct.stat64** %s, align 8
   %43 = bitcast %struct.stat64* %42 to i8*
   %44 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17996,7 +17996,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %st_dev36 = getelementptr inbounds %struct.stat64, %struct.stat64* %46, i32 0, i32 0
   %47 = load i64, i64* %st_dev36, align 8
   %cmp37 = icmp eq i64 %45, %47
-  call void @llsc_prefer_cex(i8* %43, i1 zeroext %cmp37)
+  call void @gs_prefer_cex(i8* %43, i1 zeroext %cmp37)
   %48 = load %struct.stat64*, %struct.stat64** %s, align 8
   %49 = bitcast %struct.stat64* %48 to i8*
   %50 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -18006,7 +18006,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %st_rdev39 = getelementptr inbounds %struct.stat64, %struct.stat64* %52, i32 0, i32 7
   %53 = load i64, i64* %st_rdev39, align 8
   %cmp40 = icmp eq i64 %51, %53
-  call void @llsc_prefer_cex(i8* %49, i1 zeroext %cmp40)
+  call void @gs_prefer_cex(i8* %49, i1 zeroext %cmp40)
   %54 = load %struct.stat64*, %struct.stat64** %s, align 8
   %55 = bitcast %struct.stat64* %54 to i8*
   %56 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -18014,7 +18014,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %57 = load i32, i32* %st_mode42, align 8
   %and43 = and i32 %57, 448
   %cmp44 = icmp eq i32 %and43, 384
-  call void @llsc_prefer_cex(i8* %55, i1 zeroext %cmp44)
+  call void @gs_prefer_cex(i8* %55, i1 zeroext %cmp44)
   %58 = load %struct.stat64*, %struct.stat64** %s, align 8
   %59 = bitcast %struct.stat64* %58 to i8*
   %60 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -18022,7 +18022,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %61 = load i32, i32* %st_mode46, align 8
   %and47 = and i32 %61, 56
   %cmp48 = icmp eq i32 %and47, 32
-  call void @llsc_prefer_cex(i8* %59, i1 zeroext %cmp48)
+  call void @gs_prefer_cex(i8* %59, i1 zeroext %cmp48)
   %62 = load %struct.stat64*, %struct.stat64** %s, align 8
   %63 = bitcast %struct.stat64* %62 to i8*
   %64 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -18030,7 +18030,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %65 = load i32, i32* %st_mode50, align 8
   %and51 = and i32 %65, 7
   %cmp52 = icmp eq i32 %and51, 4
-  call void @llsc_prefer_cex(i8* %63, i1 zeroext %cmp52)
+  call void @gs_prefer_cex(i8* %63, i1 zeroext %cmp52)
   %66 = load %struct.stat64*, %struct.stat64** %s, align 8
   %67 = bitcast %struct.stat64* %66 to i8*
   %68 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -18038,14 +18038,14 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %69 = load i32, i32* %st_mode54, align 8
   %and55 = and i32 %69, 61440
   %cmp56 = icmp eq i32 %and55, 32768
-  call void @llsc_prefer_cex(i8* %67, i1 zeroext %cmp56)
+  call void @gs_prefer_cex(i8* %67, i1 zeroext %cmp56)
   %70 = load %struct.stat64*, %struct.stat64** %s, align 8
   %71 = bitcast %struct.stat64* %70 to i8*
   %72 = load %struct.stat64*, %struct.stat64** %s, align 8
   %st_nlink = getelementptr inbounds %struct.stat64, %struct.stat64* %72, i32 0, i32 2
   %73 = load i64, i64* %st_nlink, align 8
   %cmp58 = icmp eq i64 %73, 1
-  call void @llsc_prefer_cex(i8* %71, i1 zeroext %cmp58)
+  call void @gs_prefer_cex(i8* %71, i1 zeroext %cmp58)
   %74 = load %struct.stat64*, %struct.stat64** %s, align 8
   %75 = bitcast %struct.stat64* %74 to i8*
   %76 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -18055,7 +18055,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %st_uid60 = getelementptr inbounds %struct.stat64, %struct.stat64* %78, i32 0, i32 4
   %79 = load i32, i32* %st_uid60, align 4
   %cmp61 = icmp eq i32 %77, %79
-  call void @llsc_prefer_cex(i8* %75, i1 zeroext %cmp61)
+  call void @gs_prefer_cex(i8* %75, i1 zeroext %cmp61)
   %80 = load %struct.stat64*, %struct.stat64** %s, align 8
   %81 = bitcast %struct.stat64* %80 to i8*
   %82 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -18065,14 +18065,14 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %st_gid63 = getelementptr inbounds %struct.stat64, %struct.stat64* %84, i32 0, i32 5
   %85 = load i32, i32* %st_gid63, align 8
   %cmp64 = icmp eq i32 %83, %85
-  call void @llsc_prefer_cex(i8* %81, i1 zeroext %cmp64)
+  call void @gs_prefer_cex(i8* %81, i1 zeroext %cmp64)
   %86 = load %struct.stat64*, %struct.stat64** %s, align 8
   %87 = bitcast %struct.stat64* %86 to i8*
   %88 = load %struct.stat64*, %struct.stat64** %s, align 8
   %st_blksize66 = getelementptr inbounds %struct.stat64, %struct.stat64* %88, i32 0, i32 9
   %89 = load i64, i64* %st_blksize66, align 8
   %cmp67 = icmp eq i64 %89, 4096
-  call void @llsc_prefer_cex(i8* %87, i1 zeroext %cmp67)
+  call void @gs_prefer_cex(i8* %87, i1 zeroext %cmp67)
   %90 = load %struct.stat64*, %struct.stat64** %s, align 8
   %91 = bitcast %struct.stat64* %90 to i8*
   %92 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -18084,7 +18084,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %tv_sec70 = getelementptr inbounds %struct.timespec, %struct.timespec* %st_atim69, i32 0, i32 0
   %95 = load i64, i64* %tv_sec70, align 8
   %cmp71 = icmp eq i64 %93, %95
-  call void @llsc_prefer_cex(i8* %91, i1 zeroext %cmp71)
+  call void @gs_prefer_cex(i8* %91, i1 zeroext %cmp71)
   %96 = load %struct.stat64*, %struct.stat64** %s, align 8
   %97 = bitcast %struct.stat64* %96 to i8*
   %98 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -18096,7 +18096,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %tv_sec75 = getelementptr inbounds %struct.timespec, %struct.timespec* %st_mtim74, i32 0, i32 0
   %101 = load i64, i64* %tv_sec75, align 8
   %cmp76 = icmp eq i64 %99, %101
-  call void @llsc_prefer_cex(i8* %97, i1 zeroext %cmp76)
+  call void @gs_prefer_cex(i8* %97, i1 zeroext %cmp76)
   %102 = load %struct.stat64*, %struct.stat64** %s, align 8
   %103 = bitcast %struct.stat64* %102 to i8*
   %104 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -18108,7 +18108,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %tv_sec80 = getelementptr inbounds %struct.timespec, %struct.timespec* %st_ctim79, i32 0, i32 0
   %107 = load i64, i64* %tv_sec80, align 8
   %cmp81 = icmp eq i64 %105, %107
-  call void @llsc_prefer_cex(i8* %103, i1 zeroext %cmp81)
+  call void @gs_prefer_cex(i8* %103, i1 zeroext %cmp81)
   %108 = load %struct.exe_disk_file_t*, %struct.exe_disk_file_t** %dfile.addr, align 8
   %size83 = getelementptr inbounds %struct.exe_disk_file_t, %struct.exe_disk_file_t* %108, i32 0, i32 0
   %109 = load i32, i32* %size83, align 8
@@ -18139,7 +18139,7 @@ entry:
   ret i32 %2
 }
 
-declare dso_local void @llsc_prefer_cex(i8*, i1 zeroext) #5
+declare dso_local void @gs_prefer_cex(i8*, i1 zeroext) #5
 
 ; Function Attrs: noinline nounwind uwtable
 define weak hidden i32 @__syscall_rt_sigaction(i32 %signum, %struct.sigaction.800* %act, %struct.sigaction.800* %oldact, i64 %_something) #3 {
@@ -18152,7 +18152,7 @@ entry:
   store %struct.sigaction.800* %act, %struct.sigaction.800** %act.addr, align 8
   store %struct.sigaction.800* %oldact, %struct.sigaction.800** %oldact.addr, align 8
   store i64 %_something, i64* %_something.addr, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.157, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.157, i64 0, i64 0))
   ret i32 0
 }
 
@@ -18165,7 +18165,7 @@ entry:
   store i32 %signum, i32* %signum.addr, align 4
   store %struct.sigaction.800* %act, %struct.sigaction.800** %act.addr, align 8
   store %struct.sigaction.800* %oldact, %struct.sigaction.800** %oldact.addr, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.157, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.157, i64 0, i64 0))
   ret i32 0
 }
 
@@ -18178,7 +18178,7 @@ entry:
   store i32 %how, i32* %how.addr, align 4
   store %struct.fd_set* %set, %struct.fd_set** %set.addr, align 8
   store %struct.fd_set* %oldset, %struct.fd_set** %oldset.addr, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.157, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.157, i64 0, i64 0))
   ret i32 0
 }
 
@@ -18203,14 +18203,14 @@ entry:
   %args.addr = alloca i32*, align 8
   store i32 %type, i32* %type.addr, align 4
   store i32* %args, i32** %args.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.str.1.162, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.str.1.162, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 97, i32* %call, align 4
   ret i32 -1
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define internal void @llsc_warning.163(i8* %message) #3 {
+define internal void @gs_warning.163(i8* %message) #3 {
 entry:
   %message.addr = alloca i8*, align 8
   store i8* %message, i8** %message.addr, align 8
@@ -18250,7 +18250,7 @@ entry:
   %mode.addr = alloca i32, align 4
   store i8* %pathname, i8** %pathname.addr, align 8
   store i32 %mode, i32* %mode.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.167, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.167, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 5, i32* %call, align 4
   ret i32 -1
@@ -18263,7 +18263,7 @@ entry:
   %mode.addr = alloca i32, align 4
   store i8* %pathname, i8** %pathname.addr, align 8
   store i32 %mode, i32* %mode.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.167, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.167, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 5, i32* %call, align 4
   ret i32 -1
@@ -18278,7 +18278,7 @@ entry:
   store i8* %pathname, i8** %pathname.addr, align 8
   store i32 %mode, i32* %mode.addr, align 4
   store i64 %dev, i64* %dev.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.167, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.167, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 5, i32* %call, align 4
   ret i32 -1
@@ -18289,7 +18289,7 @@ define weak dso_local i32 @pipe(i32* %filedes) #3 {
 entry:
   %filedes.addr = alloca i32*, align 8
   store i32* %filedes, i32** %filedes.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.3.168, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.3.168, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 23, i32* %call, align 4
   ret i32 -1
@@ -18302,7 +18302,7 @@ entry:
   %newpath.addr = alloca i8*, align 8
   store i8* %oldpath, i8** %oldpath.addr, align 8
   store i8* %newpath, i8** %newpath.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18315,7 +18315,7 @@ entry:
   %newpath.addr = alloca i8*, align 8
   store i8* %oldpath, i8** %oldpath.addr, align 8
   store i8* %newpath, i8** %newpath.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18328,7 +18328,7 @@ entry:
   %newpath.addr = alloca i8*, align 8
   store i8* %oldpath, i8** %oldpath.addr, align 8
   store i8* %newpath, i8** %newpath.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18374,7 +18374,7 @@ entry:
   %res.addr = alloca %struct.timespec*, align 8
   store i32 %clk_id, i32* %clk_id.addr, align 4
   store %struct.timespec* %res, %struct.timespec** %res.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18414,11 +18414,11 @@ entry:
   br i1 %tobool, label %if.else, label %if.then
 
 if.then:                                          ; preds = %entry
-  call void @llsc_warning.163(i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.5.170, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.5.170, i64 0, i64 0))
   br label %if.end
 
 if.else:                                          ; preds = %entry
-  call void @llsc_warning.163(i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.6.171, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.6.171, i64 0, i64 0))
   %1 = load %struct.tms*, %struct.tms** %buf.addr, align 8
   %tms_utime = getelementptr inbounds %struct.tms, %struct.tms* %1, i32 0, i32 0
   store i64 0, i64* %tms_utime, align 8
@@ -18524,7 +18524,7 @@ entry:
   %buf.addr = alloca %struct.timespec*, align 8
   store i8* %filename, i8** %filename.addr, align 8
   store %struct.timespec* %buf, %struct.timespec** %buf.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18537,7 +18537,7 @@ entry:
   %times.addr = alloca %struct.timespec*, align 8
   store i32 %fd, i32* %fd.addr, align 4
   store %struct.timespec* %times, %struct.timespec** %times.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.7.172, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.7.172, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 9, i32* %call, align 4
   ret i32 -1
@@ -18664,7 +18664,7 @@ entry:
   %nelem.addr = alloca i32, align 4
   store double* %loadavg, double** %loadavg.addr, align 8
   store i32 %nelem, i32* %nelem.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @.str.8.175, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @.str.8.175, i64 0, i64 0))
   ret i32 -1
 }
 
@@ -18673,7 +18673,7 @@ define weak dso_local i32 @wait(i32* %status) #3 {
 entry:
   %status.addr = alloca i32*, align 8
   store i32* %status, i32** %status.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.176, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.176, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 10, i32* %call, align 4
   ret i32 -1
@@ -18688,7 +18688,7 @@ entry:
   store i32* %status, i32** %status.addr, align 8
   store i32 %options, i32* %options.addr, align 4
   store %struct.rusage* %rusage, %struct.rusage** %rusage.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.176, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.176, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 10, i32* %call, align 4
   ret i32 -1
@@ -18705,7 +18705,7 @@ entry:
   store i32* %status, i32** %status.addr, align 8
   store i32 %options, i32* %options.addr, align 4
   store %struct.rusage* %rusage, %struct.rusage** %rusage.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.176, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.176, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 10, i32* %call, align 4
   ret i32 -1
@@ -18720,7 +18720,7 @@ entry:
   store i32 %pid, i32* %pid.addr, align 4
   store i32* %status, i32** %status.addr, align 8
   store i32 %options, i32* %options.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.176, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.176, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 10, i32* %call, align 4
   ret i32 -1
@@ -18737,7 +18737,7 @@ entry:
   store i32 %id, i32* %id.addr, align 4
   store %struct.siginfo_t* %infop, %struct.siginfo_t** %infop.addr, align 8
   store i32 %options, i32* %options.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.176, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.176, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 10, i32* %call, align 4
   ret i32 -1
@@ -18756,7 +18756,7 @@ entry:
   store i8* %filesystemtype, i8** %filesystemtype.addr, align 8
   store i64 %mountflags, i64* %mountflags.addr, align 8
   store i8* %data, i8** %data.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18767,7 +18767,7 @@ define weak dso_local i32 @umount(i8* %target) #3 {
 entry:
   %target.addr = alloca i8*, align 8
   store i8* %target, i8** %target.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18780,7 +18780,7 @@ entry:
   %flags.addr = alloca i32, align 4
   store i8* %target, i8** %target.addr, align 8
   store i32 %flags, i32* %flags.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18793,7 +18793,7 @@ entry:
   %swapflags.addr = alloca i32, align 4
   store i8* %path, i8** %path.addr, align 8
   store i32 %swapflags, i32* %swapflags.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18804,7 +18804,7 @@ define weak dso_local i32 @swapoff(i8* %path) #3 {
 entry:
   %path.addr = alloca i8*, align 8
   store i8* %path, i8** %path.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18815,7 +18815,7 @@ define weak dso_local i32 @setgid(i32 %gid) #3 {
 entry:
   %gid.addr = alloca i32, align 4
   store i32 %gid, i32* %gid.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.10.177, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.10.177, i64 0, i64 0))
   ret i32 0
 }
 
@@ -18826,7 +18826,7 @@ entry:
   %list.addr = alloca i32*, align 8
   store i64 %size, i64* %size.addr, align 8
   store i32* %list, i32** %list.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18839,7 +18839,7 @@ entry:
   %len.addr = alloca i64, align 8
   store i8* %name, i8** %name.addr, align 8
   store i64 %len, i64* %len.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18852,7 +18852,7 @@ entry:
   %pgid.addr = alloca i32, align 4
   store i32 %pid, i32* %pid.addr, align 4
   store i32 %pgid, i32* %pgid.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18861,7 +18861,7 @@ entry:
 ; Function Attrs: noinline nounwind uwtable
 define weak dso_local i32 @setpgrp() #3 {
 entry:
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18876,7 +18876,7 @@ entry:
   store i32 %which, i32* %which.addr, align 4
   store i32 %who, i32* %who.addr, align 4
   store i32 %prio, i32* %prio.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18891,7 +18891,7 @@ entry:
   store i32 %rgid, i32* %rgid.addr, align 4
   store i32 %egid, i32* %egid.addr, align 4
   store i32 %sgid, i32* %sgid.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18906,7 +18906,7 @@ entry:
   store i32 %ruid, i32* %ruid.addr, align 4
   store i32 %euid, i32* %euid.addr, align 4
   store i32 %suid, i32* %suid.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18919,7 +18919,7 @@ entry:
   %rlim.addr = alloca %struct.timespec*, align 8
   store i32 %resource, i32* %resource.addr, align 4
   store %struct.timespec* %rlim, %struct.timespec** %rlim.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18932,7 +18932,7 @@ entry:
   %rlim.addr = alloca %struct.timespec*, align 8
   store i32 %resource, i32* %resource.addr, align 4
   store %struct.timespec* %rlim, %struct.timespec** %rlim.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18941,7 +18941,7 @@ entry:
 ; Function Attrs: noinline nounwind uwtable
 define weak dso_local i32 @setsid() #3 {
 entry:
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18954,7 +18954,7 @@ entry:
   %tz.addr = alloca %struct.__mbstate_t.512*, align 8
   store %struct.timespec* %tv, %struct.timespec** %tv.addr, align 8
   store %struct.__mbstate_t.512* %tz, %struct.__mbstate_t.512** %tz.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18965,7 +18965,7 @@ define weak dso_local i32 @setuid(i32 %uid) #3 {
 entry:
   %uid.addr = alloca i32, align 4
   store i32 %uid, i32* %uid.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.10.177, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.10.177, i64 0, i64 0))
   ret i32 0
 }
 
@@ -18974,7 +18974,7 @@ define weak dso_local i32 @reboot(i32 %flag) #3 {
 entry:
   %flag.addr = alloca i32, align 4
   store i32 %flag, i32* %flag.addr, align 4
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -18987,7 +18987,7 @@ entry:
   %len.addr = alloca i64, align 8
   store i8* %addr, i8** %addr.addr, align 8
   store i64 %len, i64* %len.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -19000,7 +19000,7 @@ entry:
   %len.addr = alloca i64, align 8
   store i8* %addr, i8** %addr.addr, align 8
   store i64 %len, i64* %len.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -19009,7 +19009,7 @@ entry:
 ; Function Attrs: noinline nounwind uwtable
 define weak dso_local i32 @pause() #3 {
 entry:
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -19024,7 +19024,7 @@ entry:
   store i32 %fd, i32* %fd.addr, align 4
   store i64* %offset, i64** %offset.addr, align 8
   store i64 %count, i64* %count.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i64 -1
@@ -19045,7 +19045,7 @@ entry:
   store i32 %flags, i32* %flags.addr, align 4
   store i32 %fd, i32* %fd.addr, align 4
   store i64 %offset, i64* %offset.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i8* inttoptr (i64 -1 to i8*)
@@ -19066,7 +19066,7 @@ entry:
   store i32 %flags, i32* %flags.addr, align 4
   store i32 %fd, i32* %fd.addr, align 4
   store i64 %offset, i64* %offset.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i8* inttoptr (i64 -1 to i8*)
@@ -19079,7 +19079,7 @@ entry:
   %length.addr = alloca i64, align 8
   store i8* %start, i8** %start.addr, align 8
   store i64 %length, i64* %length.addr, align 8
-  call void @llsc_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
+  call void @gs_warning.163(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.169, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
@@ -20059,14 +20059,14 @@ entry:
   %sig.addr = alloca i32, align 4
   store i32 %pid, i32* %pid.addr, align 4
   store i32 %sig, i32* %sig.addr, align 4
-  call void @llsc_warning.219(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.218, i64 0, i64 0))
+  call void @gs_warning.219(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.218, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define internal void @llsc_warning.219(i8* %message) #3 {
+define internal void @gs_warning.219(i8* %message) #3 {
 entry:
   %message.addr = alloca i8*, align 8
   store i8* %message, i8** %message.addr, align 8
@@ -20081,7 +20081,7 @@ define weak dso_local i32 @_setjmp(%struct.__jmp_buf_tag* %__env) #16 {
 entry:
   %__env.addr = alloca %struct.__jmp_buf_tag*, align 8
   store %struct.__jmp_buf_tag* %__env, %struct.__jmp_buf_tag** %__env.addr, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.1.221, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.1.221, i64 0, i64 0))
   ret i32 0
 }
 
@@ -20092,12 +20092,12 @@ entry:
   %val.addr = alloca i32, align 4
   store %struct.__jmp_buf_tag* %env, %struct.__jmp_buf_tag** %env.addr, align 8
   store i32 %val, i32* %val.addr, align 4
-  call void @llsc_report_error.225(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.2.222, i64 0, i64 0), i32 37, i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.3.223, i64 0, i64 0), i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.4.224, i64 0, i64 0)) #24
+  call void @gs_report_error.225(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.2.222, i64 0, i64 0), i32 37, i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.3.223, i64 0, i64 0), i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.4.224, i64 0, i64 0)) #24
   unreachable
 }
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define internal void @llsc_report_error.225(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
+define internal void @gs_report_error.225(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
 entry:
   %file.addr = alloca i8*, align 8
   %line.addr = alloca i32, align 4
@@ -20127,7 +20127,7 @@ entry:
   %arg.addr = alloca i8*, align 8
   store i8* %path, i8** %path.addr, align 8
   store i8* %arg, i8** %arg.addr, align 8
-  call void @llsc_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
+  call void @gs_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 13, i32* %call, align 4
   ret i32 -1
@@ -20140,7 +20140,7 @@ entry:
   %arg.addr = alloca i8*, align 8
   store i8* %file, i8** %file.addr, align 8
   store i8* %arg, i8** %arg.addr, align 8
-  call void @llsc_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
+  call void @gs_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 13, i32* %call, align 4
   ret i32 -1
@@ -20153,7 +20153,7 @@ entry:
   %arg.addr = alloca i8*, align 8
   store i8* %path, i8** %path.addr, align 8
   store i8* %arg, i8** %arg.addr, align 8
-  call void @llsc_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
+  call void @gs_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 13, i32* %call, align 4
   ret i32 -1
@@ -20166,7 +20166,7 @@ entry:
   %argv.addr = alloca i8**, align 8
   store i8* %path, i8** %path.addr, align 8
   store i8** %argv, i8*** %argv.addr, align 8
-  call void @llsc_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
+  call void @gs_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 13, i32* %call, align 4
   ret i32 -1
@@ -20179,7 +20179,7 @@ entry:
   %argv.addr = alloca i8**, align 8
   store i8* %file, i8** %file.addr, align 8
   store i8** %argv, i8*** %argv.addr, align 8
-  call void @llsc_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
+  call void @gs_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 13, i32* %call, align 4
   ret i32 -1
@@ -20194,7 +20194,7 @@ entry:
   store i8* %file, i8** %file.addr, align 8
   store i8** %argv, i8*** %argv.addr, align 8
   store i8** %envp, i8*** %envp.addr, align 8
-  call void @llsc_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
+  call void @gs_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.226, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 13, i32* %call, align 4
   ret i32 -1
@@ -20203,7 +20203,7 @@ entry:
 ; Function Attrs: noinline nounwind uwtable
 define dso_local i32 @fork() #3 {
 entry:
-  call void @llsc_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.6.227, i64 0, i64 0))
+  call void @gs_warning.219(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.6.227, i64 0, i64 0))
   %call = call i32* @__errno_location() #25
   store i32 12, i32* %call, align 4
   ret i32 -1

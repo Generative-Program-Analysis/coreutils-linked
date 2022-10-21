@@ -40,6 +40,7 @@ module asm "\09.previous"
 %union.anon.772 = type { %struct.anon.0.771 }
 %struct.anon.0.771 = type { void (i8*)*, i8*, i8* }
 %struct.dirent64 = type { i64, i64, i16, i8, [256 x i8] }
+%struct.__STDIO_FILE_STRUCT.590 = type { i16, [2 x i8], i32, i8*, i8*, i8*, i8*, i8*, i8*, %struct.__STDIO_FILE_STRUCT.590*, [2 x i32], %struct.__mbstate_t.512, i8* }
 %struct.__STDIO_FILE_STRUCT.592 = type { i16, [2 x i8], i32, i8*, i8*, i8*, i8*, i8*, i8*, %struct.__STDIO_FILE_STRUCT.592*, [2 x i32], %struct.__mbstate_t.512, i8* }
 %struct.__STDIO_FILE_STRUCT.608 = type { i16, [2 x i8], i32, i8*, i8*, i8*, i8*, i8*, i8*, %struct.__STDIO_FILE_STRUCT.608*, [2 x i32], %struct.__mbstate_t.512, i8* }
 %struct.__STDIO_FILE_STRUCT.621 = type { i16, [2 x i8], i32, i8*, i8*, i8*, i8*, i8*, i8*, %struct.__STDIO_FILE_STRUCT.621*, [2 x i32], %struct.__mbstate_t.512, i8* }
@@ -62,6 +63,7 @@ module asm "\09.previous"
 %struct._IO_marker = type opaque
 %struct._IO_codecvt = type opaque
 %struct._IO_wide_data = type opaque
+%struct.base32_decode_context = type { i32, [8 x i8] }
 %struct.__mbstate_t = type { i32, %union.anon }
 %union.anon = type { i32 }
 %struct.sigaction.800 = type { %union.anon.799, %struct.fd_set, i32, void ()* }
@@ -201,124 +203,127 @@ module asm "\09.previous"
 @_stdio_openlist = global %struct.__STDIO_FILE_STRUCT.568* getelementptr inbounds ([3 x %struct.__STDIO_FILE_STRUCT.568], [3 x %struct.__STDIO_FILE_STRUCT.568]* @_stdio_streams, i32 0, i32 0), align 8
 @been_there_done_that = internal global i32 0, align 4
 @__exit_cleanup = hidden global void (i32)* null, align 8
-@Version = dso_local global i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.37, i32 0, i32 0), align 8
-@.str.37 = private unnamed_addr constant [5 x i8] c"8.32\00", align 1
+@Version = dso_local global i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.44, i32 0, i32 0), align 8
+@.str.44 = private unnamed_addr constant [5 x i8] c"8.32\00", align 1
 @exit_failure = dso_local global i32 1, align 4
 @program_name = dso_local global i8* null, align 8
-@quoting_style_args = dso_local constant [11 x i8*] [i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.54, i32 0, i32 0), i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.1.55, i32 0, i32 0), i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.2.56, i32 0, i32 0), i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.3.57, i32 0, i32 0), i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.4.58, i32 0, i32 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.5.59, i32 0, i32 0), i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.6.60, i32 0, i32 0), i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.7.61, i32 0, i32 0), i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.8.62, i32 0, i32 0), i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.9.63, i32 0, i32 0), i8* null], align 16
-@.str.54 = private unnamed_addr constant [8 x i8] c"literal\00", align 1
-@.str.1.55 = private unnamed_addr constant [6 x i8] c"shell\00", align 1
-@.str.2.56 = private unnamed_addr constant [13 x i8] c"shell-always\00", align 1
-@.str.3.57 = private unnamed_addr constant [13 x i8] c"shell-escape\00", align 1
-@.str.4.58 = private unnamed_addr constant [20 x i8] c"shell-escape-always\00", align 1
-@.str.5.59 = private unnamed_addr constant [2 x i8] c"c\00", align 1
-@.str.6.60 = private unnamed_addr constant [8 x i8] c"c-maybe\00", align 1
-@.str.7.61 = private unnamed_addr constant [7 x i8] c"escape\00", align 1
-@.str.8.62 = private unnamed_addr constant [7 x i8] c"locale\00", align 1
-@.str.9.63 = private unnamed_addr constant [8 x i8] c"clocale\00", align 1
+@quoting_style_args = dso_local constant [11 x i8*] [i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.69, i32 0, i32 0), i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.1.70, i32 0, i32 0), i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.2.71, i32 0, i32 0), i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.3.72, i32 0, i32 0), i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.4.73, i32 0, i32 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.5.74, i32 0, i32 0), i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.6.75, i32 0, i32 0), i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.7.76, i32 0, i32 0), i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.8.77, i32 0, i32 0), i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.9.78, i32 0, i32 0), i8* null], align 16
+@.str.69 = private unnamed_addr constant [8 x i8] c"literal\00", align 1
+@.str.1.70 = private unnamed_addr constant [6 x i8] c"shell\00", align 1
+@.str.2.71 = private unnamed_addr constant [13 x i8] c"shell-always\00", align 1
+@.str.3.72 = private unnamed_addr constant [13 x i8] c"shell-escape\00", align 1
+@.str.4.73 = private unnamed_addr constant [20 x i8] c"shell-escape-always\00", align 1
+@.str.5.74 = private unnamed_addr constant [2 x i8] c"c\00", align 1
+@.str.6.75 = private unnamed_addr constant [8 x i8] c"c-maybe\00", align 1
+@.str.7.76 = private unnamed_addr constant [7 x i8] c"escape\00", align 1
+@.str.8.77 = private unnamed_addr constant [7 x i8] c"locale\00", align 1
+@.str.9.78 = private unnamed_addr constant [8 x i8] c"clocale\00", align 1
 @quoting_style_vals = dso_local constant [10 x i32] [i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9], align 16
 @quote_quoting_options = dso_local global %struct.quoting_options { i32 8, i32 0, [8 x i32] zeroinitializer, i8* null, i8* null }, align 8
 @version_etc_copyright = dso_local constant [47 x i8] c"Copyright %s %d Free Software Foundation, Inc.\00", align 16
 @.str.95 = private unnamed_addr constant [39 x i8] c"Try '%s --help' for more information.\0A\00", align 1
-@.str.1.96 = private unnamed_addr constant [33 x i8] c"Usage: %s [OPTION]... [FILE]...\0A\00", align 1
-@.str.2.97 = private unnamed_addr constant [60 x i8] c"Wrap input lines in each FILE, writing to standard output.\0A\00", align 1
-@.str.3.98 = private unnamed_addr constant [147 x i8] c"  -b, --bytes         count bytes rather than columns\0A  -s, --spaces        break at spaces\0A  -w, --width=WIDTH   use WIDTH columns instead of 80\0A\00", align 1
+@.str.1.96 = private unnamed_addr constant [30 x i8] c"Usage: %s [OPTION]... [FILE]\0A\00", align 1
+@.str.2.97 = private unnamed_addr constant [70 x i8] c"Base%d encode or decode FILE, or standard input, to standard output.\0A\00", align 1
+@.str.3.98 = private unnamed_addr constant [243 x i8] c"  -d, --decode          decode data\0A  -i, --ignore-garbage  when decoding, ignore non-alphabet characters\0A  -w, --wrap=COLS       wrap encoded lines after COLS character (default 76).\0A                          Use 0 to disable line wrapping\0A\0A\00", align 1
 @.str.4.99 = private unnamed_addr constant [45 x i8] c"      --help     display this help and exit\0A\00", align 1
 @.str.5.100 = private unnamed_addr constant [54 x i8] c"      --version  output version information and exit\0A\00", align 1
-@.str.6.101 = private unnamed_addr constant [5 x i8] c"fold\00", align 1
-@__const.emit_ancillary_info.infomap = private unnamed_addr constant [7 x %struct.infomap] [%struct.infomap { i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.14.111, i32 0, i32 0), i8* getelementptr inbounds ([16 x i8], [16 x i8]* @.str.15.112, i32 0, i32 0) }, %struct.infomap { i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.16.113, i32 0, i32 0), i8* getelementptr inbounds ([22 x i8], [22 x i8]* @.str.17.114, i32 0, i32 0) }, %struct.infomap { i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.18.115, i32 0, i32 0), i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.19.116, i32 0, i32 0) }, %struct.infomap { i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.20.117, i32 0, i32 0), i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.19.116, i32 0, i32 0) }, %struct.infomap { i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.21.118, i32 0, i32 0), i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.19.116, i32 0, i32 0) }, %struct.infomap { i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.22.119, i32 0, i32 0), i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.19.116, i32 0, i32 0) }, %struct.infomap zeroinitializer], align 16
-@.str.23.102 = private unnamed_addr constant [23 x i8] c"\0A%s online help: <%s>\0A\00", align 1
-@.str.9.103 = private unnamed_addr constant [14 x i8] c"GNU coreutils\00", align 1
-@.str.24.104 = private unnamed_addr constant [40 x i8] c"https://www.gnu.org/software/coreutils/\00", align 1
-@.str.25.105 = private unnamed_addr constant [4 x i8] c"en_\00", align 1
-@.str.26.106 = private unnamed_addr constant [71 x i8] c"Report any translation bugs to <https://translationproject.org/team/>\0A\00", align 1
-@.str.27.107 = private unnamed_addr constant [27 x i8] c"Full documentation <%s%s>\0A\00", align 1
-@.str.29.108 = private unnamed_addr constant [12 x i8] c" invocation\00", align 1
-@.str.7.109 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
-@.str.28.110 = private unnamed_addr constant [51 x i8] c"or available locally via: info '(coreutils) %s%s'\0A\00", align 1
-@.str.14.111 = private unnamed_addr constant [2 x i8] c"[\00", align 1
-@.str.15.112 = private unnamed_addr constant [16 x i8] c"test invocation\00", align 1
-@.str.16.113 = private unnamed_addr constant [10 x i8] c"coreutils\00", align 1
-@.str.17.114 = private unnamed_addr constant [22 x i8] c"Multi-call invocation\00", align 1
-@.str.18.115 = private unnamed_addr constant [10 x i8] c"sha224sum\00", align 1
-@.str.19.116 = private unnamed_addr constant [15 x i8] c"sha2 utilities\00", align 1
-@.str.20.117 = private unnamed_addr constant [10 x i8] c"sha256sum\00", align 1
-@.str.21.118 = private unnamed_addr constant [10 x i8] c"sha384sum\00", align 1
-@.str.22.119 = private unnamed_addr constant [10 x i8] c"sha512sum\00", align 1
-@.str.13.120 = private unnamed_addr constant [75 x i8] c"\0AMandatory arguments to long options are mandatory for short options too.\0A\00", align 1
-@.str.12.121 = private unnamed_addr constant [56 x i8] c"\0AWith no FILE, or when FILE is -, read standard input.\0A\00", align 1
-@have_read_stdin = internal global i8 0, align 1
-@count_bytes = internal global i8 0, align 1
-@break_spaces = internal global i8 0, align 1
-@shortopts = internal constant [35 x i8] c"bsw:0::1::2::3::4::5::6::7::8::9::\00", align 16
-@longopts = internal constant [6 x %struct.option] [%struct.option { i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.30.128, i32 0, i32 0), i32 0, i32* null, i32 98 }, %struct.option { i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.31.129, i32 0, i32 0), i32 0, i32* null, i32 115 }, %struct.option { i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.32.130, i32 0, i32 0), i32 1, i32* null, i32 119 }, %struct.option { i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.33.131, i32 0, i32 0), i32 0, i32* null, i32 -130 }, %struct.option { i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.34.132, i32 0, i32 0), i32 0, i32* null, i32 -131 }, %struct.option zeroinitializer], align 16
-@.str.8.124 = private unnamed_addr constant [26 x i8] c"invalid number of columns\00", align 1
-@.str.10.125 = private unnamed_addr constant [16 x i8] c"David MacKenzie\00", align 1
-@.str.11.126 = private unnamed_addr constant [2 x i8] c"-\00", align 1
-@.str.35.127 = private unnamed_addr constant [2 x i8] c"r\00", align 1
-@.str.36 = private unnamed_addr constant [3 x i8] c"%s\00", align 1
-@fold_file.allocated_out = internal global i64 0, align 8
-@fold_file.line_out = internal global i8* null, align 8
-@.str.114 = private unnamed_addr constant [3 x i8] c"%s\00", align 1
-@.str.1.115 = private unnamed_addr constant [17 x i8] c"memory exhausted\00", align 1
+@.str.6.101 = private unnamed_addr constant [268 x i8] c"\0AThe data are encoded as described for the %s alphabet in RFC 4648.\0AWhen decoding, the input may contain newlines in addition to the bytes of\0Athe formal %s alphabet.  Use --ignore-garbage to attempt to recover\0Afrom any other non-alphabet bytes in the encoded stream.\0A\00", align 1
+@.str.7.102 = private unnamed_addr constant [7 x i8] c"base32\00", align 1
+@__const.emit_ancillary_info.infomap = private unnamed_addr constant [7 x %struct.infomap] [%struct.infomap { i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.20.112, i32 0, i32 0), i8* getelementptr inbounds ([16 x i8], [16 x i8]* @.str.21.113, i32 0, i32 0) }, %struct.infomap { i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.22.114, i32 0, i32 0), i8* getelementptr inbounds ([22 x i8], [22 x i8]* @.str.23.115, i32 0, i32 0) }, %struct.infomap { i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.24.116, i32 0, i32 0), i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.25.117, i32 0, i32 0) }, %struct.infomap { i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.26.118, i32 0, i32 0), i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.25.117, i32 0, i32 0) }, %struct.infomap { i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.27.119, i32 0, i32 0), i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.25.117, i32 0, i32 0) }, %struct.infomap { i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.28.120, i32 0, i32 0), i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.25.117, i32 0, i32 0) }, %struct.infomap zeroinitializer], align 16
+@.str.29.103 = private unnamed_addr constant [23 x i8] c"\0A%s online help: <%s>\0A\00", align 1
+@.str.11.104 = private unnamed_addr constant [14 x i8] c"GNU coreutils\00", align 1
+@.str.30.105 = private unnamed_addr constant [40 x i8] c"https://www.gnu.org/software/coreutils/\00", align 1
+@.str.31.106 = private unnamed_addr constant [4 x i8] c"en_\00", align 1
+@.str.32.107 = private unnamed_addr constant [71 x i8] c"Report any translation bugs to <https://translationproject.org/team/>\0A\00", align 1
+@.str.33.108 = private unnamed_addr constant [27 x i8] c"Full documentation <%s%s>\0A\00", align 1
+@.str.35.109 = private unnamed_addr constant [12 x i8] c" invocation\00", align 1
+@.str.8.110 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
+@.str.34.111 = private unnamed_addr constant [51 x i8] c"or available locally via: info '(coreutils) %s%s'\0A\00", align 1
+@.str.20.112 = private unnamed_addr constant [2 x i8] c"[\00", align 1
+@.str.21.113 = private unnamed_addr constant [16 x i8] c"test invocation\00", align 1
+@.str.22.114 = private unnamed_addr constant [10 x i8] c"coreutils\00", align 1
+@.str.23.115 = private unnamed_addr constant [22 x i8] c"Multi-call invocation\00", align 1
+@.str.24.116 = private unnamed_addr constant [10 x i8] c"sha224sum\00", align 1
+@.str.25.117 = private unnamed_addr constant [15 x i8] c"sha2 utilities\00", align 1
+@.str.26.118 = private unnamed_addr constant [10 x i8] c"sha256sum\00", align 1
+@.str.27.119 = private unnamed_addr constant [10 x i8] c"sha384sum\00", align 1
+@.str.28.120 = private unnamed_addr constant [10 x i8] c"sha512sum\00", align 1
+@.str.19.121 = private unnamed_addr constant [75 x i8] c"\0AMandatory arguments to long options are mandatory for short options too.\0A\00", align 1
+@.str.18.122 = private unnamed_addr constant [56 x i8] c"\0AWith no FILE, or when FILE is -, read standard input.\0A\00", align 1
+@.str.9.125 = private unnamed_addr constant [5 x i8] c"diw:\00", align 1
+@long_options = internal constant [6 x %struct.option] [%struct.option { i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.36, i32 0, i32 0), i32 0, i32* null, i32 100 }, %struct.option { i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.37, i32 0, i32 0), i32 1, i32* null, i32 119 }, %struct.option { i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.38, i32 0, i32 0), i32 0, i32* null, i32 105 }, %struct.option { i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.39, i32 0, i32 0), i32 0, i32* null, i32 -130 }, %struct.option { i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.40, i32 0, i32 0), i32 0, i32* null, i32 -131 }, %struct.option zeroinitializer], align 16
+@.str.10.126 = private unnamed_addr constant [18 x i8] c"invalid wrap size\00", align 1
+@.str.12.127 = private unnamed_addr constant [16 x i8] c"Simon Josefsson\00", align 1
+@.str.13.128 = private unnamed_addr constant [17 x i8] c"extra operand %s\00", align 1
+@.str.14.129 = private unnamed_addr constant [2 x i8] c"-\00", align 1
+@.str.15.130 = private unnamed_addr constant [3 x i8] c"rb\00", align 1
+@.str.16.131 = private unnamed_addr constant [3 x i8] c"%s\00", align 1
+@.str.17.132 = private unnamed_addr constant [23 x i8] c"closing standard input\00", align 1
+@.str.42 = private unnamed_addr constant [12 x i8] c"write error\00", align 1
+@.str.41 = private unnamed_addr constant [11 x i8] c"read error\00", align 1
+@base32_encode.b32str = internal constant [32 x i8] c"ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", align 16
+@.str.131 = private unnamed_addr constant [3 x i8] c"%s\00", align 1
+@.str.1.132 = private unnamed_addr constant [17 x i8] c"memory exhausted\00", align 1
+@.str.43 = private unnamed_addr constant [14 x i8] c"invalid input\00", align 1
+@b32 = internal constant [256 x i8] c"\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\1A\1B\1C\1D\1E\1F\FF\FF\FF\FF\FF\FF\FF\FF\FF\00\01\02\03\04\05\06\07\08\09\0A\0B\0C\0D\0E\0F\10\11\12\13\14\15\16\17\18\19\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF\FF", align 16
 @slotvec = internal global %struct.slotvec* @slotvec0, align 8
 @nslots = internal global i32 1, align 4
 @slotvec0 = internal global %struct.slotvec { i64 256, i8* getelementptr inbounds ([256 x i8], [256 x i8]* @slot0, i32 0, i32 0) }, align 8
 @slot0 = internal global [256 x i8] zeroinitializer, align 16
-@.str.10.64 = private unnamed_addr constant [2 x i8] c"\22\00", align 1
-@.str.11.65 = private unnamed_addr constant [2 x i8] c"`\00", align 1
-@.str.12.66 = private unnamed_addr constant [2 x i8] c"'\00", align 1
-@.str.137 = private unnamed_addr constant [2 x i8] c"C\00", align 1
-@.str.1.138 = private unnamed_addr constant [6 x i8] c"POSIX\00", align 1
-@.str.13.67 = private unnamed_addr constant [6 x i8] c"UTF-8\00", align 1
-@.str.14.68 = private unnamed_addr constant [4 x i8] c"\E2\80\98\00", align 1
-@.str.15.69 = private unnamed_addr constant [4 x i8] c"\E2\80\99\00", align 1
-@.str.16.70 = private unnamed_addr constant [8 x i8] c"GB18030\00", align 1
-@.str.17.71 = private unnamed_addr constant [4 x i8] c"\A1\07e\00", align 1
-@.str.18.72 = private unnamed_addr constant [3 x i8] c"\A1\AF\00", align 1
-@.str.141 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
-@.str.1.142 = private unnamed_addr constant [6 x i8] c"ASCII\00", align 1
+@.str.10.79 = private unnamed_addr constant [2 x i8] c"\22\00", align 1
+@.str.11.80 = private unnamed_addr constant [2 x i8] c"`\00", align 1
+@.str.12.81 = private unnamed_addr constant [2 x i8] c"'\00", align 1
+@.str.158 = private unnamed_addr constant [2 x i8] c"C\00", align 1
+@.str.1.159 = private unnamed_addr constant [6 x i8] c"POSIX\00", align 1
+@.str.13.82 = private unnamed_addr constant [6 x i8] c"UTF-8\00", align 1
+@.str.14.83 = private unnamed_addr constant [4 x i8] c"\E2\80\98\00", align 1
+@.str.15.84 = private unnamed_addr constant [4 x i8] c"\E2\80\99\00", align 1
+@.str.16.85 = private unnamed_addr constant [8 x i8] c"GB18030\00", align 1
+@.str.17.86 = private unnamed_addr constant [4 x i8] c"\A1\07e\00", align 1
+@.str.18.87 = private unnamed_addr constant [3 x i8] c"\A1\AF\00", align 1
+@.str.162 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
+@.str.1.163 = private unnamed_addr constant [6 x i8] c"ASCII\00", align 1
 @default_quoting_options = internal global %struct.quoting_options zeroinitializer, align 8
-@.str.77 = private unnamed_addr constant [12 x i8] c"%s (%s) %s\0A\00", align 1
-@.str.1.78 = private unnamed_addr constant [7 x i8] c"%s %s\0A\00", align 1
-@.str.2.79 = private unnamed_addr constant [4 x i8] c"(C)\00", align 1
-@.str.3.80 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
-@.str.4.81 = private unnamed_addr constant [171 x i8] c"License GPLv3+: GNU GPL version 3 or later <%s>.\0AThis is free software: you are free to change and redistribute it.\0AThere is NO WARRANTY, to the extent permitted by law.\0A\00", align 1
-@.str.5.82 = private unnamed_addr constant [34 x i8] c"https://gnu.org/licenses/gpl.html\00", align 1
-@.str.6.83 = private unnamed_addr constant [16 x i8] c"Written by %s.\0A\00", align 1
-@.str.7.84 = private unnamed_addr constant [23 x i8] c"Written by %s and %s.\0A\00", align 1
-@.str.8.85 = private unnamed_addr constant [28 x i8] c"Written by %s, %s, and %s.\0A\00", align 1
-@.str.9.86 = private unnamed_addr constant [32 x i8] c"Written by %s, %s, %s,\0Aand %s.\0A\00", align 1
-@.str.10.87 = private unnamed_addr constant [36 x i8] c"Written by %s, %s, %s,\0A%s, and %s.\0A\00", align 1
-@.str.11.88 = private unnamed_addr constant [40 x i8] c"Written by %s, %s, %s,\0A%s, %s, and %s.\0A\00", align 1
-@.str.12.89 = private unnamed_addr constant [44 x i8] c"Written by %s, %s, %s,\0A%s, %s, %s, and %s.\0A\00", align 1
-@.str.13.90 = private unnamed_addr constant [48 x i8] c"Written by %s, %s, %s,\0A%s, %s, %s, %s,\0Aand %s.\0A\00", align 1
-@.str.14.91 = private unnamed_addr constant [52 x i8] c"Written by %s, %s, %s,\0A%s, %s, %s, %s,\0A%s, and %s.\0A\00", align 1
-@.str.15.92 = private unnamed_addr constant [60 x i8] c"Written by %s, %s, %s,\0A%s, %s, %s, %s,\0A%s, %s, and others.\0A\00", align 1
-@.str.116 = private unnamed_addr constant [7 x i8] c"%s: %s\00", align 1
-@.str.121 = private unnamed_addr constant [38 x i8] c"0 <= strtol_base && strtol_base <= 36\00", align 1
-@.str.1.122 = private unnamed_addr constant [17 x i8] c"../lib/xstrtol.c\00", align 1
+@.str.94 = private unnamed_addr constant [12 x i8] c"%s (%s) %s\0A\00", align 1
+@.str.1.95 = private unnamed_addr constant [7 x i8] c"%s %s\0A\00", align 1
+@.str.2.96 = private unnamed_addr constant [4 x i8] c"(C)\00", align 1
+@.str.3.97 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+@.str.4.98 = private unnamed_addr constant [171 x i8] c"License GPLv3+: GNU GPL version 3 or later <%s>.\0AThis is free software: you are free to change and redistribute it.\0AThere is NO WARRANTY, to the extent permitted by law.\0A\00", align 1
+@.str.5.99 = private unnamed_addr constant [34 x i8] c"https://gnu.org/licenses/gpl.html\00", align 1
+@.str.6.100 = private unnamed_addr constant [16 x i8] c"Written by %s.\0A\00", align 1
+@.str.7.101 = private unnamed_addr constant [23 x i8] c"Written by %s and %s.\0A\00", align 1
+@.str.8.102 = private unnamed_addr constant [28 x i8] c"Written by %s, %s, and %s.\0A\00", align 1
+@.str.9.103 = private unnamed_addr constant [32 x i8] c"Written by %s, %s, %s,\0Aand %s.\0A\00", align 1
+@.str.10.104 = private unnamed_addr constant [36 x i8] c"Written by %s, %s, %s,\0A%s, and %s.\0A\00", align 1
+@.str.11.105 = private unnamed_addr constant [40 x i8] c"Written by %s, %s, %s,\0A%s, %s, and %s.\0A\00", align 1
+@.str.12.106 = private unnamed_addr constant [44 x i8] c"Written by %s, %s, %s,\0A%s, %s, %s, and %s.\0A\00", align 1
+@.str.13.107 = private unnamed_addr constant [48 x i8] c"Written by %s, %s, %s,\0A%s, %s, %s, %s,\0Aand %s.\0A\00", align 1
+@.str.14.108 = private unnamed_addr constant [52 x i8] c"Written by %s, %s, %s,\0A%s, %s, %s, %s,\0A%s, and %s.\0A\00", align 1
+@.str.15.109 = private unnamed_addr constant [60 x i8] c"Written by %s, %s, %s,\0A%s, %s, %s, %s,\0A%s, %s, and others.\0A\00", align 1
+@.str.135 = private unnamed_addr constant [7 x i8] c"%s: %s\00", align 1
+@.str.140 = private unnamed_addr constant [38 x i8] c"0 <= strtol_base && strtol_base <= 36\00", align 1
+@.str.1.141 = private unnamed_addr constant [17 x i8] c"../lib/xstrtol.c\00", align 1
 @__PRETTY_FUNCTION__.xstrtoumax = private unnamed_addr constant [79 x i8] c"strtol_error xstrtoumax(const char *, char **, int, uintmax_t *, const char *)\00", align 1
-@.str.30.128 = private unnamed_addr constant [6 x i8] c"bytes\00", align 1
-@.str.31.129 = private unnamed_addr constant [7 x i8] c"spaces\00", align 1
-@.str.32.130 = private unnamed_addr constant [6 x i8] c"width\00", align 1
-@.str.33.131 = private unnamed_addr constant [5 x i8] c"help\00", align 1
-@.str.34.132 = private unnamed_addr constant [8 x i8] c"version\00", align 1
+@.str.36 = private unnamed_addr constant [7 x i8] c"decode\00", align 1
+@.str.37 = private unnamed_addr constant [5 x i8] c"wrap\00", align 1
+@.str.38 = private unnamed_addr constant [15 x i8] c"ignore-garbage\00", align 1
+@.str.39 = private unnamed_addr constant [5 x i8] c"help\00", align 1
+@.str.40 = private unnamed_addr constant [8 x i8] c"version\00", align 1
 @ignore_EPIPE = internal global i8 0, align 1
-@.str.40 = private unnamed_addr constant [12 x i8] c"write error\00", align 1
+@.str.55 = private unnamed_addr constant [12 x i8] c"write error\00", align 1
 @file_name = internal global i8* null, align 8
-@.str.1.41 = private unnamed_addr constant [7 x i8] c"%s: %s\00", align 1
-@.str.2.42 = private unnamed_addr constant [3 x i8] c"%s\00", align 1
-@.str.51 = private unnamed_addr constant [56 x i8] c"A NULL argv[0] was passed through an exec system call.\0A\00", align 1
-@.str.1.52 = private unnamed_addr constant [8 x i8] c"/.libs/\00", align 1
-@.str.2.53 = private unnamed_addr constant [4 x i8] c"lt-\00", align 1
-@.str.16.95 = private unnamed_addr constant [20 x i8] c"Report bugs to: %s\0A\00", align 1
-@.str.17.96 = private unnamed_addr constant [22 x i8] c"bug-coreutils@gnu.org\00", align 1
-@.str.18.97 = private unnamed_addr constant [20 x i8] c"%s home page: <%s>\0A\00", align 1
-@.str.19.98 = private unnamed_addr constant [14 x i8] c"GNU coreutils\00", align 1
-@.str.20.99 = private unnamed_addr constant [40 x i8] c"https://www.gnu.org/software/coreutils/\00", align 1
-@.str.21.100 = private unnamed_addr constant [39 x i8] c"General help using GNU software: <%s>\0A\00", align 1
-@.str.22.101 = private unnamed_addr constant [29 x i8] c"https://www.gnu.org/gethelp/\00", align 1
+@.str.1.56 = private unnamed_addr constant [7 x i8] c"%s: %s\00", align 1
+@.str.2.57 = private unnamed_addr constant [3 x i8] c"%s\00", align 1
+@.str.66 = private unnamed_addr constant [56 x i8] c"A NULL argv[0] was passed through an exec system call.\0A\00", align 1
+@.str.1.67 = private unnamed_addr constant [8 x i8] c"/.libs/\00", align 1
+@.str.2.68 = private unnamed_addr constant [4 x i8] c"lt-\00", align 1
+@.str.16.112 = private unnamed_addr constant [20 x i8] c"Report bugs to: %s\0A\00", align 1
+@.str.17.113 = private unnamed_addr constant [22 x i8] c"bug-coreutils@gnu.org\00", align 1
+@.str.18.114 = private unnamed_addr constant [20 x i8] c"%s home page: <%s>\0A\00", align 1
+@.str.19.115 = private unnamed_addr constant [14 x i8] c"GNU coreutils\00", align 1
+@.str.20.116 = private unnamed_addr constant [40 x i8] c"https://www.gnu.org/software/coreutils/\00", align 1
+@.str.21.117 = private unnamed_addr constant [39 x i8] c"General help using GNU software: <%s>\0A\00", align 1
+@.str.22.118 = private unnamed_addr constant [29 x i8] c"https://www.gnu.org/gethelp/\00", align 1
 @__exe_env = dso_local global { <{ %struct.exe_file_t, %struct.exe_file_t, %struct.exe_file_t, [29 x %struct.exe_file_t] }>, i32, i32, i32, [4 x i8] } { <{ %struct.exe_file_t, %struct.exe_file_t, %struct.exe_file_t, [29 x %struct.exe_file_t] }> <{ %struct.exe_file_t { i32 0, i32 5, i64 0, %struct.exe_disk_file_t* null }, %struct.exe_file_t { i32 1, i32 9, i64 0, %struct.exe_disk_file_t* null }, %struct.exe_file_t { i32 2, i32 9, i64 0, %struct.exe_disk_file_t* null }, [29 x %struct.exe_file_t] zeroinitializer }>, i32 18, i32 0, i32 0, [4 x i8] undef }, align 8
 @__exe_fs = dso_local global %struct.exe_file_system_t zeroinitializer, align 8
 @__const.klee_init_fds.name = private unnamed_addr constant [7 x i8] c"?-data\00", align 1
@@ -360,22 +365,22 @@ module asm "\09.previous"
 @__C_ctype_toupper = global i16* bitcast (i8* getelementptr (i8, i8* bitcast ([384 x i16]* @__C_ctype_toupper_data to i8*), i64 256) to i16*), align 8
 @errno = global i32 0, align 4
 @h_errno = global i32 0, align 4
-@.str.216 = private unnamed_addr constant [17 x i8] c"ignoring (EPERM)\00", align 1
-@.str.7.218 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
-@.str.1.219 = private unnamed_addr constant [9 x i8] c"ignoring\00", align 1
-@.str.2.220 = private unnamed_addr constant [82 x i8] c"/scratch1/gao606/coreutils-testing-pipeline/posix-runtime/runtime/POSIX/illegal.c\00", align 1
-@.str.3.221 = private unnamed_addr constant [20 x i8] c"longjmp unsupported\00", align 1
-@.str.4.222 = private unnamed_addr constant [8 x i8] c"xxx.err\00", align 1
-@.str.5.224 = private unnamed_addr constant [18 x i8] c"ignoring (EACCES)\00", align 1
-@.str.6.225 = private unnamed_addr constant [18 x i8] c"ignoring (ENOMEM)\00", align 1
+@.str.214 = private unnamed_addr constant [17 x i8] c"ignoring (EPERM)\00", align 1
+@.str.7.216 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+@.str.1.217 = private unnamed_addr constant [9 x i8] c"ignoring\00", align 1
+@.str.2.218 = private unnamed_addr constant [82 x i8] c"/scratch1/gao606/coreutils-testing-pipeline/posix-runtime/runtime/POSIX/illegal.c\00", align 1
+@.str.3.219 = private unnamed_addr constant [20 x i8] c"longjmp unsupported\00", align 1
+@.str.4.220 = private unnamed_addr constant [8 x i8] c"xxx.err\00", align 1
+@.str.5.222 = private unnamed_addr constant [18 x i8] c"ignoring (EACCES)\00", align 1
+@.str.6.223 = private unnamed_addr constant [18 x i8] c"ignoring (ENOMEM)\00", align 1
 @error_message_count = global i32 0, align 4
 @error_one_per_line = global i32 0, align 4
-@.str.228 = private unnamed_addr constant [5 x i8] c": %s\00", align 1
+@.str.226 = private unnamed_addr constant [5 x i8] c": %s\00", align 1
 @__error_at_line.old_line_number = internal global i32 0, align 4
 @__error_at_line.old_file_name = internal global i8* null, align 8
-@.str.1.229 = private unnamed_addr constant [8 x i8] c"%s:%d: \00", align 1
+@.str.1.227 = private unnamed_addr constant [8 x i8] c"%s:%d: \00", align 1
 @hr_locale = internal global [448 x i8] zeroinitializer, align 16
-@utf8.236 = internal constant [6 x i8] c"UTF-8\00", align 1
+@utf8.234 = internal constant [6 x i8] c"UTF-8\00", align 1
 @static_fd = internal global i32 -1, align 4
 @static_ut_name = internal global i8* getelementptr inbounds ([14 x i8], [14 x i8]* @default_file_name, i32 0, i32 0), align 8
 @default_file_name = internal constant [14 x i8] c"/var/run/utmp\00", align 1
@@ -387,31 +392,31 @@ module asm "\09.previous"
 @optopt = global i32 63, align 4
 @optarg = global i8* null, align 8
 @getopt_data = internal global %struct._getopt_data zeroinitializer, align 8
-@.str.307 = private unnamed_addr constant [3 x i8] c"--\00", align 1
-@.str.1.308 = private unnamed_addr constant [30 x i8] c"%s: option `%s' is ambiguous\0A\00", align 1
-@.str.2.309 = private unnamed_addr constant [45 x i8] c"%s: option `--%s' doesn't allow an argument\0A\00", align 1
-@.str.3.310 = private unnamed_addr constant [45 x i8] c"%s: option `%c%s' doesn't allow an argument\0A\00", align 1
-@.str.4.311 = private unnamed_addr constant [38 x i8] c"%s: option `%s' requires an argument\0A\00", align 1
-@.str.5.312 = private unnamed_addr constant [32 x i8] c"%s: unrecognized option `--%s'\0A\00", align 1
-@.str.6.313 = private unnamed_addr constant [32 x i8] c"%s: unrecognized option `%c%s'\0A\00", align 1
-@.str.7.314 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
-@.str.8.315 = private unnamed_addr constant [26 x i8] c"%s: illegal option -- %c\0A\00", align 1
-@.str.9.316 = private unnamed_addr constant [26 x i8] c"%s: invalid option -- %c\0A\00", align 1
-@.str.10.317 = private unnamed_addr constant [39 x i8] c"%s: option requires an argument -- %c\0A\00", align 1
-@.str.11.318 = private unnamed_addr constant [16 x i8] c"POSIXLY_CORRECT\00", align 1
-@.str.323 = private unnamed_addr constant [14 x i8] c"#\80\80\80\80\80\80\80\80\80\80\80\80\00", align 1
-@newlocale.envstr = internal global [4 x i8*] [i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.1.327, i32 0, i32 0), i8* null, i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.2.328, i32 0, i32 0), i8* getelementptr inbounds ([6 x i8], [6 x i8]* @posix, i32 0, i32 0)], align 16
-@.str.3.324 = private unnamed_addr constant [2 x i8] c"=\00", align 1
-@.str.4.325 = private unnamed_addr constant [2 x i8] c";\00", align 1
+@.str.311 = private unnamed_addr constant [3 x i8] c"--\00", align 1
+@.str.1.312 = private unnamed_addr constant [30 x i8] c"%s: option `%s' is ambiguous\0A\00", align 1
+@.str.2.313 = private unnamed_addr constant [45 x i8] c"%s: option `--%s' doesn't allow an argument\0A\00", align 1
+@.str.3.314 = private unnamed_addr constant [45 x i8] c"%s: option `%c%s' doesn't allow an argument\0A\00", align 1
+@.str.4.315 = private unnamed_addr constant [38 x i8] c"%s: option `%s' requires an argument\0A\00", align 1
+@.str.5.316 = private unnamed_addr constant [32 x i8] c"%s: unrecognized option `--%s'\0A\00", align 1
+@.str.6.317 = private unnamed_addr constant [32 x i8] c"%s: unrecognized option `%c%s'\0A\00", align 1
+@.str.7.318 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
+@.str.8.319 = private unnamed_addr constant [26 x i8] c"%s: illegal option -- %c\0A\00", align 1
+@.str.9.320 = private unnamed_addr constant [26 x i8] c"%s: invalid option -- %c\0A\00", align 1
+@.str.10.321 = private unnamed_addr constant [39 x i8] c"%s: option requires an argument -- %c\0A\00", align 1
+@.str.11.322 = private unnamed_addr constant [16 x i8] c"POSIXLY_CORRECT\00", align 1
+@.str.327 = private unnamed_addr constant [14 x i8] c"#\80\80\80\80\80\80\80\80\80\80\80\80\00", align 1
+@newlocale.envstr = internal global [4 x i8*] [i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.1.331, i32 0, i32 0), i8* null, i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.2.332, i32 0, i32 0), i8* getelementptr inbounds ([6 x i8], [6 x i8]* @posix, i32 0, i32 0)], align 16
+@.str.3.328 = private unnamed_addr constant [2 x i8] c"=\00", align 1
+@.str.4.329 = private unnamed_addr constant [2 x i8] c";\00", align 1
 @posix = internal constant [6 x i8] c"POSIX\00", align 1
-@utf8.326 = internal constant [6 x i8] c"UTF-8\00", align 1
-@.str.1.327 = private unnamed_addr constant [7 x i8] c"LC_ALL\00", align 1
-@.str.2.328 = private unnamed_addr constant [5 x i8] c"LANG\00", align 1
+@utf8.330 = internal constant [6 x i8] c"UTF-8\00", align 1
+@.str.1.331 = private unnamed_addr constant [7 x i8] c"LC_ALL\00", align 1
+@.str.2.332 = private unnamed_addr constant [5 x i8] c"LANG\00", align 1
 @empty = internal constant [1 x i8] zeroinitializer, align 1
 @mbsnrtowcs.mbstate = internal global %struct.__mbstate_t.512 zeroinitializer, align 4
 @_do_one_spec.spec_base = internal constant [7 x i8] c"\10\10\10\08\0A\0A\0A", align 1
-@.str.345 = private unnamed_addr constant [6 x i8] c"(nil)\00", align 1
-@.str.1.346 = private unnamed_addr constant [7 x i8] c"(null)\00", align 1
+@.str.349 = private unnamed_addr constant [6 x i8] c"(nil)\00", align 1
+@.str.1.350 = private unnamed_addr constant [7 x i8] c"(null)\00", align 1
 @_do_one_spec.prefix = internal constant [12 x i8] c"+\00-\00 \000x\000X\00", align 1
 @strerror.buf = internal global [50 x i8] zeroinitializer, align 16
 @desc2flag = internal constant [13 x i16] [i16 0, i16 2048, i16 4, i16 256, i16 512, i16 8, i16 128, i16 2, i16 64, i16 1024, i16 32, i16 1, i16 16], align 16
@@ -446,6 +451,7 @@ module asm "\09.previous"
 @__getdents64 = dso_local alias i64 (i32, i8*, i64), i64 (i32, i8*, i64)* @getdents64
 @error = weak alias void (i32, i32, i8*, ...), void (i32, i32, i8*, ...)* @__error
 @error_at_line = weak alias void (i32, i32, i8*, i32, i8*, ...), void (i32, i32, i8*, i32, i8*, ...)* @__error_at_line
+@feof = alias i32 (%struct.__STDIO_FILE_STRUCT.590*), i32 (%struct.__STDIO_FILE_STRUCT.590*)* @feof_unlocked
 @ferror = alias i32 (%struct.__STDIO_FILE_STRUCT.592*), i32 (%struct.__STDIO_FILE_STRUCT.592*)* @ferror_unlocked
 @fflush = alias i32 (%struct.__STDIO_FILE_STRUCT.568*), i32 (%struct.__STDIO_FILE_STRUCT.568*)* @fflush_unlocked
 @fileno = alias i32 (%struct.__STDIO_FILE_STRUCT.608*), i32 (%struct.__STDIO_FILE_STRUCT.608*)* @fileno_unlocked
@@ -454,9 +460,9 @@ module asm "\09.previous"
 @fputc = alias i32 (i32, %struct.__STDIO_FILE_STRUCT.568*), i32 (i32, %struct.__STDIO_FILE_STRUCT.568*)* @__fputc_unlocked
 @putc = alias i32 (i32, %struct.__STDIO_FILE_STRUCT.568*), i32 (i32, %struct.__STDIO_FILE_STRUCT.568*)* @__fputc_unlocked
 @fputs = alias i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*), i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked
+@fread = alias i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*), i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fread_unlocked
 @fseeko = alias i32 (%struct.__STDIO_FILE_STRUCT.636*, i64, i32), i32 (%struct.__STDIO_FILE_STRUCT.636*, i64, i32)* @fseek
 @fwrite = alias i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*), i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fwrite_unlocked
-@putchar = alias i32 (i32), i32 (i32)* @putchar_unlocked
 @strtoumax = alias i64 (i8*, i8**, i32), i64 (i8*, i8**, i32)* @strtoul
 @strtoull = alias i64 (i8*, i8**, i32), i64 (i8*, i8**, i32)* @strtoul
 @strerror_r = weak alias i32 (i32, i8*, i64), i32 (i32, i8*, i64)* @__xpg_strerror_r
@@ -473,8 +479,8 @@ if.end:                                           ; preds = %entry
   %inc = add nsw i32 %1, 1
   store i32 %inc, i32* @__uClibc_init.been_there_done_that, align 4
   store i64 4096, i64* @__pagesize, align 8
-  call void @_locale_init() #18
-  call void @_stdio_init() #18
+  call void @_locale_init() #19
+  call void @_stdio_init() #19
   br label %if.end4
 
 if.end4:                                          ; preds = %entry, %if.end
@@ -490,7 +496,7 @@ entry:
 
 if.then:                                          ; preds = %entry
   %1 = load void ()*, void ()** @__app_fini, align 8
-  call void %1() #18
+  call void %1() #19
   br label %if.end
 
 if.end:                                           ; preds = %if.then, %entry
@@ -500,7 +506,7 @@ if.end:                                           ; preds = %if.then, %entry
 
 if.then2:                                         ; preds = %if.end
   %3 = load void ()*, void ()** @__rtld_fini, align 8
-  call void %3() #18
+  call void %3() #19
   br label %if.end3
 
 if.end3:                                          ; preds = %if.then2, %if.end
@@ -555,7 +561,7 @@ if.then:                                          ; preds = %entry
 if.end:                                           ; preds = %if.then, %entry
   %arraydecay = getelementptr inbounds [15 x %struct.Elf64_auxv_t], [15 x %struct.Elf64_auxv_t]* %auxvt, i64 0, i64 0
   %10 = bitcast %struct.Elf64_auxv_t* %arraydecay to i8*
-  %call = call i8* @memset(i8* %10, i32 0, i64 240) #19
+  %call = call i8* @memset(i8* %10, i32 0, i64 240) #20
   %11 = load i8**, i8*** @__environ, align 8
   %12 = bitcast i8** %11 to i64*
   store i64* %12, i64** %aux_dat, align 8
@@ -594,7 +600,7 @@ if.then8:                                         ; preds = %while.body6
   %24 = bitcast %struct.Elf64_auxv_t* %arrayidx10 to i8*
   %25 = load %struct.Elf64_auxv_t*, %struct.Elf64_auxv_t** %auxv_entry, align 8
   %26 = bitcast %struct.Elf64_auxv_t* %25 to i8*
-  %call11 = call i8* @memcpy(i8* %24, i8* %26, i64 16) #19
+  %call11 = call i8* @memcpy(i8* %24, i8* %26, i64 16) #20
   br label %if.end12
 
 if.end12:                                         ; preds = %if.then8, %while.body6
@@ -604,7 +610,7 @@ if.end12:                                         ; preds = %if.then8, %while.bo
   br label %while.cond4
 
 while.end13:                                      ; preds = %while.cond4
-  call void @__uClibc_init() #18
+  call void @__uClibc_init() #19
   %arrayidx14 = getelementptr inbounds [15 x %struct.Elf64_auxv_t], [15 x %struct.Elf64_auxv_t]* %auxvt, i64 0, i64 6
   %a_un = getelementptr inbounds %struct.Elf64_auxv_t, %struct.Elf64_auxv_t* %arrayidx14, i32 0, i32 1
   %a_val = bitcast %union.anon.193* %a_un to i64*
@@ -624,7 +630,7 @@ while.end13:                                      ; preds = %while.cond4
   br i1 %cmp22, label %land.lhs.true, label %lor.lhs.false
 
 land.lhs.true:                                    ; preds = %while.end13
-  %call23 = call i32 @__check_suid() #18
+  %call23 = call i32 @__check_suid() #19
   %tobool24 = icmp ne i32 %call23, 0
   br i1 %tobool24, label %if.then45, label %lor.lhs.false
 
@@ -661,9 +667,9 @@ lor.lhs.false37:                                  ; preds = %land.lhs.true29
   br i1 %cmp44, label %if.then45, label %if.end46
 
 if.then45:                                        ; preds = %lor.lhs.false37, %land.lhs.true29, %land.lhs.true
-  call void @__check_one_fd(i32 0, i32 131072) #18
-  call void @__check_one_fd(i32 1, i32 131074) #18
-  call void @__check_one_fd(i32 2, i32 131074) #18
+  call void @__check_one_fd(i32 0, i32 131072) #19
+  call void @__check_one_fd(i32 1, i32 131074) #19
+  call void @__check_one_fd(i32 2, i32 131074) #19
   br label %if.end46
 
 if.end46:                                         ; preds = %if.then45, %lor.lhs.false37, %lor.lhs.false
@@ -675,7 +681,7 @@ if.end46:                                         ; preds = %if.then45, %lor.lhs
   store i8* %39, i8** @program_invocation_name, align 8
   %40 = load i8**, i8*** %argv.addr, align 8
   %41 = load i8*, i8** %40, align 8
-  %call47 = call i8* @strrchr(i8* %41, i32 47) #20
+  %call47 = call i8* @strrchr(i8* %41, i32 47) #21
   store i8* %call47, i8** @program_invocation_short_name, align 8
   %42 = load i8*, i8** @program_invocation_short_name, align 8
   %cmp48 = icmp ne i8* %42, null
@@ -701,20 +707,20 @@ if.end51:                                         ; preds = %if.else, %if.then49
 
 if.then53:                                        ; preds = %if.end51
   %47 = load void ()*, void ()** %app_init.addr, align 8
-  call void %47() #18
+  call void %47() #19
   br label %if.then55
 
 if.then55:                                        ; preds = %if.end51, %if.then53
-  %call56 = call i32* @__errno_location() #21
+  %call56 = call i32* @__errno_location() #22
   store i32 0, i32* %call56, align 4
-  %call59 = call i32* @__h_errno_location() #21
+  %call59 = call i32* @__h_errno_location() #22
   store i32 0, i32* %call59, align 4
   %48 = load i32 (i32, i8**, i8**)*, i32 (i32, i8**, i8**)** %main.addr, align 8
   %49 = load i32, i32* %argc.addr, align 4
   %50 = load i8**, i8*** %argv.addr, align 8
   %51 = load i8**, i8*** @__environ, align 8
-  %call61 = call i32 %48(i32 %49, i8** %50, i8** %51) #18
-  call void @exit(i32 %call61) #22
+  %call61 = call i32 %48(i32 %49, i8** %50, i8** %51) #19
+  call void @exit(i32 %call61) #23
   unreachable
 }
 
@@ -726,13 +732,13 @@ entry:
   %euid = alloca i32, align 4
   %gid = alloca i32, align 4
   %egid = alloca i32, align 4
-  %call = call i32 @getuid() #19
+  %call = call i32 @getuid() #20
   store i32 %call, i32* %uid, align 4
-  %call1 = call i32 @geteuid() #19
+  %call1 = call i32 @geteuid() #20
   store i32 %call1, i32* %euid, align 4
-  %call2 = call i32 @getgid() #19
+  %call2 = call i32 @getgid() #20
   store i32 %call2, i32* %gid, align 4
-  %call3 = call i32 @getegid() #19
+  %call3 = call i32 @getegid() #20
   store i32 %call3, i32* %egid, align 4
   %0 = load i32, i32* %uid, align 4
   %1 = load i32, i32* %euid, align 4
@@ -768,12 +774,12 @@ entry:
   store i32 %fd, i32* %fd.addr, align 4
   store i32 %mode, i32* %mode.addr, align 4
   %0 = load i32, i32* %fd.addr, align 4
-  %call = call i32 (i32, i32, ...) @fcntl(i32 %0, i32 1) #18
+  %call = call i32 (i32, i32, ...) @fcntl(i32 %0, i32 1) #19
   %cmp = icmp eq i32 %call, -1
   br i1 %cmp, label %land.rhs, label %land.end
 
 land.rhs:                                         ; preds = %entry
-  %call1 = call i32* @__errno_location() #21
+  %call1 = call i32* @__errno_location() #22
   %1 = load i32, i32* %call1, align 4
   %cmp2 = icmp eq i32 %1, 9
   br label %land.end
@@ -789,7 +795,7 @@ land.end:                                         ; preds = %land.rhs, %entry
 
 if.then:                                          ; preds = %land.end
   %3 = load i32, i32* %mode.addr, align 4
-  %call4 = call i32 (i8*, i32, ...) @open(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.1, i64 0, i64 0), i32 %3) #18
+  %call4 = call i32 (i8*, i32, ...) @open(i8* getelementptr inbounds ([10 x i8], [10 x i8]* @.str.1, i64 0, i64 0), i32 %3) #19
   store i32 %call4, i32* %nullfd, align 4
   %4 = load i32, i32* %nullfd, align 4
   %5 = load i32, i32* %fd.addr, align 4
@@ -798,7 +804,7 @@ if.then:                                          ; preds = %land.end
 
 lor.lhs.false:                                    ; preds = %if.then
   %6 = load i32, i32* %fd.addr, align 4
-  %call7 = call i32 bitcast (i32 (i32, %struct.stat64*)* @fstat to i32 (i32, %struct.stat.192*)*)(i32 %6, %struct.stat.192* %st) #19
+  %call7 = call i32 bitcast (i32 (i32, %struct.stat64*)* @fstat to i32 (i32, %struct.stat.192*)*)(i32 %6, %struct.stat.192* %st) #20
   %tobool8 = icmp ne i32 %call7, 0
   br i1 %tobool8, label %if.then16, label %lor.lhs.false9
 
@@ -812,12 +818,12 @@ lor.lhs.false9:                                   ; preds = %lor.lhs.false
 lor.lhs.false12:                                  ; preds = %lor.lhs.false9
   %st_rdev = getelementptr inbounds %struct.stat.192, %struct.stat.192* %st, i32 0, i32 7
   %8 = load i64, i64* %st_rdev, align 8
-  %call13 = call i64 @gnu_dev_makedev.172(i32 1, i32 3) #19
+  %call13 = call i64 @gnu_dev_makedev.172(i32 1, i32 3) #20
   %cmp14 = icmp ne i64 %8, %call13
   br i1 %cmp14, label %if.then16, label %if.end17
 
 if.then16:                                        ; preds = %lor.lhs.false12, %lor.lhs.false9, %lor.lhs.false, %if.then
-  call void @abort() #22
+  call void @abort() #23
   unreachable
 
 if.end17:                                         ; preds = %lor.lhs.false12, %land.end
@@ -872,7 +878,7 @@ entry:
 ; Function Attrs: noinline nounwind uwtable
 define i32 @siggetmask() #0 {
 entry:
-  %call = call i32 @sigblock(i32 0) #19
+  %call = call i32 @sigblock(i32 0) #20
   ret i32 %call
 }
 
@@ -918,7 +924,7 @@ entry:
   br label %while.cond
 
 while.cond:                                       ; preds = %while.body, %entry
-  %call = call i32 @getchar_unlocked() #18
+  %call = call i32 @getchar_unlocked() #19
   store i32 %call, i32* %c, align 4
   %cmp = icmp ne i32 %call, -1
   br i1 %cmp, label %land.rhs, label %while.end
@@ -977,7 +983,7 @@ entry:
   %cond = select i1 %tobool, i8* %0, i8* %arraydecay
   store i8* %cond, i8** %tmpbuf, align 8
   %1 = load i8*, i8** %tmpbuf, align 8
-  %call = call i32 @___path_search(i8* %1, i64 20, i8* null, i8* null) #18
+  %call = call i32 @___path_search(i8* %1, i64 20, i8* null, i8* null) #19
   %conv = sext i32 %call to i64
   %tobool1 = icmp ne i64 %conv, 0
   br i1 %tobool1, label %if.then, label %if.end
@@ -988,7 +994,7 @@ if.then:                                          ; preds = %entry
 
 if.end:                                           ; preds = %entry
   %2 = load i8*, i8** %tmpbuf, align 8
-  %call2 = call i32 @__gen_tempname(i8* %2, i32 3) #18
+  %call2 = call i32 @__gen_tempname(i8* %2, i32 3) #19
   %conv3 = sext i32 %call2 to i64
   %tobool4 = icmp ne i64 %conv3, 0
   br i1 %tobool4, label %if.then5, label %if.end6
@@ -1004,7 +1010,7 @@ if.end6:                                          ; preds = %if.end
 
 if.then8:                                         ; preds = %if.end6
   %4 = load i8*, i8** %tmpbuf, align 8
-  %call9 = call i8* @memcpy(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @tmpnam_buffer, i64 0, i64 0), i8* %4, i64 20) #19
+  %call9 = call i8* @memcpy(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @tmpnam_buffer, i64 0, i64 0), i8* %4, i64 20) #20
   store i8* %call9, i8** %retval, align 8
   br label %return
 
@@ -1024,7 +1030,7 @@ entry:
   %template.addr = alloca i8*, align 8
   store i8* %template, i8** %template.addr, align 8
   %0 = load i8*, i8** %template.addr, align 8
-  %call = call i32 @__gen_tempname(i8* %0, i32 3) #18
+  %call = call i32 @__gen_tempname(i8* %0, i32 3) #19
   %cmp = icmp slt i32 %call, 0
   br i1 %cmp, label %if.then, label %if.end
 
@@ -1110,7 +1116,7 @@ if.then2:                                         ; preds = %if.end
 
 if.then4:                                         ; preds = %if.then2
   %arraydecay5 = getelementptr inbounds [1024 x i8], [1024 x i8]* %cwd, i64 0, i64 0
-  %call6 = call i64 @strlen(i8* %arraydecay5) #23
+  %call6 = call i64 @strlen(i8* %arraydecay5) #24
   store i64 %call6, i64* %cwd_len, align 8
   %5 = load i64, i64* %cwd_len, align 8
   %cmp7 = icmp ugt i64 %5, 0
@@ -1137,7 +1143,7 @@ if.end15:                                         ; preds = %if.then13, %land.lh
   %9 = load i8*, i8** %pathname.addr, align 8
   %arraydecay16 = getelementptr inbounds [1024 x i8], [1024 x i8]* %cwd, i64 0, i64 0
   %10 = load i64, i64* %cwd_len, align 8
-  %call17 = call i32 @strncmp(i8* %9, i8* %arraydecay16, i64 %10) #23
+  %call17 = call i32 @strncmp(i8* %9, i8* %arraydecay16, i64 %10) #24
   %cmp18 = icmp eq i32 %call17, 0
   br i1 %cmp18, label %if.then20, label %if.end29
 
@@ -1259,7 +1265,7 @@ for.cond:                                         ; preds = %for.inc, %entry
   store i8 %2, i8* %c, align 1
   %3 = load i8, i8* %c, align 1
   %conv = sext i8 %3 to i64
-  %call1 = call i32 @llsc_is_symbolic(i64 %conv)
+  %call1 = call i32 @gs_is_symbolic(i64 %conv)
   %tobool = icmp ne i32 %call1, 0
   br i1 %tobool, label %if.end4, label %if.then
 
@@ -1299,7 +1305,7 @@ if.then11:                                        ; preds = %if.else
 
 if.else14:                                        ; preds = %if.end4
   %conv15 = sext i8 %7 to i64
-  %call16 = call i64 @llsc_get_valuel(i64 %conv15)
+  %call16 = call i64 @gs_get_valuel(i64 %conv15)
   %conv17 = trunc i64 %call16 to i8
   store i8 %conv17, i8* %cc, align 1
   %11 = load i8, i8* %cc, align 1
@@ -1307,7 +1313,7 @@ if.else14:                                        ; preds = %if.end4
   %12 = load i8, i8* %c, align 1
   %conv19 = sext i8 %12 to i32
   %cmp20 = icmp eq i32 %conv18, %conv19
-  call void @llsc_assume(i1 zeroext %cmp20)
+  call void @gs_assume(i1 zeroext %cmp20)
   %13 = load i8, i8* %cc, align 1
   %14 = load i8*, i8** %sc, align 8
   store i8 %13, i8* %14, align 1
@@ -1339,12 +1345,12 @@ entry:
   store i8* %p, i8** %p.addr, align 8
   %0 = load i8*, i8** %p.addr, align 8
   %1 = ptrtoint i8* %0 to i64
-  %call = call i32 @llsc_is_symbolic(i64 %1)
+  %call = call i32 @gs_is_symbolic(i64 %1)
   %tobool = icmp ne i32 %call, 0
   br i1 %tobool, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @llsc_report_error(i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 1386, i8* getelementptr inbounds ([37 x i8], [37 x i8]* @.str.27, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.28, i64 0, i64 0)) #24
+  call void @gs_report_error(i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 1386, i8* getelementptr inbounds ([37 x i8], [37 x i8]* @.str.27, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.28, i64 0, i64 0)) #25
   unreachable
 
 if.end:                                           ; preds = %entry
@@ -1352,14 +1358,14 @@ if.end:                                           ; preds = %entry
   ret i8* %2
 }
 
-declare dso_local i32 @llsc_is_symbolic(i64) #5
+declare dso_local i32 @gs_is_symbolic(i64) #5
 
-declare dso_local i64 @llsc_get_valuel(i64) #5
+declare dso_local i64 @gs_get_valuel(i64) #5
 
-declare dso_local void @llsc_assume(i1 zeroext) #5
+declare dso_local void @gs_assume(i1 zeroext) #5
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define internal void @llsc_report_error(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
+define internal void @gs_report_error(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
 entry:
   %file.addr = alloca i8*, align 8
   %line.addr = alloca i32, align 4
@@ -1378,7 +1384,7 @@ entry:
   %3 = load i8*, i8** %suffix.addr, align 8
   call void @print_string(i8* %3)
   call void @print_string(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.25, i64 0, i64 0))
-  call void @stop(i32 -1) #24
+  call void @stop(i32 -1) #25
   unreachable
 }
 
@@ -1419,7 +1425,7 @@ if.then:                                          ; preds = %land.lhs.true
   %5 = load i32, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
   %dec = add i32 %5, -1
   store i32 %dec, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
-  %call = call i32* @__errno_location() #25
+  %call = call i32* @__errno_location() #26
   store i32 34, i32* %call, align 4
   store i8* null, i8** %retval, align 8
   br label %return
@@ -1439,7 +1445,7 @@ if.then2:                                         ; preds = %if.end
   br i1 %tobool4, label %if.end12, label %if.then5
 
 if.then5:                                         ; preds = %if.then2
-  %call6 = call i32* @__errno_location() #25
+  %call6 = call i32* @__errno_location() #26
   store i32 12, i32* %call6, align 4
   store i8* null, i8** %retval, align 8
   br label %return
@@ -1450,7 +1456,7 @@ if.else:                                          ; preds = %if.end
   br i1 %tobool8, label %if.end12, label %if.then9
 
 if.then9:                                         ; preds = %if.else
-  %call10 = call i32* @__errno_location() #25
+  %call10 = call i32* @__errno_location() #26
   store i32 22, i32* %call10, align 4
   store i8* null, i8** %retval, align 8
   br label %return
@@ -1495,12 +1501,12 @@ entry:
   %sc = alloca i64, align 8
   store i64 %s, i64* %s.addr, align 8
   %0 = load i64, i64* %s.addr, align 8
-  %call = call i64 @llsc_get_valuel(i64 %0)
+  %call = call i64 @gs_get_valuel(i64 %0)
   store i64 %call, i64* %sc, align 8
   %1 = load i64, i64* %sc, align 8
   %2 = load i64, i64* %s.addr, align 8
   %cmp = icmp eq i64 %1, %2
-  call void @llsc_assume(i1 zeroext %cmp)
+  call void @gs_assume(i1 zeroext %cmp)
   %3 = load i64, i64* %sc, align 8
   ret i64 %3
 }
@@ -1564,7 +1570,7 @@ for.end:                                          ; preds = %for.body, %for.cond
   br i1 %cmp2, label %if.then3, label %if.end4
 
 if.then3:                                         ; preds = %for.end
-  %call = call i32* @__errno_location() #25
+  %call = call i32* @__errno_location() #26
   store i32 24, i32* %call, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -1601,7 +1607,7 @@ land.lhs.true:                                    ; preds = %if.then9
   br i1 %tobool13, label %if.then14, label %if.end16
 
 if.then14:                                        ; preds = %land.lhs.true
-  %call15 = call i32* @__errno_location() #25
+  %call15 = call i32* @__errno_location() #26
   store i32 17, i32* %call15, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -1619,8 +1625,8 @@ land.lhs.true19:                                  ; preds = %if.end16
   br i1 %tobool21, label %if.then22, label %if.end24
 
 if.then22:                                        ; preds = %land.lhs.true19
-  call void @llsc_warning(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str.5, i64 0, i64 0))
-  %call23 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str.5, i64 0, i64 0))
+  %call23 = call i32* @__errno_location() #26
   store i32 13, i32* %call23, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -1638,8 +1644,8 @@ land.lhs.true27:                                  ; preds = %if.end24
   br i1 %tobool29, label %if.end32, label %if.then30
 
 if.then30:                                        ; preds = %land.lhs.true27
-  call void @llsc_warning(i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.1.6, i64 0, i64 0))
-  %call31 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.1.6, i64 0, i64 0))
+  %call31 = call i32* @__errno_location() #26
   store i32 13, i32* %call31, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -1654,7 +1660,7 @@ if.end32:                                         ; preds = %land.lhs.true27, %i
   br i1 %tobool34, label %if.else, label %if.then35
 
 if.then35:                                        ; preds = %if.end32
-  %call36 = call i32* @__errno_location() #25
+  %call36 = call i32* @__errno_location() #26
   store i32 13, i32* %call36, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -1752,7 +1758,7 @@ return:                                           ; preds = %if.end72, %if.then5
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define internal void @llsc_warning(i8* %message) #3 {
+define internal void @gs_warning(i8* %message) #3 {
 entry:
   %message.addr = alloca i8*, align 8
   store i8* %message, i8** %message.addr, align 8
@@ -1896,7 +1902,7 @@ if.then:                                          ; preds = %entry
   br i1 %tobool, label %if.else, label %if.then1
 
 if.then1:                                         ; preds = %if.then
-  %call2 = call i32* @__errno_location() #25
+  %call2 = call i32* @__errno_location() #26
   store i32 9, i32* %call2, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -1909,8 +1915,8 @@ if.else:                                          ; preds = %if.then
   br i1 %tobool3, label %if.then4, label %if.end6
 
 if.then4:                                         ; preds = %if.else
-  call void @llsc_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
-  %call5 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
+  %call5 = call i32* @__errno_location() #26
   store i32 2, i32* %call5, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -1967,7 +1973,7 @@ for.end:                                          ; preds = %for.body, %for.cond
   br i1 %cmp19, label %if.then20, label %if.end22
 
 if.then20:                                        ; preds = %for.end
-  %call21 = call i32* @__errno_location() #25
+  %call21 = call i32* @__errno_location() #26
   store i32 24, i32* %call21, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -2190,7 +2196,7 @@ if.then:                                          ; preds = %entry
   br i1 %tobool, label %if.else, label %if.then1
 
 if.then1:                                         ; preds = %if.then
-  %call2 = call i32* @__errno_location() #25
+  %call2 = call i32* @__errno_location() #26
   store i32 9, i32* %call2, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -2203,8 +2209,8 @@ if.else:                                          ; preds = %if.then
   br i1 %tobool3, label %if.then4, label %if.end6
 
 if.then4:                                         ; preds = %if.else
-  call void @llsc_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
-  %call5 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
+  %call5 = call i32* @__errno_location() #26
   store i32 2, i32* %call5, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -2274,7 +2280,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -2295,7 +2301,7 @@ if.then3:                                         ; preds = %land.lhs.true
   %7 = load i32, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
   %dec = add i32 %7, -1
   store i32 %dec, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
-  %call4 = call i32* @__errno_location() #25
+  %call4 = call i32* @__errno_location() #26
   store i32 5, i32* %call4, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -2342,7 +2348,7 @@ if.end:                                           ; preds = %entry
   br i1 %cmp1, label %if.then2, label %if.end3
 
 if.then2:                                         ; preds = %if.end
-  %call = call i32* @__errno_location() #25
+  %call = call i32* @__errno_location() #26
   store i32 14, i32* %call, align 4
   store i64 -1, i64* %retval, align 8
   br label %return
@@ -2356,7 +2362,7 @@ if.end3:                                          ; preds = %if.end
   br i1 %tobool, label %if.end7, label %if.then5
 
 if.then5:                                         ; preds = %if.end3
-  %call6 = call i32* @__errno_location() #25
+  %call6 = call i32* @__errno_location() #26
   store i32 9, i32* %call6, align 4
   store i64 -1, i64* %retval, align 8
   br label %return
@@ -2377,7 +2383,7 @@ if.then10:                                        ; preds = %land.lhs.true
   %9 = load i32, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
   %dec = add i32 %9, -1
   store i32 %dec, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
-  %call11 = call i32* @__errno_location() #25
+  %call11 = call i32* @__errno_location() #26
   store i32 5, i32* %call11, align 4
   store i64 -1, i64* %retval, align 8
   br label %return
@@ -2462,7 +2468,7 @@ if.else38:                                        ; preds = %if.end12
   br i1 %cmp40, label %if.end44, label %if.else43
 
 if.else43:                                        ; preds = %if.else38
-  call void @__assert_fail(i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.3, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 393, i8* getelementptr inbounds ([34 x i8], [34 x i8]* @__PRETTY_FUNCTION__.read, i64 0, i64 0)) #26
+  call void @__assert_fail(i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.3, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 393, i8* getelementptr inbounds ([34 x i8], [34 x i8]* @__PRETTY_FUNCTION__.read, i64 0, i64 0)) #27
   unreachable
 
 if.end44:                                         ; preds = %if.else38
@@ -2566,7 +2572,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i64 -1, i64* %retval, align 8
   br label %return
@@ -2587,7 +2593,7 @@ if.then3:                                         ; preds = %land.lhs.true
   %7 = load i32, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
   %dec = add i32 %7, -1
   store i32 %dec, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
-  %call4 = call i32* @__errno_location() #25
+  %call4 = call i32* @__errno_location() #26
   store i32 5, i32* %call4, align 4
   store i64 -1, i64* %retval, align 8
   br label %return
@@ -2659,7 +2665,7 @@ if.end24:                                         ; preds = %if.end20
   br i1 %cmp25, label %if.end29, label %if.else28
 
 if.else28:                                        ; preds = %if.end24
-  call void @__assert_fail(i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.5.7, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 445, i8* getelementptr inbounds ([41 x i8], [41 x i8]* @__PRETTY_FUNCTION__.write, i64 0, i64 0)) #26
+  call void @__assert_fail(i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.5.7, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 445, i8* getelementptr inbounds ([41 x i8], [41 x i8]* @__PRETTY_FUNCTION__.write, i64 0, i64 0)) #27
   unreachable
 
 if.end29:                                         ; preds = %if.end24
@@ -2719,7 +2725,7 @@ if.else50:                                        ; preds = %if.else42
   br i1 %tobool51, label %if.then52, label %if.else53
 
 if.then52:                                        ; preds = %if.else50
-  call void @__assert_fail(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.6, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 458, i8* getelementptr inbounds ([41 x i8], [41 x i8]* @__PRETTY_FUNCTION__.write, i64 0, i64 0)) #26
+  call void @__assert_fail(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.6, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 458, i8* getelementptr inbounds ([41 x i8], [41 x i8]* @__PRETTY_FUNCTION__.write, i64 0, i64 0)) #27
   unreachable
 
 if.else53:                                        ; preds = %if.else50
@@ -2776,7 +2782,7 @@ if.end72:                                         ; preds = %if.then69, %if.end6
   br i1 %cmp73, label %if.then75, label %if.end76
 
 if.then75:                                        ; preds = %if.end72
-  call void @llsc_warning(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.str.7, i64 0, i64 0))
+  call void @gs_warning(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.str.7, i64 0, i64 0))
   br label %if.end76
 
 if.end76:                                         ; preds = %if.then75, %if.end72
@@ -2832,7 +2838,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i64 -1, i64* %retval, align 8
   br label %return
@@ -2877,7 +2883,7 @@ if.then10:                                        ; preds = %if.else
   br i1 %cmp12, label %if.end15, label %if.else14
 
 if.else14:                                        ; preds = %if.then10
-  call void @__assert_fail(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.8, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 504, i8* getelementptr inbounds ([38 x i8], [38 x i8]* @__PRETTY_FUNCTION__.__fd_lseek, i64 0, i64 0)) #26
+  call void @__assert_fail(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.8, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 504, i8* getelementptr inbounds ([38 x i8], [38 x i8]* @__PRETTY_FUNCTION__.__fd_lseek, i64 0, i64 0)) #27
   unreachable
 
 if.end15:                                         ; preds = %if.then10
@@ -2953,7 +2959,7 @@ newDefault:                                       ; preds = %NodeBlock
   br label %sw.default
 
 sw.default:                                       ; preds = %newDefault
-  %call30 = call i32* @__errno_location() #25
+  %call30 = call i32* @__errno_location() #26
   store i32 22, i32* %call30, align 4
   store i64 -1, i64* %retval, align 8
   br label %return
@@ -2964,7 +2970,7 @@ sw.epilog:                                        ; preds = %sw.bb27, %sw.bb25, 
   br i1 %cmp31, label %if.then33, label %if.end35
 
 if.then33:                                        ; preds = %sw.epilog
-  %call34 = call i32* @__errno_location() #25
+  %call34 = call i32* @__errno_location() #26
   store i32 22, i32* %call34, align 4
   store i64 -1, i64* %retval, align 8
   br label %return
@@ -3053,7 +3059,7 @@ if.then:                                          ; preds = %entry
   br i1 %tobool, label %if.else, label %if.then1
 
 if.then1:                                         ; preds = %if.then
-  %call2 = call i32* @__errno_location() #25
+  %call2 = call i32* @__errno_location() #26
   store i32 9, i32* %call2, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3066,8 +3072,8 @@ if.else:                                          ; preds = %if.then
   br i1 %tobool3, label %if.then4, label %if.end6
 
 if.then4:                                         ; preds = %if.else
-  call void @llsc_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
-  %call5 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.2, i64 0, i64 0))
+  %call5 = call i32* @__errno_location() #26
   store i32 2, i32* %call5, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3181,8 +3187,8 @@ entry:
   br i1 %tobool, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
-  %call1 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
+  %call1 = call i32* @__errno_location() #26
   store i32 2, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3215,7 +3221,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3228,8 +3234,8 @@ if.end:                                           ; preds = %entry
   br i1 %tobool2, label %if.then3, label %if.end5
 
 if.then3:                                         ; preds = %if.end
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
-  %call4 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
+  %call4 = call i32* @__errno_location() #26
   store i32 2, i32* %call4, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3278,7 +3284,7 @@ if.then:                                          ; preds = %land.lhs.true
   %6 = load i32, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
   %dec = add i32 %6, -1
   store i32 %dec, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 5, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3361,7 +3367,7 @@ if.end:                                           ; preds = %if.then4, %if.then
   br label %return
 
 if.else:                                          ; preds = %entry
-  %call10 = call i32* @__errno_location() #25
+  %call10 = call i32* @__errno_location() #26
   store i32 1, i32* %call10, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3388,7 +3394,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3412,7 +3418,7 @@ if.then3:                                         ; preds = %land.lhs.true
   %7 = load i32, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
   %dec = add i32 %7, -1
   store i32 %dec, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
-  %call4 = call i32* @__errno_location() #25
+  %call4 = call i32* @__errno_location() #26
   store i32 5, i32* %call4, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3497,8 +3503,8 @@ entry:
   store %struct.exe_disk_file_t* %df, %struct.exe_disk_file_t** %df.addr, align 8
   store i32 %owner, i32* %owner.addr, align 4
   store i32 %group, i32* %group.addr, align 4
-  call void @llsc_warning(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.26, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.26, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -3522,7 +3528,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3616,7 +3622,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3676,7 +3682,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3697,7 +3703,7 @@ if.then3:                                         ; preds = %land.lhs.true
   %7 = load i32, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
   %dec = add i32 %7, -1
   store i32 %dec, i32* getelementptr inbounds (%struct.exe_file_system_t, %struct.exe_file_system_t* @__exe_fs, i32 0, i32 5), align 8
-  %call4 = call i32* @__errno_location() #25
+  %call4 = call i32* @__errno_location() #26
   store i32 5, i32* %call4, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3710,8 +3716,8 @@ if.end5:                                          ; preds = %land.lhs.true, %if.
   br i1 %tobool6, label %if.then7, label %if.end9
 
 if.then7:                                         ; preds = %if.end5
-  call void @llsc_warning(i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.str.10, i64 0, i64 0))
-  %call8 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.str.10, i64 0, i64 0))
+  %call8 = call i32* @__errno_location() #26
   store i32 5, i32* %call8, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3759,7 +3765,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3772,8 +3778,8 @@ if.end:                                           ; preds = %entry
   br i1 %tobool2, label %if.then3, label %if.else
 
 if.then3:                                         ; preds = %if.end
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
-  %call4 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
+  %call4 = call i32* @__errno_location() #26
   store i32 22, i32* %call4, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3808,7 +3814,7 @@ lor.lhs.false:                                    ; preds = %if.then5
   br i1 %cmp9, label %if.then11, label %for.cond
 
 if.then11:                                        ; preds = %lor.lhs.false, %if.then5
-  %call12 = call i32* @__errno_location() #25
+  %call12 = call i32* @__errno_location() #26
   store i32 22, i32* %call12, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -3945,7 +3951,7 @@ if.else43:                                        ; preds = %if.else
   br i1 %cmp49, label %if.end53, label %if.else52
 
 if.else52:                                        ; preds = %if.else43
-  call void @__assert_fail(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.12, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 840, i8* getelementptr inbounds ([65 x i8], [65 x i8]* @__PRETTY_FUNCTION__.__fd_getdents, i64 0, i64 0)) #26
+  call void @__assert_fail(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.12, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 840, i8* getelementptr inbounds ([65 x i8], [65 x i8]* @__PRETTY_FUNCTION__.__fd_getdents, i64 0, i64 0)) #27
   unreachable
 
 if.end53:                                         ; preds = %if.else43
@@ -3977,7 +3983,7 @@ if.then59:                                        ; preds = %if.end53
   br i1 %cmp64, label %if.end68, label %if.else67
 
 if.else67:                                        ; preds = %if.then59
-  call void @__assert_fail(i8* getelementptr inbounds ([22 x i8], [22 x i8]* @.str.13, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 845, i8* getelementptr inbounds ([65 x i8], [65 x i8]* @__PRETTY_FUNCTION__.__fd_getdents, i64 0, i64 0)) #26
+  call void @__assert_fail(i8* getelementptr inbounds ([22 x i8], [22 x i8]* @.str.13, i64 0, i64 0), i8* getelementptr inbounds ([77 x i8], [77 x i8]* @.str.4, i64 0, i64 0), i32 845, i8* getelementptr inbounds ([65 x i8], [65 x i8]* @__PRETTY_FUNCTION__.__fd_getdents, i64 0, i64 0)) #27
   unreachable
 
 if.end68:                                         ; preds = %if.then59
@@ -4049,7 +4055,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4141,7 +4147,7 @@ sw.bb:                                            ; preds = %NodeBlock13
   %15 = load i8*, i8** %buf, align 8
   %16 = bitcast i8* %15 to %struct.termios*
   store %struct.termios* %16, %struct.termios** %ts, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([41 x i8], [41 x i8]* @.str.14, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([41 x i8], [41 x i8]* @.str.14, i64 0, i64 0))
   %17 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode = getelementptr inbounds %struct.stat64, %struct.stat64* %17, i32 0, i32 3
   %18 = load i32, i32* %st_mode, align 8
@@ -4245,13 +4251,13 @@ if.then10:                                        ; preds = %sw.bb
   br label %return
 
 if.else:                                          ; preds = %sw.bb
-  %call47 = call i32* @__errno_location() #25
+  %call47 = call i32* @__errno_location() #26
   store i32 25, i32* %call47, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
 
 sw.bb48:                                          ; preds = %NodeBlock11
-  call void @llsc_warning_once(i8* getelementptr inbounds ([42 x i8], [42 x i8]* @.str.15, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([42 x i8], [42 x i8]* @.str.15, i64 0, i64 0))
   %43 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode49 = getelementptr inbounds %struct.stat64, %struct.stat64* %43, i32 0, i32 3
   %44 = load i32, i32* %st_mode49, align 8
@@ -4264,13 +4270,13 @@ if.then52:                                        ; preds = %sw.bb48
   br label %return
 
 if.else53:                                        ; preds = %sw.bb48
-  %call54 = call i32* @__errno_location() #25
+  %call54 = call i32* @__errno_location() #26
   store i32 25, i32* %call54, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
 
 sw.bb55:                                          ; preds = %NodeBlock9
-  call void @llsc_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.16, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.16, i64 0, i64 0))
   %45 = load i32, i32* %fd.addr, align 4
   %cmp56 = icmp eq i32 %45, 0
   br i1 %cmp56, label %if.then57, label %if.else58
@@ -4280,13 +4286,13 @@ if.then57:                                        ; preds = %sw.bb55
   br label %return
 
 if.else58:                                        ; preds = %sw.bb55
-  %call59 = call i32* @__errno_location() #25
+  %call59 = call i32* @__errno_location() #26
   store i32 25, i32* %call59, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
 
 sw.bb60:                                          ; preds = %NodeBlock7
-  call void @llsc_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.17, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.17, i64 0, i64 0))
   %46 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode61 = getelementptr inbounds %struct.stat64, %struct.stat64* %46, i32 0, i32 3
   %47 = load i32, i32* %st_mode61, align 8
@@ -4299,7 +4305,7 @@ if.then64:                                        ; preds = %sw.bb60
   br label %return
 
 if.else65:                                        ; preds = %sw.bb60
-  %call66 = call i32* @__errno_location() #25
+  %call66 = call i32* @__errno_location() #26
   store i32 25, i32* %call66, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4314,7 +4320,7 @@ sw.bb67:                                          ; preds = %NodeBlock5
   %51 = load %struct.winsize*, %struct.winsize** %ws, align 8
   %ws_col = getelementptr inbounds %struct.winsize, %struct.winsize* %51, i32 0, i32 1
   store i16 80, i16* %ws_col, align 2
-  call void @llsc_warning_once(i8* getelementptr inbounds ([45 x i8], [45 x i8]* @.str.18, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([45 x i8], [45 x i8]* @.str.18, i64 0, i64 0))
   %52 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode68 = getelementptr inbounds %struct.stat64, %struct.stat64* %52, i32 0, i32 3
   %53 = load i32, i32* %st_mode68, align 8
@@ -4327,19 +4333,19 @@ if.then71:                                        ; preds = %sw.bb67
   br label %return
 
 if.else72:                                        ; preds = %sw.bb67
-  %call73 = call i32* @__errno_location() #25
+  %call73 = call i32* @__errno_location() #26
   store i32 25, i32* %call73, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
 
 sw.bb74:                                          ; preds = %NodeBlock3
-  call void @llsc_warning_once(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str.19, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str.19, i64 0, i64 0))
   %54 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode75 = getelementptr inbounds %struct.stat64, %struct.stat64* %54, i32 0, i32 3
   %55 = load i32, i32* %st_mode75, align 8
   %and76 = and i32 %55, 61440
   %cmp77 = icmp eq i32 %and76, 8192
-  %call79 = call i32* @__errno_location() #25
+  %call79 = call i32* @__errno_location() #26
   br i1 %cmp77, label %if.then78, label %if.else80
 
 if.then78:                                        ; preds = %sw.bb74
@@ -4356,7 +4362,7 @@ sw.bb82:                                          ; preds = %NodeBlock1
   %56 = load i8*, i8** %buf, align 8
   %57 = bitcast i8* %56 to i32*
   store i32* %57, i32** %res, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.20, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([43 x i8], [43 x i8]* @.str.20, i64 0, i64 0))
   %58 = load %struct.stat64*, %struct.stat64** %stat, align 8
   %st_mode83 = getelementptr inbounds %struct.stat64, %struct.stat64* %58, i32 0, i32 3
   %59 = load i32, i32* %st_mode83, align 8
@@ -4403,14 +4409,14 @@ if.end97:                                         ; preds = %if.else96, %if.then
   br label %return
 
 if.else98:                                        ; preds = %sw.bb82
-  %call99 = call i32* @__errno_location() #25
+  %call99 = call i32* @__errno_location() #26
   store i32 25, i32* %call99, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
 
 sw.bb100:                                         ; preds = %NodeBlock
-  call void @llsc_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.21, i64 0, i64 0))
-  %call101 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.21, i64 0, i64 0))
+  %call101 = call i32* @__errno_location() #26
   store i32 22, i32* %call101, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4419,8 +4425,8 @@ newDefault:                                       ; preds = %NodeBlock
   br label %sw.default
 
 sw.default:                                       ; preds = %newDefault
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
-  %call102 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
+  %call102 = call i32* @__errno_location() #26
   store i32 22, i32* %call102, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4446,7 +4452,7 @@ declare void @llvm.va_start(i8*) #11
 ; Function Attrs: nounwind
 declare void @llvm.va_end(i8*) #11
 
-declare dso_local void @llsc_warning_once(i8*) #5
+declare dso_local void @gs_warning_once(i8*) #5
 
 ; Function Attrs: noinline nounwind uwtable
 define dso_local i32 @fcntl(i32 %fd, i32 %cmd, ...) #3 {
@@ -4469,7 +4475,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4667,8 +4673,8 @@ newDefault:                                       ; preds = %NodeBlock
   br label %sw.default
 
 sw.default:                                       ; preds = %newDefault
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
-  %call59 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.11, i64 0, i64 0))
+  %call59 = call i32* @__errno_location() #26
   store i32 22, i32* %call59, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4706,8 +4712,8 @@ entry:
   br i1 %tobool, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @llsc_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
-  %call1 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.9, i64 0, i64 0))
+  %call1 = call i32* @__errno_location() #26
   store i32 2, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4743,7 +4749,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4756,8 +4762,8 @@ if.end:                                           ; preds = %entry
   br i1 %tobool2, label %if.then3, label %if.end5
 
 if.then3:                                         ; preds = %if.end
-  call void @llsc_warning(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.22, i64 0, i64 0))
-  %call4 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.22, i64 0, i64 0))
+  %call4 = call i32* @__errno_location() #26
   store i32 9, i32* %call4, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4792,7 +4798,7 @@ entry:
   br i1 %tobool, label %if.else, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4846,7 +4852,7 @@ entry:
   br i1 %or.cond1, label %if.else, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call2 = call i32* @__errno_location() #25
+  %call2 = call i32* @__errno_location() #26
   store i32 9, i32* %call2, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4904,7 +4910,7 @@ entry:
   br i1 %tobool, label %if.else, label %if.then
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32* @__errno_location() #25
+  %call1 = call i32* @__errno_location() #26
   store i32 9, i32* %call1, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4940,7 +4946,7 @@ for.end:                                          ; preds = %for.body, %for.cond
   br i1 %cmp4, label %if.then5, label %if.else7
 
 if.then5:                                         ; preds = %for.end
-  %call6 = call i32* @__errno_location() #25
+  %call6 = call i32* @__errno_location() #26
   store i32 24, i32* %call6, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -4991,14 +4997,14 @@ if.then1:                                         ; preds = %if.then
   br label %return
 
 if.else:                                          ; preds = %if.then
-  %call3 = call i32* @__errno_location() #25
+  %call3 = call i32* @__errno_location() #26
   store i32 20, i32* %call3, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
 
 if.end:                                           ; preds = %entry
-  call void @llsc_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
-  %call4 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
+  %call4 = call i32* @__errno_location() #26
   store i32 1, i32* %call4, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -5046,7 +5052,7 @@ if.else:                                          ; preds = %if.then
   %7 = load i32, i32* %st_mode4, align 8
   %and5 = and i32 %7, 61440
   %cmp6 = icmp eq i32 %and5, 16384
-  %call8 = call i32* @__errno_location() #25
+  %call8 = call i32* @__errno_location() #26
   br i1 %cmp6, label %if.then7, label %if.else9
 
 if.then7:                                         ; preds = %if.else
@@ -5060,8 +5066,8 @@ if.else9:                                         ; preds = %if.else
   br label %return
 
 if.end:                                           ; preds = %entry
-  call void @llsc_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
-  %call11 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
+  %call11 = call i32* @__errno_location() #26
   store i32 1, i32* %call11, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -5113,7 +5119,7 @@ if.else:                                          ; preds = %if.then
   %7 = load i32, i32* %st_mode4, align 8
   %and5 = and i32 %7, 61440
   %cmp6 = icmp eq i32 %and5, 16384
-  %call8 = call i32* @__errno_location() #25
+  %call8 = call i32* @__errno_location() #26
   br i1 %cmp6, label %if.then7, label %if.else9
 
 if.then7:                                         ; preds = %if.else
@@ -5127,8 +5133,8 @@ if.else9:                                         ; preds = %if.else
   br label %return
 
 if.end:                                           ; preds = %entry
-  call void @llsc_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
-  %call11 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.23, i64 0, i64 0))
+  %call11 = call i32* @__errno_location() #26
   store i32 1, i32* %call11, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -5225,7 +5231,7 @@ if.end17:                                         ; preds = %if.then15, %if.end1
   br label %return
 
 if.else:                                          ; preds = %if.then
-  %call19 = call i32* @__errno_location() #25
+  %call19 = call i32* @__errno_location() #26
   store i32 22, i32* %call19, align 4
   store i64 -1, i64* %retval, align 8
   br label %return
@@ -5401,7 +5407,7 @@ if.then29:                                        ; preds = %lor.lhs.false19, %l
   br i1 %tobool30, label %if.else33, label %if.then31
 
 if.then31:                                        ; preds = %if.then29
-  %call32 = call i32* @__errno_location() #25
+  %call32 = call i32* @__errno_location() #26
   store i32 9, i32* %call32, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -5828,7 +5834,7 @@ entry:
   br i1 %cmp, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  %call = call i32* @__errno_location() #25
+  %call = call i32* @__errno_location() #26
   store i32 2, i32* %call, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -5854,8 +5860,8 @@ if.then10:                                        ; preds = %land.lhs.true
   br label %return
 
 if.end11:                                         ; preds = %land.lhs.true, %if.end
-  call void @llsc_warning(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.24, i64 0, i64 0))
-  %call12 = call i32* @__errno_location() #25
+  call void @gs_warning(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.24, i64 0, i64 0))
+  %call12 = call i32* @__errno_location() #26
   store i32 2, i32* %call12, align 4
   store i32 -1, i32* %retval, align 4
   br label %return
@@ -6584,7 +6590,7 @@ if.end71:                                         ; preds = %if.then70, %lor.lhs
   %55 = load i32, i32* %min_argvs, align 4
   %56 = load i32, i32* %max_argvs, align 4
   %add72 = add i32 %56, 1
-  %call73 = call i32 @llsc_range(i32 %55, i32 %add72, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.10.39, i64 0, i64 0))
+  %call73 = call i32 @gs_range(i32 %55, i32 %add72, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.10.39, i64 0, i64 0))
   store i32 %call73, i32* %n_args, align 4
   %57 = load i32, i32* %sym_arg_num, align 4
   %58 = load i32, i32* %max_argvs, align 4
@@ -7035,7 +7041,7 @@ entry:
   %msg.addr = alloca i8*, align 8
   store i8* %msg, i8** %msg.addr, align 8
   %0 = load i8*, i8** %msg.addr, align 8
-  call void @llsc_report_error.59(i8* getelementptr inbounds ([88 x i8], [88 x i8]* @.str.32, i64 0, i64 0), i32 21, i8* %0, i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.33, i64 0, i64 0)) #24
+  call void @gs_report_error.59(i8* getelementptr inbounds ([88 x i8], [88 x i8]* @.str.32, i64 0, i64 0), i32 21, i8* %0, i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.33, i64 0, i64 0)) #25
   unreachable
 }
 
@@ -7154,7 +7160,7 @@ for.body:                                         ; preds = %for.cond
   %10 = load i8, i8* %arrayidx, align 1
   %call4 = call i32 @__isprint(i8 signext %10)
   %tobool5 = icmp ne i32 %call4, 0
-  call void @llsc_posix_prefer_cex(i8* %7, i1 zeroext %tobool5)
+  call void @gs_posix_prefer_cex(i8* %7, i1 zeroext %tobool5)
   %11 = load i32, i32* %i, align 4
   %inc = add nsw i32 %11, 1
   store i32 %inc, i32* %i, align 4
@@ -7209,7 +7215,7 @@ if.end:                                           ; preds = %if.else, %if.then
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define internal i32 @llsc_range(i32 %begin, i32 %end, i8* %name) #3 {
+define internal i32 @gs_range(i32 %begin, i32 %end, i8* %name) #3 {
 entry:
   %begin.addr = alloca i32, align 4
   %end.addr = alloca i32, align 4
@@ -7224,11 +7230,11 @@ entry:
   %2 = load i32, i32* %x, align 4
   %3 = load i32, i32* %begin.addr, align 4
   %cmp = icmp sge i32 %2, %3
-  call void @llsc_assume(i1 zeroext %cmp)
+  call void @gs_assume(i1 zeroext %cmp)
   %4 = load i32, i32* %x, align 4
   %5 = load i32, i32* %end.addr, align 4
   %cmp1 = icmp slt i32 %4, %5
-  call void @llsc_assume(i1 zeroext %cmp1)
+  call void @gs_assume(i1 zeroext %cmp1)
   %6 = load i32, i32* %x, align 4
   ret i32 %6
 }
@@ -7252,10 +7258,10 @@ entry:
   ret i32 %and
 }
 
-declare dso_local void @llsc_posix_prefer_cex(i8*, i1 zeroext) #5
+declare dso_local void @gs_posix_prefer_cex(i8*, i1 zeroext) #5
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define internal void @llsc_report_error.59(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
+define internal void @gs_report_error.59(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
 entry:
   %file.addr = alloca i8*, align 8
   %line.addr = alloca i32, align 4
@@ -7274,7 +7280,7 @@ entry:
   %3 = load i8*, i8** %suffix.addr, align 8
   call void @print_string(i8* %3)
   call void @print_string(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.34, i64 0, i64 0))
-  call void @stop(i32 -1) #24
+  call void @stop(i32 -1) #25
   unreachable
 }
 
@@ -7336,7 +7342,7 @@ if.then:                                          ; preds = %lor.lhs.false, %ent
 
 if.else:                                          ; preds = %lor.lhs.false
   %3 = load i8*, i8** %pfx.addr, align 8
-  %call = call i64 @strlen(i8* %3) #20
+  %call = call i64 @strlen(i8* %3) #21
   store i64 %call, i64* %plen, align 8
   %4 = load i64, i64* %plen, align 8
   %cmp = icmp ugt i64 %4, 5
@@ -7350,7 +7356,7 @@ if.end3:                                          ; preds = %if.else, %if.then
   br i1 %cmp4, label %if.then5, label %if.end18
 
 if.then5:                                         ; preds = %if.end3
-  %call6 = call i32 @direxists(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1.69, i64 0, i64 0)) #18
+  %call6 = call i32 @direxists(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1.69, i64 0, i64 0)) #19
   %tobool7 = icmp ne i32 %call6, 0
   br i1 %tobool7, label %if.then8, label %if.else9
 
@@ -7359,12 +7365,12 @@ if.then8:                                         ; preds = %if.then5
   br label %if.end18
 
 if.else9:                                         ; preds = %if.then5
-  %call10 = call i32 @strcmp(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1.69, i64 0, i64 0), i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1.69, i64 0, i64 0)) #20
+  %call10 = call i32 @strcmp(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1.69, i64 0, i64 0), i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1.69, i64 0, i64 0)) #21
   %cmp11 = icmp ne i32 %call10, 0
   br i1 %cmp11, label %land.lhs.true, label %if.else15
 
 land.lhs.true:                                    ; preds = %if.else9
-  %call12 = call i32 @direxists(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1.69, i64 0, i64 0)) #18
+  %call12 = call i32 @direxists(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.1.69, i64 0, i64 0)) #19
   %tobool13 = icmp ne i32 %call12, 0
   br i1 %tobool13, label %if.then14, label %if.else15
 
@@ -7379,7 +7385,7 @@ if.else15:                                        ; preds = %land.lhs.true, %if.
 
 if.end18:                                         ; preds = %if.then8, %if.then14, %if.end3
   %6 = load i8*, i8** %dir.addr, align 8
-  %call19 = call i64 @strlen(i8* %6) #20
+  %call19 = call i64 @strlen(i8* %6) #21
   store i64 %call19, i64* %dlen, align 8
   br label %while.cond
 
@@ -7426,7 +7432,7 @@ if.end30:                                         ; preds = %while.end
   %17 = load i8*, i8** %dir.addr, align 8
   %18 = load i64, i64* %plen, align 8
   %19 = load i8*, i8** %pfx.addr, align 8
-  %call31 = call i32 (i8*, i8*, ...) @sprintf(i8* %15, i8* getelementptr inbounds ([16 x i8], [16 x i8]* @.str.2.70, i64 0, i64 0), i64 %16, i8* %17, i64 %18, i8* %19) #19
+  %call31 = call i32 (i8*, i8*, ...) @sprintf(i8* %15, i8* getelementptr inbounds ([16 x i8], [16 x i8]* @.str.2.70, i64 0, i64 0), i64 %16, i8* %17, i64 %18, i8* %19) #20
   store i32 0, i32* %retval, align 4
   br label %return
 
@@ -7442,7 +7448,7 @@ entry:
   %buf = alloca %struct.stat.192, align 8
   store i8* %dir, i8** %dir.addr, align 8
   %0 = load i8*, i8** %dir.addr, align 8
-  %call = call i32 bitcast (i32 (i8*, %struct.stat64*)* @stat to i32 (i8*, %struct.stat.192*)*)(i8* %0, %struct.stat.192* %buf) #19
+  %call = call i32 bitcast (i32 (i8*, %struct.stat64*)* @stat to i32 (i8*, %struct.stat.192*)*)(i8* %0, %struct.stat.192* %buf) #20
   %cmp = icmp eq i32 %call, 0
   %st_mode = getelementptr inbounds %struct.stat.192, %struct.stat.192* %buf, i32 0, i32 3
   %1 = load i32, i32* %st_mode, align 8
@@ -7472,7 +7478,7 @@ entry:
   %0 = load i32, i32* @errno, align 4
   store i32 %0, i32* %save_errno, align 4
   %1 = load i8*, i8** %tmpl.addr, align 8
-  %call = call i64 @strlen(i8* %1) #20
+  %call = call i64 @strlen(i8* %1) #21
   store i64 %call, i64* %len, align 8
   %2 = load i8*, i8** %tmpl.addr, align 8
   %3 = load i64, i64* %len, align 8
@@ -7485,7 +7491,7 @@ entry:
 
 lor.lhs.false:                                    ; preds = %entry
   %5 = load i8*, i8** %XXXXXX, align 8
-  %call2 = call i32 @strcmp(i8* %5, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.3.73, i64 0, i64 0)) #20
+  %call2 = call i32 @strcmp(i8* %5, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.3.73, i64 0, i64 0)) #21
   %tobool = icmp ne i32 %call2, 0
   br i1 %tobool, label %if.then, label %if.end
 
@@ -7505,14 +7511,14 @@ for.cond:                                         ; preds = %for.inc44, %if.end
 
 for.body:                                         ; preds = %for.cond
   %arraydecay = getelementptr inbounds [6 x i8], [6 x i8]* %randomness, i64 0, i64 0
-  %call4 = call i32 @fillrand(i8* %arraydecay, i32 6) #18
+  %call4 = call i32 @fillrand(i8* %arraydecay, i32 6) #19
   %conv = zext i32 %call4 to i64
   %cmp5 = icmp ne i64 %conv, 6
   br i1 %cmp5, label %if.then7, label %if.end9
 
 if.then7:                                         ; preds = %for.body
   %arraydecay8 = getelementptr inbounds [6 x i8], [6 x i8]* %randomness, i64 0, i64 0
-  call void @brain_damaged_fillrand(i8* %arraydecay8, i32 6) #18
+  call void @brain_damaged_fillrand(i8* %arraydecay8, i32 6) #19
   br label %if.end9
 
 if.end9:                                          ; preds = %if.then7, %for.body
@@ -7567,7 +7573,7 @@ NodeBlock:                                        ; preds = %NodeBlock1
 
 sw.bb:                                            ; preds = %NodeBlock5
   %15 = load i8*, i8** %tmpl.addr, align 8
-  %call20 = call i32 bitcast (i32 (i8*, %struct.stat64*)* @stat to i32 (i8*, %struct.stat.192*)*)(i8* %15, %struct.stat.192* %st) #19
+  %call20 = call i32 bitcast (i32 (i8*, %struct.stat64*)* @stat to i32 (i8*, %struct.stat.192*)*)(i8* %15, %struct.stat.192* %st) #20
   %cmp21 = icmp slt i32 %call20, 0
   br i1 %cmp21, label %if.then23, label %if.else27
 
@@ -7590,19 +7596,19 @@ if.else27:                                        ; preds = %sw.bb
 
 sw.bb29:                                          ; preds = %NodeBlock3, %if.else27
   %17 = load i8*, i8** %tmpl.addr, align 8
-  %call30 = call i32 (i8*, i32, ...) @open(i8* %17, i32 194, i32 384) #18
+  %call30 = call i32 (i8*, i32, ...) @open(i8* %17, i32 194, i32 384) #19
   store i32 %call30, i32* %fd, align 4
   br label %sw.epilog
 
 sw.bb31:                                          ; preds = %NodeBlock1
   %18 = load i8*, i8** %tmpl.addr, align 8
-  %call32 = call i32 (i8*, i32, ...) @open64(i8* %18, i32 194, i32 384) #18
+  %call32 = call i32 (i8*, i32, ...) @open64(i8* %18, i32 194, i32 384) #19
   store i32 %call32, i32* %fd, align 4
   br label %sw.epilog
 
 sw.bb33:                                          ; preds = %NodeBlock
   %19 = load i8*, i8** %tmpl.addr, align 8
-  %call34 = call i32 @mkdir(i8* %19, i32 448) #19
+  %call34 = call i32 @mkdir(i8* %19, i32 448) #20
   store i32 %call34, i32* %fd, align 4
   br label %sw.epilog
 
@@ -7660,14 +7666,14 @@ entry:
   store i8* %buf, i8** %buf.addr, align 8
   store i32 %len, i32* %len.addr, align 4
   store i32 -1, i32* %result, align 4
-  %call = call i32 (i8*, i32, ...) @open(i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.4.74, i64 0, i64 0), i32 0) #18
+  %call = call i32 (i8*, i32, ...) @open(i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.4.74, i64 0, i64 0), i32 0) #19
   store i32 %call, i32* %fd, align 4
   %0 = load i32, i32* %fd, align 4
   %cmp = icmp slt i32 %0, 0
   br i1 %cmp, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  %call1 = call i32 (i8*, i32, ...) @open(i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.5.75, i64 0, i64 0), i32 2048) #18
+  %call1 = call i32 (i8*, i32, ...) @open(i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.5.75, i64 0, i64 0), i32 2048) #19
   store i32 %call1, i32* %fd, align 4
   br label %if.end
 
@@ -7681,11 +7687,11 @@ if.then3:                                         ; preds = %if.end
   %3 = load i8*, i8** %buf.addr, align 8
   %4 = load i32, i32* %len.addr, align 4
   %conv = zext i32 %4 to i64
-  %call4 = call i64 @read(i32 %2, i8* %3, i64 %conv) #18
+  %call4 = call i64 @read(i32 %2, i8* %3, i64 %conv) #19
   %conv5 = trunc i64 %call4 to i32
   store i32 %conv5, i32* %result, align 4
   %5 = load i32, i32* %fd, align 4
-  %call6 = call i32 @close(i32 %5) #18
+  %call6 = call i32 @close(i32 %5) #19
   br label %if.end7
 
 if.end7:                                          ; preds = %if.then3, %if.end
@@ -7706,14 +7712,14 @@ entry:
   %rh = alloca i32, align 4
   store i8* %buf, i8** %buf.addr, align 8
   store i32 %len, i32* %len.addr, align 4
-  %call = call i32 bitcast (i32 (%struct.timespec*, i8*)* @gettimeofday to i32 (%struct.timespec*, %struct.__mbstate_t.512*)*)(%struct.timespec* %tv, %struct.__mbstate_t.512* null) #19
+  %call = call i32 bitcast (i32 (%struct.timespec*, i8*)* @gettimeofday to i32 (%struct.timespec*, %struct.__mbstate_t.512*)*)(%struct.timespec* %tv, %struct.__mbstate_t.512* null) #20
   %tv_usec = getelementptr inbounds %struct.timespec, %struct.timespec* %tv, i32 0, i32 1
   %0 = load i64, i64* %tv_usec, align 8
   %shl = shl i64 %0, 16
   %tv_sec = getelementptr inbounds %struct.timespec, %struct.timespec* %tv, i32 0, i32 0
   %1 = load i64, i64* %tv_sec, align 8
   %xor = xor i64 %shl, %1
-  %call1 = call i32 @getpid() #19
+  %call1 = call i32 @getpid() #20
   %conv = sext i32 %call1 to i64
   %xor2 = xor i64 %xor, %conv
   %2 = load i64, i64* @brain_damaged_fillrand.value, align 8
@@ -7863,7 +7869,7 @@ if.then:                                          ; preds = %lor.lhs.false, %ent
   %arrayidx16 = getelementptr inbounds [2826 x i8], [2826 x i8]* %locales, i64 0, i64 %idxprom
   %16 = load i8, i8* %arrayidx16, align 1
   %conv17 = zext i8 %16 to i32
-  %call = call i32 @init_cur_collate(i32 %conv17, %struct.__collate_t.200* %newcol) #18
+  %call = call i32 @init_cur_collate(i32 %conv17, %struct.__collate_t.200* %newcol) #19
   %tobool = icmp ne i32 %call, 0
   br i1 %tobool, label %if.end, label %if.then18
 
@@ -7877,12 +7883,12 @@ if.end:                                           ; preds = %if.then
   %index2weight19 = getelementptr inbounds %struct.__collate_t.200, %struct.__collate_t.200* %collate, i32 0, i32 23
   %18 = load i16*, i16** %index2weight19, align 8
   %19 = bitcast i16* %18 to i8*
-  call void @free(i8* %19) #19
+  call void @free(i8* %19) #20
   %20 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
   %collate20 = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %20, i32 0, i32 118
   %21 = bitcast %struct.__collate_t.200* %collate20 to i8*
   %22 = bitcast %struct.__collate_t.200* %newcol to i8*
-  %call21 = call i8* @memcpy(i8* %21, i8* %22, i64 112) #19
+  %call21 = call i8* @memcpy(i8* %21, i8* %22, i64 112) #20
   br label %if.end22
 
 if.end22:                                         ; preds = %if.end, %lor.lhs.false
@@ -8170,7 +8176,7 @@ if.else112:                                       ; preds = %if.then95
   %122 = load i16*, i16** @__C_ctype_b, align 8
   %add.ptr134 = getelementptr inbounds i16, i16* %122, i64 -128
   %123 = bitcast i16* %add.ptr134 to i8*
-  %call135 = call i8* @memcpy(i8* %121, i8* %123, i64 768) #19
+  %call135 = call i8* @memcpy(i8* %121, i8* %123, i64 768) #20
   %124 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
   %__ctype_tolower_data = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %124, i32 0, i32 4
   %arraydecay136 = getelementptr inbounds [384 x i16], [384 x i16]* %__ctype_tolower_data, i64 0, i64 0
@@ -8178,7 +8184,7 @@ if.else112:                                       ; preds = %if.then95
   %126 = load i16*, i16** @__C_ctype_tolower, align 8
   %add.ptr137 = getelementptr inbounds i16, i16* %126, i64 -128
   %127 = bitcast i16* %add.ptr137 to i8*
-  %call138 = call i8* @memcpy(i8* %125, i8* %127, i64 768) #19
+  %call138 = call i8* @memcpy(i8* %125, i8* %127, i64 768) #20
   %128 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
   %__ctype_toupper_data = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %128, i32 0, i32 5
   %arraydecay139 = getelementptr inbounds [384 x i16], [384 x i16]* %__ctype_toupper_data, i64 0, i64 0
@@ -8186,7 +8192,7 @@ if.else112:                                       ; preds = %if.then95
   %130 = load i16*, i16** @__C_ctype_toupper, align 8
   %add.ptr140 = getelementptr inbounds i16, i16* %130, i64 -128
   %131 = bitcast i16* %add.ptr140 to i8*
-  %call141 = call i8* @memcpy(i8* %129, i8* %131, i64 768) #19
+  %call141 = call i8* @memcpy(i8* %129, i8* %131, i64 768) #20
   store i32 0, i32* %u, align 4
   br label %for.cond142
 
@@ -8445,7 +8451,7 @@ for.body285:                                      ; preds = %for.cond282
   %idxprom286 = sext i32 %194 to i64
   %arrayidx287 = getelementptr inbounds i8*, i8** %193, i64 %idxprom286
   %195 = load i8*, i8** %arrayidx287, align 8
-  %call288 = call i64 @strlen(i8* %195) #20
+  %call288 = call i64 @strlen(i8* %195) #21
   %conv289 = trunc i64 %call288 to i8
   %196 = load i8*, i8** %d, align 8
   %197 = load i32, i32* %c, align 4
@@ -8469,7 +8475,7 @@ if.then298:                                       ; preds = %if.else295
   %decimal_point = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %201, i32 0, i32 39
   %202 = load i8*, i8** %decimal_point, align 8
   %203 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
-  %call299 = call i32 @__locale_mbrtowc_l(i32* %decimal_point_wc, i8* %202, %struct.__uclibc_locale_struct.201* %203) #18
+  %call299 = call i32 @__locale_mbrtowc_l(i32* %decimal_point_wc, i8* %202, %struct.__uclibc_locale_struct.201* %203) #19
   %204 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
   %decimal_point_len = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %204, i32 0, i32 26
   store i32 %call299, i32* %decimal_point_len, align 8
@@ -8487,7 +8493,7 @@ if.then301:                                       ; preds = %if.then298
   %thousands_sep = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %209, i32 0, i32 40
   %210 = load i8*, i8** %thousands_sep, align 8
   %211 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
-  %call302 = call i32 @__locale_mbrtowc_l(i32* %thousands_sep_wc, i8* %210, %struct.__uclibc_locale_struct.201* %211) #18
+  %call302 = call i32 @__locale_mbrtowc_l(i32* %thousands_sep_wc, i8* %210, %struct.__uclibc_locale_struct.201* %211) #19
   %212 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
   %thousands_sep_len = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %212, i32 0, i32 27
   store i32 %call302, i32* %thousands_sep_len, align 4
@@ -8597,7 +8603,7 @@ if.end:                                           ; preds = %entry
   %16 = bitcast %struct.__collate_t.200* %15 to i8*
   %17 = load %struct.coldata_base_t*, %struct.coldata_base_t** %cdb, align 8
   %18 = bitcast %struct.coldata_base_t* %17 to i8*
-  %call = call i8* @memcpy(i8* %16, i8* %18, i64 28) #19
+  %call = call i8* @memcpy(i8* %16, i8* %18, i64 28) #20
   %19 = load %struct.winsize*, %struct.winsize** %cdd, align 8
   %undefined_idx = getelementptr inbounds %struct.winsize, %struct.winsize* %19, i32 0, i32 1
   %20 = load i16, i16* %undefined_idx, align 2
@@ -8771,7 +8777,7 @@ if.end:                                           ; preds = %entry
   %mul63 = mul nsw i32 2, %conv62
   %add64 = add nsw i32 %mul63, 2
   %conv65 = sext i32 %add64 to i64
-  %call66 = call noalias i8* @calloc(i64 %conv65, i64 2) #19
+  %call66 = call noalias i8* @calloc(i64 %conv65, i64 2) #20
   %88 = bitcast i8* %call66 to i16*
   %89 = load %struct.__collate_t.200*, %struct.__collate_t.200** %cur_collate.addr, align 8
   %index2weight = getelementptr inbounds %struct.__collate_t.200, %struct.__collate_t.200* %89, i32 0, i32 23
@@ -8813,7 +8819,7 @@ if.end70:                                         ; preds = %if.end
   %104 = load i16, i16* %num_col_base, align 2
   %conv79 = zext i16 %104 to i64
   %mul80 = mul i64 %conv79, 2
-  %call81 = call i8* @memcpy(i8* %99, i8* %102, i64 %mul80) #19
+  %call81 = call i8* @memcpy(i8* %99, i8* %102, i64 %mul80) #20
   %105 = load %struct.__collate_t.200*, %struct.__collate_t.200** %cur_collate.addr, align 8
   %index2ruleidx82 = getelementptr inbounds %struct.__collate_t.200, %struct.__collate_t.200* %105, i32 0, i32 24
   %106 = load i16*, i16** %index2ruleidx82, align 8
@@ -8827,7 +8833,7 @@ if.end70:                                         ; preds = %if.end
   %112 = load i16, i16* %num_col_base84, align 2
   %conv85 = zext i16 %112 to i64
   %mul86 = mul i64 %conv85, 2
-  %call87 = call i8* @memcpy(i8* %107, i8* %110, i64 %mul86) #19
+  %call87 = call i8* @memcpy(i8* %107, i8* %110, i64 %mul86) #20
   %113 = load %struct.__collate_t.200*, %struct.__collate_t.200** %cur_collate.addr, align 8
   %overrides_tbl88 = getelementptr inbounds %struct.__collate_t.200, %struct.__collate_t.200* %113, i32 0, i32 20
   %114 = load i16*, i16** %overrides_tbl88, align 8
@@ -9014,7 +9020,7 @@ entry:
   %0 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
   %cur_locale = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %0, i32 0, i32 6
   %arraydecay = getelementptr inbounds [14 x i8], [14 x i8]* %cur_locale, i64 0, i64 0
-  %call = call i8* @memset(i8* %arraydecay, i32 0, i64 14) #19
+  %call = call i8* @memset(i8* %arraydecay, i32 0, i64 14) #20
   %1 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
   %cur_locale1 = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %1, i32 0, i32 6
   %arrayidx = getelementptr inbounds [14 x i8], [14 x i8]* %cur_locale1, i64 0, i64 0
@@ -9025,7 +9031,7 @@ entry:
   %3 = load %struct.__locale_mmap_t.203*, %struct.__locale_mmap_t.203** @__locale_mmap, align 8
   %lc_common_item_offsets_LEN = getelementptr inbounds %struct.__locale_mmap_t.203, %struct.__locale_mmap_t.203* %3, i32 0, i32 29
   %arraydecay3 = getelementptr inbounds [6 x i8], [6 x i8]* %lc_common_item_offsets_LEN, i64 0, i64 0
-  %call4 = call i8* @memcpy(i8* %arraydecay2, i8* %arraydecay3, i64 6) #19
+  %call4 = call i8* @memcpy(i8* %arraydecay2, i8* %arraydecay3, i64 6) #20
   %4 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
   %category_item_count5 = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %4, i32 0, i32 8
   %arrayidx6 = getelementptr inbounds [6 x i8], [6 x i8]* %category_item_count5, i64 0, i64 0
@@ -9110,7 +9116,7 @@ entry:
   %code2flag = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %38, i32 0, i32 20
   store i16* getelementptr inbounds ([16 x i16], [16 x i16]* @__code2flag, i64 0, i64 0), i16** %code2flag, align 8
   %39 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
-  %call23 = call i32 @_locale_set_l(i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.76, i64 0, i64 0), %struct.__uclibc_locale_struct.201* %39) #18
+  %call23 = call i32 @_locale_set_l(i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.76, i64 0, i64 0), %struct.__uclibc_locale_struct.201* %39) #19
   ret void
 }
 
@@ -9118,7 +9124,7 @@ entry:
 define hidden void @_locale_init() #0 {
 entry:
   %0 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** @__global_locale, align 8
-  call void @_locale_init_l(%struct.__uclibc_locale_struct.201* %0) #18
+  call void @_locale_init_l(%struct.__uclibc_locale_struct.201* %0) #19
   ret void
 }
 
@@ -9131,7 +9137,7 @@ entry:
   %oset = alloca %struct.fd_set, align 8
   store i32 %mask, i32* %mask.addr, align 4
   %0 = load i32, i32* %mask.addr, align 4
-  %call = call i32 @sigset_set_old_mask(%struct.fd_set* %set, i32 %0) #18
+  %call = call i32 @sigset_set_old_mask(%struct.fd_set* %set, i32 %0) #19
   %cmp = icmp slt i32 %call, 0
   br i1 %cmp, label %if.then, label %if.end
 
@@ -9140,7 +9146,7 @@ if.then:                                          ; preds = %entry
   br label %return
 
 if.end:                                           ; preds = %entry
-  %call1 = call i32 @sigprocmask(i32 0, %struct.fd_set* %set, %struct.fd_set* %oset) #19
+  %call1 = call i32 @sigprocmask(i32 0, %struct.fd_set* %set, %struct.fd_set* %oset) #20
   %cmp2 = icmp slt i32 %call1, 0
   br i1 %cmp2, label %if.then3, label %if.end4
 
@@ -9149,7 +9155,7 @@ if.then3:                                         ; preds = %if.end
   br label %return
 
 if.end4:                                          ; preds = %if.end
-  %call5 = call i32 @sigset_get_old_mask(%struct.fd_set* %oset) #18
+  %call5 = call i32 @sigset_get_old_mask(%struct.fd_set* %oset) #19
   store i32 %call5, i32* %retval, align 4
   br label %return
 
@@ -9232,7 +9238,7 @@ for.body:                                         ; preds = %for.cond
 
 if.then:                                          ; preds = %for.body
   %4 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %ptr, align 8
-  %call = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %4) #18
+  %call = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %4) #19
   br label %for.inc
 
 for.inc:                                          ; preds = %for.body, %if.then
@@ -9252,7 +9258,7 @@ entry:
   %old_errno = alloca i32, align 4
   %0 = load i32, i32* @errno, align 4
   store i32 %0, i32* %old_errno, align 4
-  %call = call i32 @isatty(i32 0) #19
+  %call = call i32 @isatty(i32 0) #20
   %sub = sub nsw i32 1, %call
   %mul = mul i32 %sub, 256
   %1 = load i16, i16* getelementptr inbounds ([3 x %struct.__STDIO_FILE_STRUCT.568], [3 x %struct.__STDIO_FILE_STRUCT.568]* @_stdio_streams, i64 0, i64 0, i32 0), align 16
@@ -9260,7 +9266,7 @@ entry:
   %xor = xor i32 %conv, %mul
   %conv1 = trunc i32 %xor to i16
   store i16 %conv1, i16* getelementptr inbounds ([3 x %struct.__STDIO_FILE_STRUCT.568], [3 x %struct.__STDIO_FILE_STRUCT.568]* @_stdio_streams, i64 0, i64 0, i32 0), align 16
-  %call2 = call i32 @isatty(i32 1) #19
+  %call2 = call i32 @isatty(i32 1) #20
   %sub3 = sub nsw i32 1, %call2
   %mul4 = mul i32 %sub3, 256
   %2 = load i16, i16* getelementptr inbounds ([3 x %struct.__STDIO_FILE_STRUCT.568], [3 x %struct.__STDIO_FILE_STRUCT.568]* @_stdio_streams, i64 0, i64 1, i32 0), align 8
@@ -9299,7 +9305,7 @@ cond.true:                                        ; preds = %entry
   br label %cond.end
 
 cond.false:                                       ; preds = %entry
-  %call = call i32 @__fgetc_unlocked(%struct.__STDIO_FILE_STRUCT.568* %5) #18
+  %call = call i32 @__fgetc_unlocked(%struct.__STDIO_FILE_STRUCT.568* %5) #19
   br label %cond.end
 
 cond.end:                                         ; preds = %cond.false, %cond.true
@@ -9325,14 +9331,14 @@ entry:
 if.then:                                          ; preds = %entry
   %1 = load void (i32)*, void (i32)** @__exit_cleanup, align 8
   %2 = load i32, i32* %rv.addr, align 4
-  call void %1(i32 %2) #18
+  call void %1(i32 %2) #19
   br label %if.end
 
 if.end:                                           ; preds = %if.then, %entry
-  call void @__uClibc_fini() #18
-  call void @_stdio_term() #18
+  call void @__uClibc_fini() #19
+  call void @_stdio_term() #19
   %3 = load i32, i32* %rv.addr, align 4
-  call void @_exit(i32 %3) #27
+  call void @_exit(i32 %3) #28
   unreachable
 }
 
@@ -9469,23 +9475,23 @@ do.body:                                          ; preds = %entry
 
 if.else:                                          ; preds = %entry
   %3 = load i8*, i8** @program_name, align 8
-  %call1 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([33 x i8], [33 x i8]* @.str.1.96, i64 0, i64 0), i8* %3)
-  %4 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call2 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([60 x i8], [60 x i8]* @.str.2.97, i64 0, i64 0), %struct._IO_FILE* %4)
+  %call1 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.str.1.96, i64 0, i64 0), i8* %3)
+  %call2 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([70 x i8], [70 x i8]* @.str.2.97, i64 0, i64 0), i32 32)
   call void @emit_stdin_note()
   call void @emit_mandatory_arg_note()
+  %4 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
+  %call3 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([243 x i8], [243 x i8]* @.str.3.98, i64 0, i64 0), %struct._IO_FILE* %4)
   %5 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call3 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([147 x i8], [147 x i8]* @.str.3.98, i64 0, i64 0), %struct._IO_FILE* %5)
+  %call4 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([45 x i8], [45 x i8]* @.str.4.99, i64 0, i64 0), %struct._IO_FILE* %5)
   %6 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call4 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([45 x i8], [45 x i8]* @.str.4.99, i64 0, i64 0), %struct._IO_FILE* %6)
-  %7 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call5 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([54 x i8], [54 x i8]* @.str.5.100, i64 0, i64 0), %struct._IO_FILE* %7)
-  call void @emit_ancillary_info(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.6.101, i64 0, i64 0))
+  %call5 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([54 x i8], [54 x i8]* @.str.5.100, i64 0, i64 0), %struct._IO_FILE* %6)
+  %call6 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([268 x i8], [268 x i8]* @.str.6.101, i64 0, i64 0), i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.7.102, i64 0, i64 0), i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.7.102, i64 0, i64 0))
+  call void @emit_ancillary_info(i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.7.102, i64 0, i64 0))
   br label %if.end
 
 if.end:                                           ; preds = %if.else, %do.body
-  %8 = load i32, i32* %status.addr, align 4
-  call void @exit(i32 %8) #26
+  %7 = load i32, i32* %status.addr, align 4
+  call void @exit(i32 %7) #27
   unreachable
 }
 
@@ -9495,7 +9501,7 @@ declare dso_local i32 @printf(i8*, ...) #5
 define internal void @emit_stdin_note() #3 {
 entry:
   %0 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([56 x i8], [56 x i8]* @.str.12.121, i64 0, i64 0), %struct._IO_FILE* %0)
+  %call = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([56 x i8], [56 x i8]* @.str.18.122, i64 0, i64 0), %struct._IO_FILE* %0)
   ret void
 }
 
@@ -9503,7 +9509,7 @@ entry:
 define internal void @emit_mandatory_arg_note() #3 {
 entry:
   %0 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([75 x i8], [75 x i8]* @.str.13.120, i64 0, i64 0), %struct._IO_FILE* %0)
+  %call = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([75 x i8], [75 x i8]* @.str.19.121, i64 0, i64 0), %struct._IO_FILE* %0)
   ret void
 }
 
@@ -9536,7 +9542,7 @@ land.rhs:                                         ; preds = %while.cond
   %6 = load %struct.infomap*, %struct.infomap** %map_prog, align 8
   %program2 = getelementptr inbounds %struct.infomap, %struct.infomap* %6, i32 0, i32 0
   %7 = load i8*, i8** %program2, align 8
-  %call = call i32 @strcmp(i8* %5, i8* %7) #23
+  %call = call i32 @strcmp(i8* %5, i8* %7) #24
   %cmp = icmp eq i32 %call, 0
   %lnot = xor i1 %cmp, true
   br label %land.end
@@ -9565,7 +9571,7 @@ if.then:                                          ; preds = %while.end
   br label %if.end
 
 if.end:                                           ; preds = %if.then, %while.end
-  %call6 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([23 x i8], [23 x i8]* @.str.23.102, i64 0, i64 0), i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.9.103, i64 0, i64 0), i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.24.104, i64 0, i64 0))
+  %call6 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([23 x i8], [23 x i8]* @.str.29.103, i64 0, i64 0), i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.11.104, i64 0, i64 0), i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.30.105, i64 0, i64 0))
   %call7 = call i8* @setlocale(i32 5, i8* null) #11
   store i8* %call7, i8** %lc_messages, align 8
   %13 = load i8*, i8** %lc_messages, align 8
@@ -9574,25 +9580,25 @@ if.end:                                           ; preds = %if.then, %while.end
 
 land.lhs.true:                                    ; preds = %if.end
   %14 = load i8*, i8** %lc_messages, align 8
-  %call9 = call i32 @strncmp(i8* %14, i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.25.105, i64 0, i64 0), i64 3) #23
+  %call9 = call i32 @strncmp(i8* %14, i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.31.106, i64 0, i64 0), i64 3) #24
   %tobool10 = icmp ne i32 %call9, 0
   br i1 %tobool10, label %if.then11, label %if.end13
 
 if.then11:                                        ; preds = %land.lhs.true
   %15 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call12 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([71 x i8], [71 x i8]* @.str.26.106, i64 0, i64 0), %struct._IO_FILE* %15)
+  %call12 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([71 x i8], [71 x i8]* @.str.32.107, i64 0, i64 0), %struct._IO_FILE* %15)
   br label %if.end13
 
 if.end13:                                         ; preds = %if.then11, %land.lhs.true, %if.end
   %16 = load i8*, i8** %program.addr, align 8
-  %call14 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.str.27.107, i64 0, i64 0), i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.24.104, i64 0, i64 0), i8* %16)
+  %call14 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([27 x i8], [27 x i8]* @.str.33.108, i64 0, i64 0), i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.30.105, i64 0, i64 0), i8* %16)
   %17 = load i8*, i8** %node, align 8
   %18 = load i8*, i8** %node, align 8
   %19 = load i8*, i8** %program.addr, align 8
   %cmp15 = icmp eq i8* %18, %19
   %20 = zext i1 %cmp15 to i64
-  %cond = select i1 %cmp15, i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.29.108, i64 0, i64 0), i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.7.109, i64 0, i64 0)
-  %call16 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.28.110, i64 0, i64 0), i8* %17, i8* %cond)
+  %cond = select i1 %cmp15, i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.35.109, i64 0, i64 0), i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.8.110, i64 0, i64 0)
+  %call16 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.34.111, i64 0, i64 0), i8* %17, i8* %cond)
   ret void
 }
 
@@ -9602,224 +9608,205 @@ entry:
   %retval = alloca i32, align 4
   %argc.addr = alloca i32, align 4
   %argv.addr = alloca i8**, align 8
-  %width = alloca i64, align 8
-  %i = alloca i32, align 4
-  %optc = alloca i32, align 4
-  %ok = alloca i8, align 1
-  %optargbuf = alloca [2 x i8], align 1
+  %opt = alloca i32, align 4
+  %input_fh = alloca %struct._IO_FILE*, align 8
+  %infile = alloca i8*, align 8
+  %decode = alloca i8, align 1
+  %ignore_garbage = alloca i8, align 1
+  %wrap_column = alloca i64, align 8
   store i32 0, i32* %retval, align 4
   store i32 %argc, i32* %argc.addr, align 4
   store i8** %argv, i8*** %argv.addr, align 8
-  store i64 80, i64* %width, align 8
+  store i8 0, i8* %decode, align 1
+  store i8 0, i8* %ignore_garbage, align 1
+  store i64 76, i64* %wrap_column, align 8
   %0 = load i8**, i8*** %argv.addr, align 8
   %arrayidx = getelementptr inbounds i8*, i8** %0, i64 0
   %1 = load i8*, i8** %arrayidx, align 8
   call void @set_program_name(i8* %1)
-  %call = call i8* @setlocale(i32 6, i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.7.109, i64 0, i64 0)) #11
+  %call = call i8* @setlocale(i32 6, i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.8.110, i64 0, i64 0)) #11
   %call1 = call i32 @atexit(void ()* @close_stdout) #11
-  store i8 0, i8* @have_read_stdin, align 1
-  store i8 0, i8* @count_bytes, align 1
-  store i8 0, i8* @break_spaces, align 1
   br label %while.cond
 
 while.cond:                                       ; preds = %sw.epilog, %entry
   %2 = load i32, i32* %argc.addr, align 4
   %3 = load i8**, i8*** %argv.addr, align 8
-  %call2 = call i32 @getopt_long(i32 %2, i8** %3, i8* getelementptr inbounds ([35 x i8], [35 x i8]* @shortopts, i64 0, i64 0), %struct.option* getelementptr inbounds ([6 x %struct.option], [6 x %struct.option]* @longopts, i64 0, i64 0), i32* null) #11
-  store i32 %call2, i32* %optc, align 4
+  %call2 = call i32 @getopt_long(i32 %2, i8** %3, i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.9.125, i64 0, i64 0), %struct.option* getelementptr inbounds ([6 x %struct.option], [6 x %struct.option]* @long_options, i64 0, i64 0), i32* null) #11
+  store i32 %call2, i32* %opt, align 4
   %cmp = icmp ne i32 %call2, -1
   br i1 %cmp, label %while.body, label %while.end
 
 while.body:                                       ; preds = %while.cond
-  %4 = load i32, i32* %optc, align 4
-  br label %NodeBlock27
+  %4 = load i32, i32* %opt, align 4
+  br label %NodeBlock7
 
-NodeBlock27:                                      ; preds = %while.body
-  %case.cmp28 = icmp eq i32 %4, 98
-  br i1 %case.cmp28, label %sw.bb, label %NodeBlock25
-
-NodeBlock25:                                      ; preds = %NodeBlock27
-  %case.cmp26 = icmp eq i32 %4, 115
-  br i1 %case.cmp26, label %sw.bb3, label %NodeBlock23
-
-NodeBlock23:                                      ; preds = %NodeBlock25
-  %case.cmp24 = icmp eq i32 %4, 48
-  br i1 %case.cmp24, label %sw.bb4, label %NodeBlock21
-
-NodeBlock21:                                      ; preds = %NodeBlock23
-  %case.cmp22 = icmp eq i32 %4, 49
-  br i1 %case.cmp22, label %sw.bb4, label %NodeBlock19
-
-NodeBlock19:                                      ; preds = %NodeBlock21
-  %case.cmp20 = icmp eq i32 %4, 50
-  br i1 %case.cmp20, label %sw.bb4, label %NodeBlock17
-
-NodeBlock17:                                      ; preds = %NodeBlock19
-  %case.cmp18 = icmp eq i32 %4, 51
-  br i1 %case.cmp18, label %sw.bb4, label %NodeBlock15
-
-NodeBlock15:                                      ; preds = %NodeBlock17
-  %case.cmp16 = icmp eq i32 %4, 52
-  br i1 %case.cmp16, label %sw.bb4, label %NodeBlock13
-
-NodeBlock13:                                      ; preds = %NodeBlock15
-  %case.cmp14 = icmp eq i32 %4, 53
-  br i1 %case.cmp14, label %sw.bb4, label %NodeBlock11
-
-NodeBlock11:                                      ; preds = %NodeBlock13
-  %case.cmp12 = icmp eq i32 %4, 54
-  br i1 %case.cmp12, label %sw.bb4, label %NodeBlock9
-
-NodeBlock9:                                       ; preds = %NodeBlock11
-  %case.cmp10 = icmp eq i32 %4, 55
-  br i1 %case.cmp10, label %sw.bb4, label %NodeBlock7
-
-NodeBlock7:                                       ; preds = %NodeBlock9
-  %case.cmp8 = icmp eq i32 %4, 56
-  br i1 %case.cmp8, label %sw.bb4, label %NodeBlock5
+NodeBlock7:                                       ; preds = %while.body
+  %case.cmp8 = icmp eq i32 %4, 100
+  br i1 %case.cmp8, label %sw.bb, label %NodeBlock5
 
 NodeBlock5:                                       ; preds = %NodeBlock7
-  %case.cmp6 = icmp eq i32 %4, 57
-  br i1 %case.cmp6, label %sw.bb4, label %NodeBlock3
+  %case.cmp6 = icmp eq i32 %4, 119
+  br i1 %case.cmp6, label %sw.bb3, label %NodeBlock3
 
 NodeBlock3:                                       ; preds = %NodeBlock5
-  %case.cmp4 = icmp eq i32 %4, 119
-  br i1 %case.cmp4, label %sw.bb7, label %NodeBlock1
+  %case.cmp4 = icmp eq i32 %4, 105
+  br i1 %case.cmp4, label %sw.bb5, label %NodeBlock1
 
 NodeBlock1:                                       ; preds = %NodeBlock3
   %case.cmp2 = icmp eq i32 %4, -130
-  br i1 %case.cmp2, label %sw.bb9, label %NodeBlock
+  br i1 %case.cmp2, label %sw.bb6, label %NodeBlock
 
 NodeBlock:                                        ; preds = %NodeBlock1
   %case.cmp = icmp eq i32 %4, -131
-  br i1 %case.cmp, label %sw.bb10, label %newDefault
+  br i1 %case.cmp, label %sw.bb7, label %newDefault
 
-sw.bb:                                            ; preds = %NodeBlock27
-  store i8 1, i8* @count_bytes, align 1
+sw.bb:                                            ; preds = %NodeBlock7
+  store i8 1, i8* %decode, align 1
   br label %sw.epilog
 
-sw.bb3:                                           ; preds = %NodeBlock25
-  store i8 1, i8* @break_spaces, align 1
-  br label %sw.epilog
-
-sw.bb4:                                           ; preds = %NodeBlock23, %NodeBlock21, %NodeBlock19, %NodeBlock17, %NodeBlock15, %NodeBlock13, %NodeBlock11, %NodeBlock9, %NodeBlock7, %NodeBlock5
+sw.bb3:                                           ; preds = %NodeBlock5
   %5 = load i8*, i8** @optarg, align 8
-  %tobool = icmp ne i8* %5, null
-  br i1 %tobool, label %if.then, label %if.else
-
-if.then:                                          ; preds = %sw.bb4
-  %6 = load i8*, i8** @optarg, align 8
-  %incdec.ptr = getelementptr inbounds i8, i8* %6, i32 -1
-  store i8* %incdec.ptr, i8** @optarg, align 8
-  br label %sw.bb7
-
-if.else:                                          ; preds = %sw.bb4
-  %7 = load i32, i32* %optc, align 4
-  %conv = trunc i32 %7 to i8
-  %arrayidx5 = getelementptr inbounds [2 x i8], [2 x i8]* %optargbuf, i64 0, i64 0
-  store i8 %conv, i8* %arrayidx5, align 1
-  %arrayidx6 = getelementptr inbounds [2 x i8], [2 x i8]* %optargbuf, i64 0, i64 1
-  store i8 0, i8* %arrayidx6, align 1
-  %arraydecay = getelementptr inbounds [2 x i8], [2 x i8]* %optargbuf, i64 0, i64 0
-  store i8* %arraydecay, i8** @optarg, align 8
-  br label %sw.bb7
-
-sw.bb7:                                           ; preds = %NodeBlock3, %if.then, %if.else
-  %8 = load i8*, i8** @optarg, align 8
-  %call8 = call i64 @xdectoumax(i8* %8, i64 1, i64 -10, i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.7.109, i64 0, i64 0), i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str.8.124, i64 0, i64 0), i32 0)
-  store i64 %call8, i64* %width, align 8
+  %call4 = call i64 @xdectoumax(i8* %5, i64 0, i64 -1, i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.8.110, i64 0, i64 0), i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.10.126, i64 0, i64 0), i32 0)
+  store i64 %call4, i64* %wrap_column, align 8
   br label %sw.epilog
 
-sw.bb9:                                           ; preds = %NodeBlock1
-  call void @usage(i32 0) #24
+sw.bb5:                                           ; preds = %NodeBlock3
+  store i8 1, i8* %ignore_garbage, align 1
+  br label %sw.epilog
+
+sw.bb6:                                           ; preds = %NodeBlock1
+  call void @usage(i32 0) #25
   unreachable
 
-sw.bb10:                                          ; preds = %NodeBlock
-  %9 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %10 = load i8*, i8** @Version, align 8
-  call void (%struct._IO_FILE*, i8*, i8*, i8*, ...) @version_etc(%struct._IO_FILE* %9, i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.6.101, i64 0, i64 0), i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.9.103, i64 0, i64 0), i8* %10, i8* getelementptr inbounds ([16 x i8], [16 x i8]* @.str.10.125, i64 0, i64 0), i8* null)
-  call void @exit(i32 0) #26
+sw.bb7:                                           ; preds = %NodeBlock
+  %6 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
+  %7 = load i8*, i8** @Version, align 8
+  call void (%struct._IO_FILE*, i8*, i8*, i8*, ...) @version_etc(%struct._IO_FILE* %6, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.7.102, i64 0, i64 0), i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.11.104, i64 0, i64 0), i8* %7, i8* getelementptr inbounds ([16 x i8], [16 x i8]* @.str.12.127, i64 0, i64 0), i8* null)
+  call void @exit(i32 0) #27
   unreachable
 
 newDefault:                                       ; preds = %NodeBlock
   br label %sw.default
 
 sw.default:                                       ; preds = %newDefault
-  call void @usage(i32 1) #24
+  call void @usage(i32 1) #25
   unreachable
 
-sw.epilog:                                        ; preds = %sw.bb7, %sw.bb3, %sw.bb
+sw.epilog:                                        ; preds = %sw.bb5, %sw.bb3, %sw.bb
   br label %while.cond
 
 while.end:                                        ; preds = %while.cond
-  %11 = load i32, i32* %argc.addr, align 4
-  %12 = load i32, i32* @optind, align 4
-  %cmp11 = icmp eq i32 %11, %12
-  br i1 %cmp11, label %if.then13, label %if.else15
+  %8 = load i32, i32* %argc.addr, align 4
+  %9 = load i32, i32* @optind, align 4
+  %sub = sub nsw i32 %8, %9
+  %cmp8 = icmp sgt i32 %sub, 1
+  br i1 %cmp8, label %if.then, label %if.end
 
-if.then13:                                        ; preds = %while.end
-  %13 = load i64, i64* %width, align 8
-  %call14 = call zeroext i1 @fold_file(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.11.126, i64 0, i64 0), i64 %13)
-  %frombool = zext i1 %call14 to i8
-  store i8 %frombool, i8* %ok, align 1
-  br label %if.end25
-
-if.else15:                                        ; preds = %while.end
-  store i8 1, i8* %ok, align 1
-  %14 = load i32, i32* @optind, align 4
-  store i32 %14, i32* %i, align 4
-  br label %for.cond
-
-for.cond:                                         ; preds = %for.body, %if.else15
-  %15 = load i32, i32* %i, align 4
-  %16 = load i32, i32* %argc.addr, align 4
-  %cmp16 = icmp slt i32 %15, %16
-  br i1 %cmp16, label %for.body, label %if.end25
-
-for.body:                                         ; preds = %for.cond
-  %17 = load i8**, i8*** %argv.addr, align 8
-  %18 = load i32, i32* %i, align 4
-  %idxprom = sext i32 %18 to i64
-  %arrayidx18 = getelementptr inbounds i8*, i8** %17, i64 %idxprom
-  %19 = load i8*, i8** %arrayidx18, align 8
-  %20 = load i64, i64* %width, align 8
-  %call19 = call zeroext i1 @fold_file(i8* %19, i64 %20)
-  %conv20 = zext i1 %call19 to i32
-  %21 = load i8, i8* %ok, align 1
-  %tobool21 = trunc i8 %21 to i1
-  %conv22 = zext i1 %tobool21 to i32
-  %and = and i32 %conv22, %conv20
-  %tobool23 = icmp ne i32 %and, 0
-  %frombool24 = zext i1 %tobool23 to i8
-  store i8 %frombool24, i8* %ok, align 1
-  %22 = load i32, i32* %i, align 4
-  %inc = add nsw i32 %22, 1
-  store i32 %inc, i32* %i, align 4
-  br label %for.cond
-
-if.end25:                                         ; preds = %for.cond, %if.then13
-  %23 = load i8, i8* @have_read_stdin, align 1
-  %tobool26 = trunc i8 %23 to i1
-  br i1 %tobool26, label %land.lhs.true, label %if.end33
-
-land.lhs.true:                                    ; preds = %if.end25
-  %24 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdin to %struct._IO_FILE**), align 8
-  %call28 = call i32 @rpl_fclose(%struct._IO_FILE* %24)
-  %cmp29 = icmp eq i32 %call28, -1
-  br i1 %cmp29, label %if.then31, label %if.end33
-
-if.then31:                                        ; preds = %land.lhs.true
-  %call32 = call i32* @__errno_location() #25
-  %25 = load i32, i32* %call32, align 4
-  call void (i32, i32, i8*, ...) @error(i32 1, i32 %25, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.11.126, i64 0, i64 0))
+if.then:                                          ; preds = %while.end
+  %10 = load i8**, i8*** %argv.addr, align 8
+  %11 = load i32, i32* @optind, align 4
+  %add = add nsw i32 %11, 1
+  %idxprom = sext i32 %add to i64
+  %arrayidx9 = getelementptr inbounds i8*, i8** %10, i64 %idxprom
+  %12 = load i8*, i8** %arrayidx9, align 8
+  %call10 = call i8* @quote(i8* %12)
+  call void (i32, i32, i8*, ...) @error(i32 0, i32 0, i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.13.128, i64 0, i64 0), i8* %call10)
+  call void @usage(i32 1) #25
   unreachable
 
-if.end33:                                         ; preds = %land.lhs.true, %if.end25
-  %26 = load i8, i8* %ok, align 1
-  %tobool34 = trunc i8 %26 to i1
-  %27 = zext i1 %tobool34 to i64
-  %cond = select i1 %tobool34, i32 0, i32 1
-  ret i32 %cond
+if.end:                                           ; preds = %while.end
+  %13 = load i32, i32* @optind, align 4
+  %14 = load i32, i32* %argc.addr, align 4
+  %cmp11 = icmp slt i32 %13, %14
+  br i1 %cmp11, label %if.then12, label %if.else
+
+if.then12:                                        ; preds = %if.end
+  %15 = load i8**, i8*** %argv.addr, align 8
+  %16 = load i32, i32* @optind, align 4
+  %idxprom13 = sext i32 %16 to i64
+  %arrayidx14 = getelementptr inbounds i8*, i8** %15, i64 %idxprom13
+  %17 = load i8*, i8** %arrayidx14, align 8
+  store i8* %17, i8** %infile, align 8
+  br label %if.end15
+
+if.else:                                          ; preds = %if.end
+  store i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.14.129, i64 0, i64 0), i8** %infile, align 8
+  br label %if.end15
+
+if.end15:                                         ; preds = %if.else, %if.then12
+  %18 = load i8*, i8** %infile, align 8
+  %call16 = call i32 @strcmp(i8* %18, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.14.129, i64 0, i64 0)) #24
+  %cmp17 = icmp eq i32 %call16, 0
+  br i1 %cmp17, label %if.then18, label %if.else19
+
+if.then18:                                        ; preds = %if.end15
+  call void @xset_binary_mode(i32 0, i32 0)
+  %19 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdin to %struct._IO_FILE**), align 8
+  store %struct._IO_FILE* %19, %struct._IO_FILE** %input_fh, align 8
+  br label %if.end26
+
+if.else19:                                        ; preds = %if.end15
+  %20 = load i8*, i8** %infile, align 8
+  %call20 = call %struct._IO_FILE* bitcast (%struct.__STDIO_FILE_STRUCT.612* (i8*, i8*)* @fopen to %struct._IO_FILE* (i8*, i8*)*)(i8* %20, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.15.130, i64 0, i64 0))
+  store %struct._IO_FILE* %call20, %struct._IO_FILE** %input_fh, align 8
+  %21 = load %struct._IO_FILE*, %struct._IO_FILE** %input_fh, align 8
+  %cmp21 = icmp eq %struct._IO_FILE* %21, null
+  br i1 %cmp21, label %if.then22, label %if.end26
+
+if.then22:                                        ; preds = %if.else19
+  %call23 = call i32* @__errno_location() #26
+  %22 = load i32, i32* %call23, align 4
+  %23 = load i8*, i8** %infile, align 8
+  %call24 = call i8* @quotearg_n_style_colon(i32 0, i32 3, i8* %23)
+  call void (i32, i32, i8*, ...) @error(i32 1, i32 %22, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.16.131, i64 0, i64 0), i8* %call24)
+  unreachable
+
+if.end26:                                         ; preds = %if.else19, %if.then18
+  %24 = load %struct._IO_FILE*, %struct._IO_FILE** %input_fh, align 8
+  call void @fadvise(%struct._IO_FILE* %24, i32 2)
+  %25 = load i8, i8* %decode, align 1
+  %tobool = trunc i8 %25 to i1
+  %26 = load %struct._IO_FILE*, %struct._IO_FILE** %input_fh, align 8
+  %27 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
+  br i1 %tobool, label %if.then27, label %if.else29
+
+if.then27:                                        ; preds = %if.end26
+  %28 = load i8, i8* %ignore_garbage, align 1
+  %tobool28 = trunc i8 %28 to i1
+  call void @do_decode(%struct._IO_FILE* %26, %struct._IO_FILE* %27, i1 zeroext %tobool28)
+  br label %if.end30
+
+if.else29:                                        ; preds = %if.end26
+  %29 = load i64, i64* %wrap_column, align 8
+  call void @do_encode(%struct._IO_FILE* %26, %struct._IO_FILE* %27, i64 %29)
+  br label %if.end30
+
+if.end30:                                         ; preds = %if.else29, %if.then27
+  %30 = load %struct._IO_FILE*, %struct._IO_FILE** %input_fh, align 8
+  %call31 = call i32 @rpl_fclose(%struct._IO_FILE* %30)
+  %cmp32 = icmp eq i32 %call31, -1
+  br i1 %cmp32, label %if.then33, label %if.end41
+
+if.then33:                                        ; preds = %if.end30
+  %31 = load i8*, i8** %infile, align 8
+  %call34 = call i32 @strcmp(i8* %31, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.14.129, i64 0, i64 0)) #24
+  %cmp35 = icmp eq i32 %call34, 0
+  %call37 = call i32* @__errno_location() #26
+  %32 = load i32, i32* %call37, align 4
+  br i1 %cmp35, label %if.then36, label %if.else38
+
+if.then36:                                        ; preds = %if.then33
+  call void (i32, i32, i8*, ...) @error(i32 1, i32 %32, i8* getelementptr inbounds ([23 x i8], [23 x i8]* @.str.17.132, i64 0, i64 0))
+  unreachable
+
+if.else38:                                        ; preds = %if.then33
+  %33 = load i8*, i8** %infile, align 8
+  %call40 = call i8* @quotearg_n_style_colon(i32 0, i32 3, i8* %33)
+  call void (i32, i32, i8*, ...) @error(i32 1, i32 %32, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.16.131, i64 0, i64 0), i8* %call40)
+  unreachable
+
+if.end41:                                         ; preds = %if.end30
+  ret i32 0
 }
 
 ; Function Attrs: noinline nounwind uwtable
@@ -9835,13 +9822,13 @@ entry:
 
 if.then:                                          ; preds = %entry
   %1 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stderr to %struct._IO_FILE**), align 8
-  %call = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([56 x i8], [56 x i8]* @.str.51, i64 0, i64 0), %struct._IO_FILE* %1)
-  call void @abort() #26
+  %call = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([56 x i8], [56 x i8]* @.str.66, i64 0, i64 0), %struct._IO_FILE* %1)
+  call void @abort() #27
   unreachable
 
 if.end:                                           ; preds = %entry
   %2 = load i8*, i8** %argv0.addr, align 8
-  %call1 = call i8* @strrchr(i8* %2, i32 47) #23
+  %call1 = call i8* @strrchr(i8* %2, i32 47) #24
   store i8* %call1, i8** %slash, align 8
   %3 = load i8*, i8** %slash, align 8
   %cmp2 = icmp ne i8* %3, null
@@ -9861,7 +9848,7 @@ if.end:                                           ; preds = %entry
 land.lhs.true:                                    ; preds = %if.end
   %8 = load i8*, i8** %base, align 8
   %add.ptr4 = getelementptr inbounds i8, i8* %8, i64 -7
-  %call5 = call i32 @strncmp(i8* %add.ptr4, i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.1.52, i64 0, i64 0), i64 7) #23
+  %call5 = call i32 @strncmp(i8* %add.ptr4, i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.1.67, i64 0, i64 0), i64 7) #24
   %cmp6 = icmp eq i32 %call5, 0
   br i1 %cmp6, label %if.then7, label %if.end13
 
@@ -9869,7 +9856,7 @@ if.then7:                                         ; preds = %land.lhs.true
   %9 = load i8*, i8** %base, align 8
   store i8* %9, i8** %argv0.addr, align 8
   %10 = load i8*, i8** %base, align 8
-  %call8 = call i32 @strncmp(i8* %10, i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.2.53, i64 0, i64 0), i64 3) #23
+  %call8 = call i32 @strncmp(i8* %10, i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.2.68, i64 0, i64 0), i64 3) #24
   %cmp9 = icmp eq i32 %call8, 0
   br i1 %cmp9, label %if.then10, label %if.end13
 
@@ -9904,16 +9891,16 @@ land.lhs.true:                                    ; preds = %entry
   br i1 %tobool, label %land.lhs.true1, label %if.then
 
 land.lhs.true1:                                   ; preds = %land.lhs.true
-  %call2 = call i32* @__errno_location() #25
+  %call2 = call i32* @__errno_location() #26
   %2 = load i32, i32* %call2, align 4
   %cmp3 = icmp eq i32 %2, 32
   br i1 %cmp3, label %if.end9, label %if.then
 
 if.then:                                          ; preds = %land.lhs.true1, %land.lhs.true
-  store i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.40, i64 0, i64 0), i8** %write_error, align 8
+  store i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.55, i64 0, i64 0), i8** %write_error, align 8
   %3 = load i8*, i8** @file_name, align 8
   %tobool4 = icmp ne i8* %3, null
-  %call6 = call i32* @__errno_location() #25
+  %call6 = call i32* @__errno_location() #26
   %4 = load i32, i32* %call6, align 4
   br i1 %tobool4, label %if.then5, label %if.else
 
@@ -9921,17 +9908,17 @@ if.then5:                                         ; preds = %if.then
   %5 = load i8*, i8** @file_name, align 8
   %call7 = call i8* @quotearg_colon(i8* %5)
   %6 = load i8*, i8** %write_error, align 8
-  call void (i32, i32, i8*, ...) @error(i32 0, i32 %4, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.1.41, i64 0, i64 0), i8* %call7, i8* %6)
+  call void (i32, i32, i8*, ...) @error(i32 0, i32 %4, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.1.56, i64 0, i64 0), i8* %call7, i8* %6)
   br label %if.end
 
 if.else:                                          ; preds = %if.then
   %7 = load i8*, i8** %write_error, align 8
-  call void (i32, i32, i8*, ...) @error(i32 0, i32 %4, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.2.42, i64 0, i64 0), i8* %7)
+  call void (i32, i32, i8*, ...) @error(i32 0, i32 %4, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.2.57, i64 0, i64 0), i8* %7)
   br label %if.end
 
 if.end:                                           ; preds = %if.else, %if.then5
   %8 = load volatile i32, i32* @exit_failure, align 4
-  call void @_exit(i32 %8) #24
+  call void @_exit(i32 %8) #25
   unreachable
 
 if.end9:                                          ; preds = %land.lhs.true1, %entry
@@ -9942,7 +9929,7 @@ if.end9:                                          ; preds = %land.lhs.true1, %en
 
 if.then12:                                        ; preds = %if.end9
   %10 = load volatile i32, i32* @exit_failure, align 4
-  call void @_exit(i32 %10) #24
+  call void @_exit(i32 %10) #25
   unreachable
 
 if.end13:                                         ; preds = %if.end9
@@ -10002,311 +9989,417 @@ entry:
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define internal zeroext i1 @fold_file(i8* %filename, i64 %width) #3 {
+define dso_local i8* @quote(i8* %arg) #3 {
 entry:
-  %retval = alloca i1, align 1
-  %filename.addr = alloca i8*, align 8
-  %width.addr = alloca i64, align 8
-  %istream = alloca %struct._IO_FILE*, align 8
-  %c = alloca i32, align 4
-  %column = alloca i64, align 8
-  %offset_out = alloca i64, align 8
-  %saved_errno = alloca i32, align 4
-  %found_blank = alloca i8, align 1
-  %logical_end = alloca i64, align 8
-  %i = alloca i64, align 8
-  store i8* %filename, i8** %filename.addr, align 8
-  store i64 %width, i64* %width.addr, align 8
-  store i64 0, i64* %column, align 8
-  store i64 0, i64* %offset_out, align 8
-  %0 = load i8*, i8** %filename.addr, align 8
-  %call = call i32 @strcmp(i8* %0, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.11.126, i64 0, i64 0)) #23
-  %cmp = icmp eq i32 %call, 0
-  br i1 %cmp, label %if.then, label %if.else
+  %arg.addr = alloca i8*, align 8
+  store i8* %arg, i8** %arg.addr, align 8
+  %0 = load i8*, i8** %arg.addr, align 8
+  %call = call i8* @quote_n(i32 0, i8* %0)
+  ret i8* %call
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local void @xset_binary_mode(i32 %fd, i32 %mode) #3 {
+entry:
+  %fd.addr = alloca i32, align 4
+  %mode.addr = alloca i32, align 4
+  store i32 %fd, i32* %fd.addr, align 4
+  store i32 %mode, i32* %mode.addr, align 4
+  %0 = load i32, i32* %fd.addr, align 4
+  %1 = load i32, i32* %mode.addr, align 4
+  %call = call i32 @set_binary_mode(i32 %0, i32 %1)
+  %cmp = icmp slt i32 %call, 0
+  br i1 %cmp, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  %1 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdin to %struct._IO_FILE**), align 8
-  store %struct._IO_FILE* %1, %struct._IO_FILE** %istream, align 8
-  store i8 1, i8* @have_read_stdin, align 1
+  call void @xset_binary_mode_error()
   br label %if.end
 
-if.else:                                          ; preds = %entry
-  %2 = load i8*, i8** %filename.addr, align 8
-  %call1 = call %struct._IO_FILE* bitcast (%struct.__STDIO_FILE_STRUCT.612* (i8*, i8*)* @fopen to %struct._IO_FILE* (i8*, i8*)*)(i8* %2, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.35.127, i64 0, i64 0))
-  store %struct._IO_FILE* %call1, %struct._IO_FILE** %istream, align 8
+if.end:                                           ; preds = %if.then, %entry
+  ret void
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local i8* @quotearg_n_style_colon(i32 %n, i32 %s, i8* %arg) #3 {
+entry:
+  %n.addr = alloca i32, align 4
+  %s.addr = alloca i32, align 4
+  %arg.addr = alloca i8*, align 8
+  %options = alloca %struct.quoting_options, align 8
+  %tmp = alloca %struct.quoting_options, align 8
+  store i32 %n, i32* %n.addr, align 4
+  store i32 %s, i32* %s.addr, align 4
+  store i8* %arg, i8** %arg.addr, align 8
+  %0 = load i32, i32* %s.addr, align 4
+  call void @quoting_options_from_style(%struct.quoting_options* sret align 8 %tmp, i32 %0)
+  %1 = bitcast %struct.quoting_options* %options to i8*
+  %2 = bitcast %struct.quoting_options* %tmp to i8*
+  %3 = call i8* @memcpy(i8* %1, i8* %2, i64 56)
+  %call = call i32 @set_char_quoting(%struct.quoting_options* %options, i8 signext 58, i32 1)
+  %4 = load i32, i32* %n.addr, align 4
+  %5 = load i8*, i8** %arg.addr, align 8
+  %call1 = call i8* @quotearg_n_options(i32 %4, i8* %5, i64 -1, %struct.quoting_options* %options)
+  ret i8* %call1
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local void @fadvise(%struct._IO_FILE* %fp, i32 %advice) #3 {
+entry:
+  %fp.addr = alloca %struct._IO_FILE*, align 8
+  %advice.addr = alloca i32, align 4
+  store %struct._IO_FILE* %fp, %struct._IO_FILE** %fp.addr, align 8
+  store i32 %advice, i32* %advice.addr, align 4
+  %0 = load %struct._IO_FILE*, %struct._IO_FILE** %fp.addr, align 8
+  %tobool = icmp ne %struct._IO_FILE* %0, null
+  br i1 %tobool, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  %1 = load %struct._IO_FILE*, %struct._IO_FILE** %fp.addr, align 8
+  %call = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.608*)* @fileno to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %1) #11
+  %2 = load i32, i32* %advice.addr, align 4
+  call void @fdadvise(i32 %call, i64 0, i64 0, i32 %2)
   br label %if.end
 
-if.end:                                           ; preds = %if.else, %if.then
-  %3 = load %struct._IO_FILE*, %struct._IO_FILE** %istream, align 8
-  %cmp2 = icmp eq %struct._IO_FILE* %3, null
-  br i1 %cmp2, label %if.then3, label %if.end6
+if.end:                                           ; preds = %if.then, %entry
+  ret void
+}
 
-if.then3:                                         ; preds = %if.end
-  %call4 = call i32* @__errno_location() #25
-  %4 = load i32, i32* %call4, align 4
-  %5 = load i8*, i8** %filename.addr, align 8
-  %call5 = call i8* @quotearg_n_style_colon(i32 0, i32 3, i8* %5)
-  call void (i32, i32, i8*, ...) @error(i32 0, i32 %4, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.36, i64 0, i64 0), i8* %call5)
-  store i1 false, i1* %retval, align 1
-  br label %return
+; Function Attrs: noinline nounwind uwtable
+define internal void @do_decode(%struct._IO_FILE* %in, %struct._IO_FILE* %out, i1 zeroext %ignore_garbage) #3 {
+entry:
+  %in.addr = alloca %struct._IO_FILE*, align 8
+  %out.addr = alloca %struct._IO_FILE*, align 8
+  %ignore_garbage.addr = alloca i8, align 1
+  %inbuf = alloca i8*, align 8
+  %outbuf = alloca i8*, align 8
+  %sum = alloca i64, align 8
+  %ctx = alloca %struct.base32_decode_context, align 4
+  %ok = alloca i8, align 1
+  %n = alloca i64, align 8
+  %k = alloca i32, align 4
+  %i = alloca i64, align 8
+  store %struct._IO_FILE* %in, %struct._IO_FILE** %in.addr, align 8
+  store %struct._IO_FILE* %out, %struct._IO_FILE** %out.addr, align 8
+  %frombool = zext i1 %ignore_garbage to i8
+  store i8 %frombool, i8* %ignore_garbage.addr, align 1
+  %call = call noalias i8* @xmalloc(i64 8192)
+  store i8* %call, i8** %inbuf, align 8
+  %call1 = call noalias i8* @xmalloc(i64 5120)
+  store i8* %call1, i8** %outbuf, align 8
+  call void @base32_decode_ctx_init(%struct.base32_decode_context* %ctx)
+  br label %do.body
 
-if.end6:                                          ; preds = %if.end
-  %6 = load %struct._IO_FILE*, %struct._IO_FILE** %istream, align 8
-  call void @fadvise(%struct._IO_FILE* %6, i32 2)
-  br label %while.cond
+do.body:                                          ; preds = %do.cond61, %entry
+  store i64 0, i64* %sum, align 8
+  br label %do.body2
 
-while.cond:                                       ; preds = %if.end58, %if.then50, %if.then14, %if.end6
-  %7 = load %struct._IO_FILE*, %struct._IO_FILE** %istream, align 8
-  %call7 = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*)* @getc_unlocked to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %7)
-  store i32 %call7, i32* %c, align 4
-  %cmp8 = icmp ne i32 %call7, -1
-  br i1 %cmp8, label %while.body, label %while.end62
+do.body2:                                         ; preds = %land.rhs26, %do.body
+  %0 = load i8*, i8** %inbuf, align 8
+  %1 = load i64, i64* %sum, align 8
+  %add.ptr = getelementptr inbounds i8, i8* %0, i64 %1
+  %2 = load i64, i64* %sum, align 8
+  %sub = sub i64 8192, %2
+  %3 = load %struct._IO_FILE*, %struct._IO_FILE** %in.addr, align 8
+  %call3 = call i64 bitcast (i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fread_unlocked to i64 (i8*, i64, i64, %struct._IO_FILE*)*)(i8* %add.ptr, i64 1, i64 %sub, %struct._IO_FILE* %3)
+  store i64 %call3, i64* %n, align 8
+  %4 = load i8, i8* %ignore_garbage.addr, align 1
+  %tobool = trunc i8 %4 to i1
+  br i1 %tobool, label %if.then, label %if.end17
 
-while.body:                                       ; preds = %while.cond
-  %8 = load i64, i64* %offset_out, align 8
-  %add = add i64 %8, 1
-  %9 = load i64, i64* @fold_file.allocated_out, align 8
-  %cmp9 = icmp uge i64 %add, %9
-  br i1 %cmp9, label %if.then10, label %if.end12
-
-if.then10:                                        ; preds = %while.body
-  %10 = load i8*, i8** @fold_file.line_out, align 8
-  %call11 = call i8* @x2realloc(i8* %10, i64* @fold_file.allocated_out)
-  store i8* %call11, i8** @fold_file.line_out, align 8
-  br label %if.end12
-
-if.end12:                                         ; preds = %if.then10, %while.body
-  %11 = load i32, i32* %c, align 4
-  %cmp13 = icmp eq i32 %11, 10
-  br i1 %cmp13, label %if.then14, label %rescan
-
-if.then14:                                        ; preds = %if.end12
-  %12 = load i32, i32* %c, align 4
-  %conv = trunc i32 %12 to i8
-  %13 = load i8*, i8** @fold_file.line_out, align 8
-  %14 = load i64, i64* %offset_out, align 8
-  %inc = add i64 %14, 1
-  store i64 %inc, i64* %offset_out, align 8
-  %arrayidx = getelementptr inbounds i8, i8* %13, i64 %14
-  store i8 %conv, i8* %arrayidx, align 1
-  %15 = load i8*, i8** @fold_file.line_out, align 8
-  %16 = load i64, i64* %offset_out, align 8
-  %17 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call15 = call i64 bitcast (i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fwrite_unlocked to i64 (i8*, i64, i64, %struct._IO_FILE*)*)(i8* %15, i64 1, i64 %16, %struct._IO_FILE* %17)
-  store i64 0, i64* %offset_out, align 8
-  store i64 0, i64* %column, align 8
-  br label %while.cond
-
-rescan:                                           ; preds = %for.cond, %if.end12, %if.end54
-  %18 = load i64, i64* %column, align 8
-  %19 = load i32, i32* %c, align 4
-  %conv17 = trunc i32 %19 to i8
-  %call18 = call i64 @adjust_column(i64 %18, i8 signext %conv17)
-  store i64 %call18, i64* %column, align 8
-  %20 = load i64, i64* %column, align 8
-  %21 = load i64, i64* %width.addr, align 8
-  %cmp19 = icmp ugt i64 %20, %21
-  br i1 %cmp19, label %if.then21, label %if.end58
-
-if.then21:                                        ; preds = %rescan
-  %22 = load i8, i8* @break_spaces, align 1
-  %tobool = trunc i8 %22 to i1
-  br i1 %tobool, label %if.then22, label %if.end47
-
-if.then22:                                        ; preds = %if.then21
-  store i8 0, i8* %found_blank, align 1
-  %23 = load i64, i64* %offset_out, align 8
-  store i64 %23, i64* %logical_end, align 8
-  br label %while.cond23
-
-while.cond23:                                     ; preds = %while.body25, %if.then22
-  %24 = load i64, i64* %logical_end, align 8
-  %tobool24 = icmp ne i64 %24, 0
-  br i1 %tobool24, label %while.body25, label %while.end
-
-while.body25:                                     ; preds = %while.cond23
-  %25 = load i64, i64* %logical_end, align 8
-  %dec = add i64 %25, -1
-  store i64 %dec, i64* %logical_end, align 8
-  %call26 = call i16** @__ctype_b_loc() #25
-  %26 = load i16*, i16** %call26, align 8
-  %27 = load i8*, i8** @fold_file.line_out, align 8
-  %28 = load i64, i64* %logical_end, align 8
-  %arrayidx27 = getelementptr inbounds i8, i8* %27, i64 %28
-  %29 = load i8, i8* %arrayidx27, align 1
-  %call28 = call zeroext i8 @to_uchar(i8 signext %29)
-  %conv29 = zext i8 %call28 to i32
-  %idxprom = sext i32 %conv29 to i64
-  %arrayidx30 = getelementptr inbounds i16, i16* %26, i64 %idxprom
-  %30 = load i16, i16* %arrayidx30, align 2
-  %conv31 = zext i16 %30 to i32
-  %and = and i32 %conv31, 1
-  %tobool32 = icmp ne i32 %and, 0
-  br i1 %tobool32, label %if.then33, label %while.cond23
-
-if.then33:                                        ; preds = %while.body25
-  store i8 1, i8* %found_blank, align 1
-  br label %while.end
-
-while.end:                                        ; preds = %if.then33, %while.cond23
-  %31 = load i8, i8* %found_blank, align 1
-  %tobool35 = trunc i8 %31 to i1
-  br i1 %tobool35, label %if.then36, label %if.end47
-
-if.then36:                                        ; preds = %while.end
-  %32 = load i64, i64* %logical_end, align 8
-  %inc37 = add i64 %32, 1
-  store i64 %inc37, i64* %logical_end, align 8
-  %33 = load i8*, i8** @fold_file.line_out, align 8
-  %34 = load i64, i64* %logical_end, align 8
-  %35 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call38 = call i64 bitcast (i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fwrite_unlocked to i64 (i8*, i64, i64, %struct._IO_FILE*)*)(i8* %33, i64 1, i64 %34, %struct._IO_FILE* %35)
-  %call39 = call i32 @putchar_unlocked(i32 10)
-  %36 = load i8*, i8** @fold_file.line_out, align 8
-  %37 = load i8*, i8** @fold_file.line_out, align 8
-  %38 = load i64, i64* %logical_end, align 8
-  %add.ptr = getelementptr inbounds i8, i8* %37, i64 %38
-  %39 = load i64, i64* %offset_out, align 8
-  %40 = load i64, i64* %logical_end, align 8
-  %sub = sub i64 %39, %40
-  %41 = call i8* @memmove(i8* %36, i8* %add.ptr, i64 %sub)
-  %42 = load i64, i64* %logical_end, align 8
-  %43 = load i64, i64* %offset_out, align 8
-  %sub40 = sub i64 %43, %42
-  store i64 %sub40, i64* %offset_out, align 8
+if.then:                                          ; preds = %do.body2
   store i64 0, i64* %i, align 8
-  store i64 0, i64* %column, align 8
   br label %for.cond
 
-for.cond:                                         ; preds = %for.body, %if.then36
-  %44 = load i64, i64* %i, align 8
-  %45 = load i64, i64* %offset_out, align 8
-  %cmp41 = icmp ult i64 %44, %45
-  br i1 %cmp41, label %for.body, label %rescan
+for.cond:                                         ; preds = %if.end, %if.then
+  %5 = load i64, i64* %n, align 8
+  %cmp = icmp ugt i64 %5, 0
+  %6 = load i64, i64* %i, align 8
+  %7 = load i64, i64* %n, align 8
+  %cmp4 = icmp ult i64 %6, %7
+  %8 = select i1 %cmp, i1 %cmp4, i1 false
+  br i1 %8, label %for.body, label %if.end17
 
 for.body:                                         ; preds = %for.cond
-  %46 = load i64, i64* %column, align 8
-  %47 = load i8*, i8** @fold_file.line_out, align 8
-  %48 = load i64, i64* %i, align 8
-  %arrayidx43 = getelementptr inbounds i8, i8* %47, i64 %48
-  %49 = load i8, i8* %arrayidx43, align 1
-  %call44 = call i64 @adjust_column(i64 %46, i8 signext %49)
-  store i64 %call44, i64* %column, align 8
-  %50 = load i64, i64* %i, align 8
-  %inc45 = add i64 %50, 1
-  store i64 %inc45, i64* %i, align 8
+  %9 = load i8*, i8** %inbuf, align 8
+  %10 = load i64, i64* %sum, align 8
+  %11 = load i64, i64* %i, align 8
+  %add = add i64 %10, %11
+  %arrayidx = getelementptr inbounds i8, i8* %9, i64 %add
+  %12 = load i8, i8* %arrayidx, align 1
+  %call5 = call zeroext i1 @isbase32(i8 signext %12) #26
+  br i1 %call5, label %if.then10, label %lor.lhs.false
+
+lor.lhs.false:                                    ; preds = %for.body
+  %13 = load i8*, i8** %inbuf, align 8
+  %14 = load i64, i64* %sum, align 8
+  %15 = load i64, i64* %i, align 8
+  %add6 = add i64 %14, %15
+  %arrayidx7 = getelementptr inbounds i8, i8* %13, i64 %add6
+  %16 = load i8, i8* %arrayidx7, align 1
+  %conv = sext i8 %16 to i32
+  %cmp8 = icmp eq i32 %conv, 61
+  br i1 %cmp8, label %if.then10, label %if.else
+
+if.then10:                                        ; preds = %lor.lhs.false, %for.body
+  %17 = load i64, i64* %i, align 8
+  %inc = add i64 %17, 1
+  store i64 %inc, i64* %i, align 8
+  br label %if.end
+
+if.else:                                          ; preds = %lor.lhs.false
+  %18 = load i8*, i8** %inbuf, align 8
+  %19 = load i64, i64* %sum, align 8
+  %add.ptr11 = getelementptr inbounds i8, i8* %18, i64 %19
+  %20 = load i64, i64* %i, align 8
+  %add.ptr12 = getelementptr inbounds i8, i8* %add.ptr11, i64 %20
+  %21 = load i8*, i8** %inbuf, align 8
+  %22 = load i64, i64* %sum, align 8
+  %add.ptr13 = getelementptr inbounds i8, i8* %21, i64 %22
+  %23 = load i64, i64* %i, align 8
+  %add.ptr14 = getelementptr inbounds i8, i8* %add.ptr13, i64 %23
+  %add.ptr15 = getelementptr inbounds i8, i8* %add.ptr14, i64 1
+  %24 = load i64, i64* %n, align 8
+  %dec = add i64 %24, -1
+  store i64 %dec, i64* %n, align 8
+  %25 = load i64, i64* %i, align 8
+  %sub16 = sub i64 %dec, %25
+  %26 = call i8* @memmove(i8* %add.ptr12, i8* %add.ptr15, i64 %sub16)
+  br label %if.end
+
+if.end:                                           ; preds = %if.else, %if.then10
   br label %for.cond
 
-if.end47:                                         ; preds = %while.end, %if.then21
-  %51 = load i64, i64* %offset_out, align 8
-  %cmp48 = icmp eq i64 %51, 0
-  br i1 %cmp48, label %if.then50, label %if.end54
+if.end17:                                         ; preds = %for.cond, %do.body2
+  %27 = load i64, i64* %n, align 8
+  %28 = load i64, i64* %sum, align 8
+  %add18 = add i64 %28, %27
+  store i64 %add18, i64* %sum, align 8
+  %29 = load %struct._IO_FILE*, %struct._IO_FILE** %in.addr, align 8
+  %call19 = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.592*)* @ferror_unlocked to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %29) #11
+  %tobool20 = icmp ne i32 %call19, 0
+  br i1 %tobool20, label %if.then21, label %do.cond
 
-if.then50:                                        ; preds = %if.end47
-  %52 = load i32, i32* %c, align 4
-  %conv51 = trunc i32 %52 to i8
-  %53 = load i8*, i8** @fold_file.line_out, align 8
-  %54 = load i64, i64* %offset_out, align 8
-  %inc52 = add i64 %54, 1
-  store i64 %inc52, i64* %offset_out, align 8
-  %arrayidx53 = getelementptr inbounds i8, i8* %53, i64 %54
-  store i8 %conv51, i8* %arrayidx53, align 1
-  br label %while.cond
+if.then21:                                        ; preds = %if.end17
+  %call22 = call i32* @__errno_location() #26
+  %30 = load i32, i32* %call22, align 4
+  call void (i32, i32, i8*, ...) @error(i32 1, i32 %30, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.str.41, i64 0, i64 0))
+  unreachable
 
-if.end54:                                         ; preds = %if.end47
-  %55 = load i8*, i8** @fold_file.line_out, align 8
-  %56 = load i64, i64* %offset_out, align 8
-  %inc55 = add i64 %56, 1
-  store i64 %inc55, i64* %offset_out, align 8
-  %arrayidx56 = getelementptr inbounds i8, i8* %55, i64 %56
-  store i8 10, i8* %arrayidx56, align 1
-  %57 = load i8*, i8** @fold_file.line_out, align 8
-  %58 = load i64, i64* %offset_out, align 8
-  %59 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call57 = call i64 bitcast (i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fwrite_unlocked to i64 (i8*, i64, i64, %struct._IO_FILE*)*)(i8* %57, i64 1, i64 %58, %struct._IO_FILE* %59)
-  store i64 0, i64* %offset_out, align 8
-  store i64 0, i64* %column, align 8
-  br label %rescan
+do.cond:                                          ; preds = %if.end17
+  %31 = load i64, i64* %sum, align 8
+  %cmp24 = icmp ult i64 %31, 8192
+  br i1 %cmp24, label %land.rhs26, label %do.end
 
-if.end58:                                         ; preds = %rescan
-  %60 = load i32, i32* %c, align 4
-  %conv59 = trunc i32 %60 to i8
-  %61 = load i8*, i8** @fold_file.line_out, align 8
-  %62 = load i64, i64* %offset_out, align 8
-  %inc60 = add i64 %62, 1
-  store i64 %inc60, i64* %offset_out, align 8
-  %arrayidx61 = getelementptr inbounds i8, i8* %61, i64 %62
-  store i8 %conv59, i8* %arrayidx61, align 1
-  br label %while.cond
+land.rhs26:                                       ; preds = %do.cond
+  %32 = load %struct._IO_FILE*, %struct._IO_FILE** %in.addr, align 8
+  %call27 = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.590*)* @feof_unlocked to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %32) #11
+  %tobool28 = icmp ne i32 %call27, 0
+  %lnot = xor i1 %tobool28, true
+  br i1 %lnot, label %do.body2, label %do.end
 
-while.end62:                                      ; preds = %while.cond
-  %call63 = call i32* @__errno_location() #25
-  %63 = load i32, i32* %call63, align 4
-  store i32 %63, i32* %saved_errno, align 4
-  %64 = load i64, i64* %offset_out, align 8
-  %tobool64 = icmp ne i64 %64, 0
-  br i1 %tobool64, label %if.then65, label %if.end67
+do.end:                                           ; preds = %do.cond, %land.rhs26
+  store i32 0, i32* %k, align 4
+  br label %for.cond30
 
-if.then65:                                        ; preds = %while.end62
-  %65 = load i8*, i8** @fold_file.line_out, align 8
-  %66 = load i64, i64* %offset_out, align 8
-  %67 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call66 = call i64 bitcast (i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fwrite_unlocked to i64 (i8*, i64, i64, %struct._IO_FILE*)*)(i8* %65, i64 1, i64 %66, %struct._IO_FILE* %67)
-  br label %if.end67
+for.cond30:                                       ; preds = %for.inc, %do.end
+  %33 = load i32, i32* %k, align 4
+  %34 = load %struct._IO_FILE*, %struct._IO_FILE** %in.addr, align 8
+  %call31 = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.590*)* @feof_unlocked to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %34) #11
+  %tobool32 = icmp ne i32 %call31, 0
+  %lnot33 = xor i1 %tobool32, true
+  %lnot34 = xor i1 %lnot33, true
+  %lnot.ext = zext i1 %lnot34 to i32
+  %add35 = add nsw i32 1, %lnot.ext
+  %cmp36 = icmp ult i32 %33, %add35
+  br i1 %cmp36, label %for.body38, label %do.cond61
 
-if.end67:                                         ; preds = %if.then65, %while.end62
-  %68 = load %struct._IO_FILE*, %struct._IO_FILE** %istream, align 8
-  %call68 = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.592*)* @ferror_unlocked to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %68) #11
-  %tobool69 = icmp ne i32 %call68, 0
-  br i1 %tobool69, label %if.then70, label %if.end78
+for.body38:                                       ; preds = %for.cond30
+  %35 = load i32, i32* %k, align 4
+  %cmp39 = icmp eq i32 %35, 1
+  br i1 %cmp39, label %land.lhs.true, label %if.end45
 
-if.then70:                                        ; preds = %if.end67
-  %69 = load i32, i32* %saved_errno, align 4
-  %70 = load i8*, i8** %filename.addr, align 8
-  %call71 = call i8* @quotearg_n_style_colon(i32 0, i32 3, i8* %70)
-  call void (i32, i32, i8*, ...) @error(i32 0, i32 %69, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.36, i64 0, i64 0), i8* %call71)
-  %71 = load i8*, i8** %filename.addr, align 8
-  %call72 = call i32 @strcmp(i8* %71, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.11.126, i64 0, i64 0)) #23
-  %cmp73 = icmp eq i32 %call72, 0
-  br i1 %cmp73, label %if.end77, label %if.then75
+land.lhs.true:                                    ; preds = %for.body38
+  %i41 = getelementptr inbounds %struct.base32_decode_context, %struct.base32_decode_context* %ctx, i32 0, i32 0
+  %36 = load i32, i32* %i41, align 4
+  %cmp42 = icmp eq i32 %36, 0
+  br i1 %cmp42, label %do.cond61, label %if.end45
 
-if.then75:                                        ; preds = %if.then70
-  %72 = load %struct._IO_FILE*, %struct._IO_FILE** %istream, align 8
-  %call76 = call i32 @rpl_fclose(%struct._IO_FILE* %72)
-  br label %if.end77
+if.end45:                                         ; preds = %land.lhs.true, %for.body38
+  store i64 5120, i64* %n, align 8
+  %37 = load i8*, i8** %inbuf, align 8
+  %38 = load i32, i32* %k, align 4
+  %cmp46 = icmp eq i32 %38, 0
+  %39 = load i64, i64* %sum, align 8
+  %cond = select i1 %cmp46, i64 %39, i64 0
+  %40 = load i8*, i8** %outbuf, align 8
+  %call48 = call zeroext i1 @base32_decode_ctx(%struct.base32_decode_context* %ctx, i8* %37, i64 %cond, i8* %40, i64* %n)
+  %frombool49 = zext i1 %call48 to i8
+  store i8 %frombool49, i8* %ok, align 1
+  %41 = load i8*, i8** %outbuf, align 8
+  %42 = load i64, i64* %n, align 8
+  %43 = load %struct._IO_FILE*, %struct._IO_FILE** %out.addr, align 8
+  %call50 = call i64 bitcast (i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fwrite_unlocked to i64 (i8*, i64, i64, %struct._IO_FILE*)*)(i8* %41, i64 1, i64 %42, %struct._IO_FILE* %43)
+  %44 = load i64, i64* %n, align 8
+  %cmp51 = icmp ult i64 %call50, %44
+  br i1 %cmp51, label %if.then53, label %if.end55
 
-if.end77:                                         ; preds = %if.then75, %if.then70
-  store i1 false, i1* %retval, align 1
-  br label %return
+if.then53:                                        ; preds = %if.end45
+  %call54 = call i32* @__errno_location() #26
+  %45 = load i32, i32* %call54, align 4
+  call void (i32, i32, i8*, ...) @error(i32 1, i32 %45, i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.42, i64 0, i64 0))
+  unreachable
 
-if.end78:                                         ; preds = %if.end67
-  %73 = load i8*, i8** %filename.addr, align 8
-  %call79 = call i32 @strcmp(i8* %73, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.11.126, i64 0, i64 0)) #23
-  %cmp80 = icmp eq i32 %call79, 0
-  br i1 %cmp80, label %if.end88, label %land.lhs.true
+if.end55:                                         ; preds = %if.end45
+  %46 = load i8, i8* %ok, align 1
+  %tobool56 = trunc i8 %46 to i1
+  br i1 %tobool56, label %for.inc, label %if.then57
 
-land.lhs.true:                                    ; preds = %if.end78
-  %74 = load %struct._IO_FILE*, %struct._IO_FILE** %istream, align 8
-  %call82 = call i32 @rpl_fclose(%struct._IO_FILE* %74)
-  %cmp83 = icmp eq i32 %call82, -1
-  br i1 %cmp83, label %if.then85, label %if.end88
+if.then57:                                        ; preds = %if.end55
+  call void (i32, i32, i8*, ...) @error(i32 1, i32 0, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.43, i64 0, i64 0))
+  unreachable
 
-if.then85:                                        ; preds = %land.lhs.true
-  %call86 = call i32* @__errno_location() #25
-  %75 = load i32, i32* %call86, align 4
-  %76 = load i8*, i8** %filename.addr, align 8
-  %call87 = call i8* @quotearg_n_style_colon(i32 0, i32 3, i8* %76)
-  call void (i32, i32, i8*, ...) @error(i32 0, i32 %75, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.36, i64 0, i64 0), i8* %call87)
-  store i1 false, i1* %retval, align 1
-  br label %return
+for.inc:                                          ; preds = %if.end55
+  %47 = load i32, i32* %k, align 4
+  %inc59 = add i32 %47, 1
+  store i32 %inc59, i32* %k, align 4
+  br label %for.cond30
 
-if.end88:                                         ; preds = %land.lhs.true, %if.end78
-  store i1 true, i1* %retval, align 1
-  br label %return
+do.cond61:                                        ; preds = %for.cond30, %land.lhs.true
+  %48 = load %struct._IO_FILE*, %struct._IO_FILE** %in.addr, align 8
+  %call62 = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.590*)* @feof_unlocked to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %48) #11
+  %tobool63 = icmp ne i32 %call62, 0
+  %lnot64 = xor i1 %tobool63, true
+  br i1 %lnot64, label %do.body, label %do.end66
 
-return:                                           ; preds = %if.end88, %if.then85, %if.end77, %if.then3
-  %77 = load i1, i1* %retval, align 1
-  ret i1 %77
+do.end66:                                         ; preds = %do.cond61
+  ret void
+}
+
+; Function Attrs: noinline nounwind uwtable
+define internal void @do_encode(%struct._IO_FILE* %in, %struct._IO_FILE* %out, i64 %wrap_column) #3 {
+entry:
+  %in.addr = alloca %struct._IO_FILE*, align 8
+  %out.addr = alloca %struct._IO_FILE*, align 8
+  %wrap_column.addr = alloca i64, align 8
+  %current_column = alloca i64, align 8
+  %inbuf = alloca i8*, align 8
+  %outbuf = alloca i8*, align 8
+  %sum = alloca i64, align 8
+  %n = alloca i64, align 8
+  store %struct._IO_FILE* %in, %struct._IO_FILE** %in.addr, align 8
+  store %struct._IO_FILE* %out, %struct._IO_FILE** %out.addr, align 8
+  store i64 %wrap_column, i64* %wrap_column.addr, align 8
+  store i64 0, i64* %current_column, align 8
+  %call = call noalias i8* @xmalloc(i64 30720)
+  store i8* %call, i8** %inbuf, align 8
+  %call1 = call noalias i8* @xmalloc(i64 49152)
+  store i8* %call1, i8** %outbuf, align 8
+  br label %do.body
+
+do.body:                                          ; preds = %land.lhs.true15, %entry
+  store i64 0, i64* %sum, align 8
+  br label %do.body2
+
+do.body2:                                         ; preds = %land.lhs.true, %do.body
+  %0 = load i8*, i8** %inbuf, align 8
+  %1 = load i64, i64* %sum, align 8
+  %add.ptr = getelementptr inbounds i8, i8* %0, i64 %1
+  %2 = load i64, i64* %sum, align 8
+  %sub = sub i64 30720, %2
+  %3 = load %struct._IO_FILE*, %struct._IO_FILE** %in.addr, align 8
+  %call3 = call i64 bitcast (i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fread_unlocked to i64 (i8*, i64, i64, %struct._IO_FILE*)*)(i8* %add.ptr, i64 1, i64 %sub, %struct._IO_FILE* %3)
+  store i64 %call3, i64* %n, align 8
+  %4 = load i64, i64* %n, align 8
+  %5 = load i64, i64* %sum, align 8
+  %add = add i64 %5, %4
+  store i64 %add, i64* %sum, align 8
+  %6 = load %struct._IO_FILE*, %struct._IO_FILE** %in.addr, align 8
+  %call4 = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.590*)* @feof_unlocked to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %6) #11
+  %tobool = icmp ne i32 %call4, 0
+  br i1 %tobool, label %do.end, label %land.lhs.true
+
+land.lhs.true:                                    ; preds = %do.body2
+  %7 = load %struct._IO_FILE*, %struct._IO_FILE** %in.addr, align 8
+  %call5 = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.592*)* @ferror_unlocked to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %7) #11
+  %tobool6 = icmp eq i32 %call5, 0
+  %8 = load i64, i64* %sum, align 8
+  %cmp = icmp ult i64 %8, 30720
+  %or.cond3 = and i1 %tobool6, %cmp
+  br i1 %or.cond3, label %do.body2, label %do.end
+
+do.end:                                           ; preds = %land.lhs.true, %do.body2
+  %9 = load i64, i64* %sum, align 8
+  %cmp7 = icmp ugt i64 %9, 0
+  br i1 %cmp7, label %if.then, label %do.cond12
+
+if.then:                                          ; preds = %do.end
+  %10 = load i8*, i8** %inbuf, align 8
+  %11 = load i64, i64* %sum, align 8
+  %12 = load i8*, i8** %outbuf, align 8
+  %13 = load i64, i64* %sum, align 8
+  %add8 = add i64 %13, 4
+  %div = udiv i64 %add8, 5
+  %mul = mul i64 %div, 8
+  call void @base32_encode(i8* %10, i64 %11, i8* %12, i64 %mul)
+  %14 = load i8*, i8** %outbuf, align 8
+  %15 = load i64, i64* %sum, align 8
+  %add9 = add i64 %15, 4
+  %div10 = udiv i64 %add9, 5
+  %mul11 = mul i64 %div10, 8
+  %16 = load i64, i64* %wrap_column.addr, align 8
+  %17 = load %struct._IO_FILE*, %struct._IO_FILE** %out.addr, align 8
+  call void @wrap_write(i8* %14, i64 %mul11, i64 %16, i64* %current_column, %struct._IO_FILE* %17)
+  br label %do.cond12
+
+do.cond12:                                        ; preds = %do.end, %if.then
+  %18 = load %struct._IO_FILE*, %struct._IO_FILE** %in.addr, align 8
+  %call13 = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.590*)* @feof_unlocked to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %18) #11
+  %tobool14 = icmp ne i32 %call13, 0
+  br i1 %tobool14, label %do.end21, label %land.lhs.true15
+
+land.lhs.true15:                                  ; preds = %do.cond12
+  %19 = load %struct._IO_FILE*, %struct._IO_FILE** %in.addr, align 8
+  %call16 = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.592*)* @ferror_unlocked to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %19) #11
+  %tobool17 = icmp eq i32 %call16, 0
+  %20 = load i64, i64* %sum, align 8
+  %cmp19 = icmp eq i64 %20, 30720
+  %or.cond4 = and i1 %tobool17, %cmp19
+  br i1 %or.cond4, label %do.body, label %do.end21
+
+do.end21:                                         ; preds = %land.lhs.true15, %do.cond12
+  %21 = load i64, i64* %wrap_column.addr, align 8
+  %tobool22 = icmp ne i64 %21, 0
+  %22 = load i64, i64* %current_column, align 8
+  %cmp24 = icmp ugt i64 %22, 0
+  %or.cond = and i1 %tobool22, %cmp24
+  br i1 %or.cond, label %land.lhs.true25, label %if.end30
+
+land.lhs.true25:                                  ; preds = %do.end21
+  %23 = load %struct._IO_FILE*, %struct._IO_FILE** %out.addr, align 8
+  %call26 = call i32 bitcast (i32 (i32, %struct.__STDIO_FILE_STRUCT.568*)* @fputc_unlocked to i32 (i32, %struct._IO_FILE*)*)(i32 10, %struct._IO_FILE* %23)
+  %cmp27 = icmp eq i32 %call26, -1
+  br i1 %cmp27, label %if.then28, label %if.end30
+
+if.then28:                                        ; preds = %land.lhs.true25
+  %call29 = call i32* @__errno_location() #26
+  %24 = load i32, i32* %call29, align 4
+  call void (i32, i32, i8*, ...) @error(i32 1, i32 %24, i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.42, i64 0, i64 0))
+  unreachable
+
+if.end30:                                         ; preds = %land.lhs.true25, %do.end21
+  %25 = load %struct._IO_FILE*, %struct._IO_FILE** %in.addr, align 8
+  %call31 = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.592*)* @ferror_unlocked to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %25) #11
+  %tobool32 = icmp ne i32 %call31, 0
+  br i1 %tobool32, label %if.then33, label %if.end35
+
+if.then33:                                        ; preds = %if.end30
+  %call34 = call i32* @__errno_location() #26
+  %26 = load i32, i32* %call34, align 4
+  call void (i32, i32, i8*, ...) @error(i32 1, i32 %26, i8* getelementptr inbounds ([11 x i8], [11 x i8]* @.str.41, i64 0, i64 0))
+  unreachable
+
+if.end35:                                         ; preds = %if.end30
+  ret void
 }
 
 ; Function Attrs: noinline nounwind uwtable
@@ -10352,7 +10445,7 @@ land.lhs.true:                                    ; preds = %lor.lhs.false, %if.
   br i1 %tobool, label %if.then8, label %if.end10
 
 if.then8:                                         ; preds = %land.lhs.true
-  %call9 = call i32* @__errno_location() #25
+  %call9 = call i32* @__errno_location() #26
   %5 = load i32, i32* %call9, align 4
   store i32 %5, i32* %saved_errno, align 4
   br label %if.end10
@@ -10367,7 +10460,7 @@ if.end10:                                         ; preds = %if.then8, %land.lhs
 
 if.then13:                                        ; preds = %if.end10
   %8 = load i32, i32* %saved_errno, align 4
-  %call14 = call i32* @__errno_location() #25
+  %call14 = call i32* @__errno_location() #26
   store i32 %8, i32* %call14, align 4
   store i32 -1, i32* %result, align 4
   br label %if.end15
@@ -10517,130 +10610,517 @@ return:                                           ; preds = %if.end7, %if.end, %
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define dso_local i8* @quotearg_n_style_colon(i32 %n, i32 %s, i8* %arg) #3 {
+define dso_local noalias i8* @xmalloc(i64 %n) #3 {
 entry:
-  %n.addr = alloca i32, align 4
-  %s.addr = alloca i32, align 4
-  %arg.addr = alloca i8*, align 8
-  %options = alloca %struct.quoting_options, align 8
-  %tmp = alloca %struct.quoting_options, align 8
-  store i32 %n, i32* %n.addr, align 4
-  store i32 %s, i32* %s.addr, align 4
-  store i8* %arg, i8** %arg.addr, align 8
-  %0 = load i32, i32* %s.addr, align 4
-  call void @quoting_options_from_style(%struct.quoting_options* sret align 8 %tmp, i32 %0)
-  %1 = bitcast %struct.quoting_options* %options to i8*
-  %2 = bitcast %struct.quoting_options* %tmp to i8*
-  %3 = call i8* @memcpy(i8* %1, i8* %2, i64 56)
-  %call = call i32 @set_char_quoting(%struct.quoting_options* %options, i8 signext 58, i32 1)
-  %4 = load i32, i32* %n.addr, align 4
-  %5 = load i8*, i8** %arg.addr, align 8
-  %call1 = call i8* @quotearg_n_options(i32 %4, i8* %5, i64 -1, %struct.quoting_options* %options)
-  ret i8* %call1
+  %n.addr = alloca i64, align 8
+  %p = alloca i8*, align 8
+  store i64 %n, i64* %n.addr, align 8
+  %0 = load i64, i64* %n.addr, align 8
+  %call = call noalias i8* @malloc(i64 %0) #11
+  store i8* %call, i8** %p, align 8
+  %1 = load i8*, i8** %p, align 8
+  %tobool = icmp eq i8* %1, null
+  %2 = load i64, i64* %n.addr, align 8
+  %cmp = icmp ne i64 %2, 0
+  %or.cond = and i1 %tobool, %cmp
+  br i1 %or.cond, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  call void @xalloc_die() #25
+  unreachable
+
+if.end:                                           ; preds = %entry
+  %3 = load i8*, i8** %p, align 8
+  ret i8* %3
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define dso_local void @fadvise(%struct._IO_FILE* %fp, i32 %advice) #3 {
+define dso_local void @base32_encode(i8* noalias %in, i64 %inlen, i8* noalias %out, i64 %outlen) #3 {
 entry:
-  %fp.addr = alloca %struct._IO_FILE*, align 8
-  %advice.addr = alloca i32, align 4
-  store %struct._IO_FILE* %fp, %struct._IO_FILE** %fp.addr, align 8
-  store i32 %advice, i32* %advice.addr, align 4
-  %0 = load %struct._IO_FILE*, %struct._IO_FILE** %fp.addr, align 8
-  %tobool = icmp ne %struct._IO_FILE* %0, null
-  br i1 %tobool, label %if.then, label %if.end
+  %in.addr = alloca i8*, align 8
+  %inlen.addr = alloca i64, align 8
+  %out.addr = alloca i8*, align 8
+  %outlen.addr = alloca i64, align 8
+  store i8* %in, i8** %in.addr, align 8
+  store i64 %inlen, i64* %inlen.addr, align 8
+  store i8* %out, i8** %out.addr, align 8
+  store i64 %outlen, i64* %outlen.addr, align 8
+  br label %while.cond
 
-if.then:                                          ; preds = %entry
-  %1 = load %struct._IO_FILE*, %struct._IO_FILE** %fp.addr, align 8
-  %call = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.608*)* @fileno to i32 (%struct._IO_FILE*)*)(%struct._IO_FILE* %1) #11
-  %2 = load i32, i32* %advice.addr, align 4
-  call void @fdadvise(i32 %call, i64 0, i64 0, i32 %2)
-  br label %if.end
+while.cond:                                       ; preds = %if.end173, %entry
+  %0 = load i64, i64* %inlen.addr, align 8
+  %tobool = icmp ne i64 %0, 0
+  %1 = load i64, i64* %outlen.addr, align 8
+  %tobool1 = icmp ne i64 %1, 0
+  %2 = select i1 %tobool, i1 %tobool1, i1 false
+  br i1 %2, label %while.body, label %while.end
 
-if.end:                                           ; preds = %if.then, %entry
+while.body:                                       ; preds = %while.cond
+  %3 = load i8*, i8** %in.addr, align 8
+  %arrayidx = getelementptr inbounds i8, i8* %3, i64 0
+  %4 = load i8, i8* %arrayidx, align 1
+  %call = call zeroext i8 @to_uchar(i8 signext %4)
+  %conv = zext i8 %call to i32
+  %shr = ashr i32 %conv, 3
+  %and = and i32 %shr, 31
+  %idxprom = sext i32 %and to i64
+  %arrayidx2 = getelementptr inbounds [32 x i8], [32 x i8]* @base32_encode.b32str, i64 0, i64 %idxprom
+  %5 = load i8, i8* %arrayidx2, align 1
+  %6 = load i8*, i8** %out.addr, align 8
+  %incdec.ptr = getelementptr inbounds i8, i8* %6, i32 1
+  store i8* %incdec.ptr, i8** %out.addr, align 8
+  store i8 %5, i8* %6, align 1
+  %7 = load i64, i64* %outlen.addr, align 8
+  %dec = add i64 %7, -1
+  store i64 %dec, i64* %outlen.addr, align 8
+  %tobool3 = icmp ne i64 %dec, 0
+  br i1 %tobool3, label %if.end, label %while.end
+
+if.end:                                           ; preds = %while.body
+  %8 = load i8*, i8** %in.addr, align 8
+  %arrayidx4 = getelementptr inbounds i8, i8* %8, i64 0
+  %9 = load i8, i8* %arrayidx4, align 1
+  %call5 = call zeroext i8 @to_uchar(i8 signext %9)
+  %conv6 = zext i8 %call5 to i32
+  %shl = shl i32 %conv6, 2
+  %10 = load i64, i64* %inlen.addr, align 8
+  %dec7 = add i64 %10, -1
+  store i64 %dec7, i64* %inlen.addr, align 8
+  %tobool8 = icmp ne i64 %dec7, 0
+  br i1 %tobool8, label %cond.true, label %cond.end
+
+cond.true:                                        ; preds = %if.end
+  %11 = load i8*, i8** %in.addr, align 8
+  %arrayidx9 = getelementptr inbounds i8, i8* %11, i64 1
+  %12 = load i8, i8* %arrayidx9, align 1
+  %call10 = call zeroext i8 @to_uchar(i8 signext %12)
+  %conv11 = zext i8 %call10 to i32
+  %shr12 = ashr i32 %conv11, 6
+  br label %cond.end
+
+cond.end:                                         ; preds = %if.end, %cond.true
+  %cond = phi i32 [ %shr12, %cond.true ], [ 0, %if.end ]
+  %add = add nsw i32 %shl, %cond
+  %and13 = and i32 %add, 31
+  %idxprom14 = sext i32 %and13 to i64
+  %arrayidx15 = getelementptr inbounds [32 x i8], [32 x i8]* @base32_encode.b32str, i64 0, i64 %idxprom14
+  %13 = load i8, i8* %arrayidx15, align 1
+  %14 = load i8*, i8** %out.addr, align 8
+  %incdec.ptr16 = getelementptr inbounds i8, i8* %14, i32 1
+  store i8* %incdec.ptr16, i8** %out.addr, align 8
+  store i8 %13, i8* %14, align 1
+  %15 = load i64, i64* %outlen.addr, align 8
+  %dec17 = add i64 %15, -1
+  store i64 %dec17, i64* %outlen.addr, align 8
+  %tobool18 = icmp ne i64 %dec17, 0
+  br i1 %tobool18, label %if.end20, label %while.end
+
+if.end20:                                         ; preds = %cond.end
+  %16 = load i64, i64* %inlen.addr, align 8
+  %tobool21 = icmp ne i64 %16, 0
+  br i1 %tobool21, label %cond.true22, label %cond.end32
+
+cond.true22:                                      ; preds = %if.end20
+  %17 = load i8*, i8** %in.addr, align 8
+  %arrayidx23 = getelementptr inbounds i8, i8* %17, i64 1
+  %18 = load i8, i8* %arrayidx23, align 1
+  %call24 = call zeroext i8 @to_uchar(i8 signext %18)
+  %conv25 = zext i8 %call24 to i32
+  %shr26 = ashr i32 %conv25, 1
+  %and27 = and i32 %shr26, 31
+  %idxprom28 = sext i32 %and27 to i64
+  %arrayidx29 = getelementptr inbounds [32 x i8], [32 x i8]* @base32_encode.b32str, i64 0, i64 %idxprom28
+  %19 = load i8, i8* %arrayidx29, align 1
+  %conv30 = sext i8 %19 to i32
+  br label %cond.end32
+
+cond.end32:                                       ; preds = %if.end20, %cond.true22
+  %cond33 = phi i32 [ %conv30, %cond.true22 ], [ 61, %if.end20 ]
+  %conv34 = trunc i32 %cond33 to i8
+  %20 = load i8*, i8** %out.addr, align 8
+  %incdec.ptr35 = getelementptr inbounds i8, i8* %20, i32 1
+  store i8* %incdec.ptr35, i8** %out.addr, align 8
+  store i8 %conv34, i8* %20, align 1
+  %21 = load i64, i64* %outlen.addr, align 8
+  %dec36 = add i64 %21, -1
+  store i64 %dec36, i64* %outlen.addr, align 8
+  %tobool37 = icmp ne i64 %dec36, 0
+  br i1 %tobool37, label %if.end39, label %while.end
+
+if.end39:                                         ; preds = %cond.end32
+  %22 = load i64, i64* %inlen.addr, align 8
+  %tobool40 = icmp ne i64 %22, 0
+  br i1 %tobool40, label %cond.true41, label %cond.end62
+
+cond.true41:                                      ; preds = %if.end39
+  %23 = load i8*, i8** %in.addr, align 8
+  %arrayidx42 = getelementptr inbounds i8, i8* %23, i64 1
+  %24 = load i8, i8* %arrayidx42, align 1
+  %call43 = call zeroext i8 @to_uchar(i8 signext %24)
+  %conv44 = zext i8 %call43 to i32
+  %shl45 = shl i32 %conv44, 4
+  %25 = load i64, i64* %inlen.addr, align 8
+  %dec46 = add i64 %25, -1
+  store i64 %dec46, i64* %inlen.addr, align 8
+  %tobool47 = icmp ne i64 %dec46, 0
+  br i1 %tobool47, label %cond.true48, label %cond.end54
+
+cond.true48:                                      ; preds = %cond.true41
+  %26 = load i8*, i8** %in.addr, align 8
+  %arrayidx49 = getelementptr inbounds i8, i8* %26, i64 2
+  %27 = load i8, i8* %arrayidx49, align 1
+  %call50 = call zeroext i8 @to_uchar(i8 signext %27)
+  %conv51 = zext i8 %call50 to i32
+  %shr52 = ashr i32 %conv51, 4
+  br label %cond.end54
+
+cond.end54:                                       ; preds = %cond.true41, %cond.true48
+  %cond55 = phi i32 [ %shr52, %cond.true48 ], [ 0, %cond.true41 ]
+  %add56 = add nsw i32 %shl45, %cond55
+  %and57 = and i32 %add56, 31
+  %idxprom58 = sext i32 %and57 to i64
+  %arrayidx59 = getelementptr inbounds [32 x i8], [32 x i8]* @base32_encode.b32str, i64 0, i64 %idxprom58
+  %28 = load i8, i8* %arrayidx59, align 1
+  %conv60 = sext i8 %28 to i32
+  br label %cond.end62
+
+cond.end62:                                       ; preds = %if.end39, %cond.end54
+  %cond63 = phi i32 [ %conv60, %cond.end54 ], [ 61, %if.end39 ]
+  %conv64 = trunc i32 %cond63 to i8
+  %29 = load i8*, i8** %out.addr, align 8
+  %incdec.ptr65 = getelementptr inbounds i8, i8* %29, i32 1
+  store i8* %incdec.ptr65, i8** %out.addr, align 8
+  store i8 %conv64, i8* %29, align 1
+  %30 = load i64, i64* %outlen.addr, align 8
+  %dec66 = add i64 %30, -1
+  store i64 %dec66, i64* %outlen.addr, align 8
+  %tobool67 = icmp ne i64 %dec66, 0
+  br i1 %tobool67, label %if.end69, label %while.end
+
+if.end69:                                         ; preds = %cond.end62
+  %31 = load i64, i64* %inlen.addr, align 8
+  %tobool70 = icmp ne i64 %31, 0
+  br i1 %tobool70, label %cond.true71, label %cond.end92
+
+cond.true71:                                      ; preds = %if.end69
+  %32 = load i8*, i8** %in.addr, align 8
+  %arrayidx72 = getelementptr inbounds i8, i8* %32, i64 2
+  %33 = load i8, i8* %arrayidx72, align 1
+  %call73 = call zeroext i8 @to_uchar(i8 signext %33)
+  %conv74 = zext i8 %call73 to i32
+  %shl75 = shl i32 %conv74, 1
+  %34 = load i64, i64* %inlen.addr, align 8
+  %dec76 = add i64 %34, -1
+  store i64 %dec76, i64* %inlen.addr, align 8
+  %tobool77 = icmp ne i64 %dec76, 0
+  br i1 %tobool77, label %cond.true78, label %cond.end84
+
+cond.true78:                                      ; preds = %cond.true71
+  %35 = load i8*, i8** %in.addr, align 8
+  %arrayidx79 = getelementptr inbounds i8, i8* %35, i64 3
+  %36 = load i8, i8* %arrayidx79, align 1
+  %call80 = call zeroext i8 @to_uchar(i8 signext %36)
+  %conv81 = zext i8 %call80 to i32
+  %shr82 = ashr i32 %conv81, 7
+  br label %cond.end84
+
+cond.end84:                                       ; preds = %cond.true71, %cond.true78
+  %cond85 = phi i32 [ %shr82, %cond.true78 ], [ 0, %cond.true71 ]
+  %add86 = add nsw i32 %shl75, %cond85
+  %and87 = and i32 %add86, 31
+  %idxprom88 = sext i32 %and87 to i64
+  %arrayidx89 = getelementptr inbounds [32 x i8], [32 x i8]* @base32_encode.b32str, i64 0, i64 %idxprom88
+  %37 = load i8, i8* %arrayidx89, align 1
+  %conv90 = sext i8 %37 to i32
+  br label %cond.end92
+
+cond.end92:                                       ; preds = %if.end69, %cond.end84
+  %cond93 = phi i32 [ %conv90, %cond.end84 ], [ 61, %if.end69 ]
+  %conv94 = trunc i32 %cond93 to i8
+  %38 = load i8*, i8** %out.addr, align 8
+  %incdec.ptr95 = getelementptr inbounds i8, i8* %38, i32 1
+  store i8* %incdec.ptr95, i8** %out.addr, align 8
+  store i8 %conv94, i8* %38, align 1
+  %39 = load i64, i64* %outlen.addr, align 8
+  %dec96 = add i64 %39, -1
+  store i64 %dec96, i64* %outlen.addr, align 8
+  %tobool97 = icmp ne i64 %dec96, 0
+  br i1 %tobool97, label %if.end99, label %while.end
+
+if.end99:                                         ; preds = %cond.end92
+  %40 = load i64, i64* %inlen.addr, align 8
+  %tobool100 = icmp ne i64 %40, 0
+  br i1 %tobool100, label %cond.true101, label %cond.end111
+
+cond.true101:                                     ; preds = %if.end99
+  %41 = load i8*, i8** %in.addr, align 8
+  %arrayidx102 = getelementptr inbounds i8, i8* %41, i64 3
+  %42 = load i8, i8* %arrayidx102, align 1
+  %call103 = call zeroext i8 @to_uchar(i8 signext %42)
+  %conv104 = zext i8 %call103 to i32
+  %shr105 = ashr i32 %conv104, 2
+  %and106 = and i32 %shr105, 31
+  %idxprom107 = sext i32 %and106 to i64
+  %arrayidx108 = getelementptr inbounds [32 x i8], [32 x i8]* @base32_encode.b32str, i64 0, i64 %idxprom107
+  %43 = load i8, i8* %arrayidx108, align 1
+  %conv109 = sext i8 %43 to i32
+  br label %cond.end111
+
+cond.end111:                                      ; preds = %if.end99, %cond.true101
+  %cond112 = phi i32 [ %conv109, %cond.true101 ], [ 61, %if.end99 ]
+  %conv113 = trunc i32 %cond112 to i8
+  %44 = load i8*, i8** %out.addr, align 8
+  %incdec.ptr114 = getelementptr inbounds i8, i8* %44, i32 1
+  store i8* %incdec.ptr114, i8** %out.addr, align 8
+  store i8 %conv113, i8* %44, align 1
+  %45 = load i64, i64* %outlen.addr, align 8
+  %dec115 = add i64 %45, -1
+  store i64 %dec115, i64* %outlen.addr, align 8
+  %tobool116 = icmp ne i64 %dec115, 0
+  br i1 %tobool116, label %if.end118, label %while.end
+
+if.end118:                                        ; preds = %cond.end111
+  %46 = load i64, i64* %inlen.addr, align 8
+  %tobool119 = icmp ne i64 %46, 0
+  br i1 %tobool119, label %cond.true120, label %cond.end141
+
+cond.true120:                                     ; preds = %if.end118
+  %47 = load i8*, i8** %in.addr, align 8
+  %arrayidx121 = getelementptr inbounds i8, i8* %47, i64 3
+  %48 = load i8, i8* %arrayidx121, align 1
+  %call122 = call zeroext i8 @to_uchar(i8 signext %48)
+  %conv123 = zext i8 %call122 to i32
+  %shl124 = shl i32 %conv123, 3
+  %49 = load i64, i64* %inlen.addr, align 8
+  %dec125 = add i64 %49, -1
+  store i64 %dec125, i64* %inlen.addr, align 8
+  %tobool126 = icmp ne i64 %dec125, 0
+  br i1 %tobool126, label %cond.true127, label %cond.end133
+
+cond.true127:                                     ; preds = %cond.true120
+  %50 = load i8*, i8** %in.addr, align 8
+  %arrayidx128 = getelementptr inbounds i8, i8* %50, i64 4
+  %51 = load i8, i8* %arrayidx128, align 1
+  %call129 = call zeroext i8 @to_uchar(i8 signext %51)
+  %conv130 = zext i8 %call129 to i32
+  %shr131 = ashr i32 %conv130, 5
+  br label %cond.end133
+
+cond.end133:                                      ; preds = %cond.true120, %cond.true127
+  %cond134 = phi i32 [ %shr131, %cond.true127 ], [ 0, %cond.true120 ]
+  %add135 = add nsw i32 %shl124, %cond134
+  %and136 = and i32 %add135, 31
+  %idxprom137 = sext i32 %and136 to i64
+  %arrayidx138 = getelementptr inbounds [32 x i8], [32 x i8]* @base32_encode.b32str, i64 0, i64 %idxprom137
+  %52 = load i8, i8* %arrayidx138, align 1
+  %conv139 = sext i8 %52 to i32
+  br label %cond.end141
+
+cond.end141:                                      ; preds = %if.end118, %cond.end133
+  %cond142 = phi i32 [ %conv139, %cond.end133 ], [ 61, %if.end118 ]
+  %conv143 = trunc i32 %cond142 to i8
+  %53 = load i8*, i8** %out.addr, align 8
+  %incdec.ptr144 = getelementptr inbounds i8, i8* %53, i32 1
+  store i8* %incdec.ptr144, i8** %out.addr, align 8
+  store i8 %conv143, i8* %53, align 1
+  %54 = load i64, i64* %outlen.addr, align 8
+  %dec145 = add i64 %54, -1
+  store i64 %dec145, i64* %outlen.addr, align 8
+  %tobool146 = icmp ne i64 %dec145, 0
+  br i1 %tobool146, label %if.end148, label %while.end
+
+if.end148:                                        ; preds = %cond.end141
+  %55 = load i64, i64* %inlen.addr, align 8
+  %tobool149 = icmp ne i64 %55, 0
+  br i1 %tobool149, label %cond.true150, label %cond.end159
+
+cond.true150:                                     ; preds = %if.end148
+  %56 = load i8*, i8** %in.addr, align 8
+  %arrayidx151 = getelementptr inbounds i8, i8* %56, i64 4
+  %57 = load i8, i8* %arrayidx151, align 1
+  %call152 = call zeroext i8 @to_uchar(i8 signext %57)
+  %conv153 = zext i8 %call152 to i32
+  %and154 = and i32 %conv153, 31
+  %idxprom155 = sext i32 %and154 to i64
+  %arrayidx156 = getelementptr inbounds [32 x i8], [32 x i8]* @base32_encode.b32str, i64 0, i64 %idxprom155
+  %58 = load i8, i8* %arrayidx156, align 1
+  %conv157 = sext i8 %58 to i32
+  br label %cond.end159
+
+cond.end159:                                      ; preds = %if.end148, %cond.true150
+  %cond160 = phi i32 [ %conv157, %cond.true150 ], [ 61, %if.end148 ]
+  %conv161 = trunc i32 %cond160 to i8
+  %59 = load i8*, i8** %out.addr, align 8
+  %incdec.ptr162 = getelementptr inbounds i8, i8* %59, i32 1
+  store i8* %incdec.ptr162, i8** %out.addr, align 8
+  store i8 %conv161, i8* %59, align 1
+  %60 = load i64, i64* %outlen.addr, align 8
+  %dec163 = add i64 %60, -1
+  store i64 %dec163, i64* %outlen.addr, align 8
+  %tobool164 = icmp ne i64 %dec163, 0
+  br i1 %tobool164, label %if.end166, label %while.end
+
+if.end166:                                        ; preds = %cond.end159
+  %61 = load i64, i64* %inlen.addr, align 8
+  %tobool167 = icmp ne i64 %61, 0
+  br i1 %tobool167, label %if.then168, label %if.end170
+
+if.then168:                                       ; preds = %if.end166
+  %62 = load i64, i64* %inlen.addr, align 8
+  %dec169 = add i64 %62, -1
+  store i64 %dec169, i64* %inlen.addr, align 8
+  br label %if.end170
+
+if.end170:                                        ; preds = %if.then168, %if.end166
+  %63 = load i64, i64* %inlen.addr, align 8
+  %tobool171 = icmp ne i64 %63, 0
+  br i1 %tobool171, label %if.then172, label %if.end173
+
+if.then172:                                       ; preds = %if.end170
+  %64 = load i8*, i8** %in.addr, align 8
+  %add.ptr = getelementptr inbounds i8, i8* %64, i64 5
+  store i8* %add.ptr, i8** %in.addr, align 8
+  br label %if.end173
+
+if.end173:                                        ; preds = %if.then172, %if.end170
+  br label %while.cond
+
+while.end:                                        ; preds = %cond.end159, %cond.end141, %cond.end111, %cond.end92, %cond.end62, %cond.end32, %cond.end, %while.body, %while.cond
+  %65 = load i64, i64* %outlen.addr, align 8
+  %tobool174 = icmp ne i64 %65, 0
+  br i1 %tobool174, label %if.then175, label %if.end176
+
+if.then175:                                       ; preds = %while.end
+  %66 = load i8*, i8** %out.addr, align 8
+  store i8 0, i8* %66, align 1
+  br label %if.end176
+
+if.end176:                                        ; preds = %if.then175, %while.end
   ret void
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define dso_local i8* @x2realloc(i8* %p, i64* %pn) #3 {
+define internal void @wrap_write(i8* %buffer, i64 %len, i64 %wrap_column, i64* %current_column, %struct._IO_FILE* %out) #3 {
 entry:
-  %p.addr = alloca i8*, align 8
-  %pn.addr = alloca i64*, align 8
-  store i8* %p, i8** %p.addr, align 8
-  store i64* %pn, i64** %pn.addr, align 8
-  %0 = load i8*, i8** %p.addr, align 8
-  %1 = load i64*, i64** %pn.addr, align 8
-  %call = call i8* @x2nrealloc(i8* %0, i64* %1, i64 1)
-  ret i8* %call
-}
-
-; Function Attrs: noinline nounwind uwtable
-define internal i64 @adjust_column(i64 %column, i8 signext %c) #3 {
-entry:
-  %column.addr = alloca i64, align 8
-  %c.addr = alloca i8, align 1
-  store i64 %column, i64* %column.addr, align 8
-  store i8 %c, i8* %c.addr, align 1
-  %0 = load i8, i8* @count_bytes, align 1
-  %tobool = trunc i8 %0 to i1
-  br i1 %tobool, label %if.else19, label %if.then
+  %buffer.addr = alloca i8*, align 8
+  %len.addr = alloca i64, align 8
+  %wrap_column.addr = alloca i64, align 8
+  %current_column.addr = alloca i64*, align 8
+  %out.addr = alloca %struct._IO_FILE*, align 8
+  %written = alloca i64, align 8
+  %cols_remaining = alloca i64, align 8
+  %to_write = alloca i64, align 8
+  store i8* %buffer, i8** %buffer.addr, align 8
+  store i64 %len, i64* %len.addr, align 8
+  store i64 %wrap_column, i64* %wrap_column.addr, align 8
+  store i64* %current_column, i64** %current_column.addr, align 8
+  store %struct._IO_FILE* %out, %struct._IO_FILE** %out.addr, align 8
+  %0 = load i64, i64* %wrap_column.addr, align 8
+  %cmp = icmp eq i64 %0, 0
+  br i1 %cmp, label %if.then, label %if.else
 
 if.then:                                          ; preds = %entry
-  %1 = load i8, i8* %c.addr, align 1
-  %conv = sext i8 %1 to i32
-  %cmp = icmp eq i32 %conv, 8
-  br i1 %cmp, label %if.then2, label %if.else
+  %1 = load i8*, i8** %buffer.addr, align 8
+  %2 = load i64, i64* %len.addr, align 8
+  %3 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
+  %call = call i64 bitcast (i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fwrite_unlocked to i64 (i8*, i64, i64, %struct._IO_FILE*)*)(i8* %1, i64 1, i64 %2, %struct._IO_FILE* %3)
+  %4 = load i64, i64* %len.addr, align 8
+  %cmp1 = icmp ult i64 %call, %4
+  br i1 %cmp1, label %if.then2, label %if.end28
 
 if.then2:                                         ; preds = %if.then
-  %2 = load i64, i64* %column.addr, align 8
-  %cmp3 = icmp ugt i64 %2, 0
-  br i1 %cmp3, label %if.then5, label %if.end21
+  %call3 = call i32* @__errno_location() #26
+  %5 = load i32, i32* %call3, align 4
+  call void (i32, i32, i8*, ...) @error(i32 1, i32 %5, i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.42, i64 0, i64 0))
+  unreachable
 
-if.then5:                                         ; preds = %if.then2
-  %3 = load i64, i64* %column.addr, align 8
-  %dec = add i64 %3, -1
-  store i64 %dec, i64* %column.addr, align 8
-  br label %if.end21
+if.else:                                          ; preds = %entry
+  store i64 0, i64* %written, align 8
+  br label %for.cond
 
-if.else:                                          ; preds = %if.then
-  %4 = load i8, i8* %c.addr, align 1
-  %conv6 = sext i8 %4 to i32
-  %cmp7 = icmp eq i32 %conv6, 13
-  br i1 %cmp7, label %if.then9, label %if.else10
+for.cond:                                         ; preds = %if.end27, %if.else
+  %6 = load i64, i64* %written, align 8
+  %7 = load i64, i64* %len.addr, align 8
+  %cmp4 = icmp ult i64 %6, %7
+  br i1 %cmp4, label %for.body, label %if.end28
 
-if.then9:                                         ; preds = %if.else
-  store i64 0, i64* %column.addr, align 8
-  br label %if.end21
+for.body:                                         ; preds = %for.cond
+  %8 = load i64, i64* %wrap_column.addr, align 8
+  %9 = load i64*, i64** %current_column.addr, align 8
+  %10 = load i64, i64* %9, align 8
+  %sub = sub i64 %8, %10
+  store i64 %sub, i64* %cols_remaining, align 8
+  %11 = load i64, i64* %cols_remaining, align 8
+  %cmp5 = icmp ult i64 %11, -1
+  %12 = load i64, i64* %cols_remaining, align 8
+  %cond = select i1 %cmp5, i64 %12, i64 -1
+  store i64 %cond, i64* %to_write, align 8
+  %13 = load i64, i64* %to_write, align 8
+  %14 = load i64, i64* %len.addr, align 8
+  %15 = load i64, i64* %written, align 8
+  %sub6 = sub i64 %14, %15
+  %cmp7 = icmp ult i64 %13, %sub6
+  %16 = load i64, i64* %to_write, align 8
+  %17 = load i64, i64* %len.addr, align 8
+  %18 = load i64, i64* %written, align 8
+  %sub10 = sub i64 %17, %18
+  %cond12 = select i1 %cmp7, i64 %16, i64 %sub10
+  store i64 %cond12, i64* %to_write, align 8
+  %19 = load i64, i64* %to_write, align 8
+  %cmp13 = icmp eq i64 %19, 0
+  br i1 %cmp13, label %if.then14, label %if.else20
 
-if.else10:                                        ; preds = %if.else
-  %5 = load i8, i8* %c.addr, align 1
-  %conv11 = sext i8 %5 to i32
-  %cmp12 = icmp eq i32 %conv11, 9
-  %6 = load i64, i64* %column.addr, align 8
-  br i1 %cmp12, label %if.then14, label %if.else15
+if.then14:                                        ; preds = %for.body
+  %20 = load %struct._IO_FILE*, %struct._IO_FILE** %out.addr, align 8
+  %call15 = call i32 bitcast (i32 (i32, %struct.__STDIO_FILE_STRUCT.568*)* @fputc_unlocked to i32 (i32, %struct._IO_FILE*)*)(i32 10, %struct._IO_FILE* %20)
+  %cmp16 = icmp eq i32 %call15, -1
+  br i1 %cmp16, label %if.then17, label %if.end19
 
-if.then14:                                        ; preds = %if.else10
-  %rem = urem i64 %6, 8
-  %sub = sub i64 8, %rem
-  %7 = load i64, i64* %column.addr, align 8
-  %add = add i64 %7, %sub
-  store i64 %add, i64* %column.addr, align 8
-  br label %if.end21
+if.then17:                                        ; preds = %if.then14
+  %call18 = call i32* @__errno_location() #26
+  %21 = load i32, i32* %call18, align 4
+  call void (i32, i32, i8*, ...) @error(i32 1, i32 %21, i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.42, i64 0, i64 0))
+  unreachable
 
-if.else15:                                        ; preds = %if.else10
-  %inc = add i64 %6, 1
-  store i64 %inc, i64* %column.addr, align 8
-  br label %if.end21
+if.end19:                                         ; preds = %if.then14
+  %22 = load i64*, i64** %current_column.addr, align 8
+  store i64 0, i64* %22, align 8
+  br label %if.end27
 
-if.else19:                                        ; preds = %entry
-  %8 = load i64, i64* %column.addr, align 8
-  %inc20 = add i64 %8, 1
-  store i64 %inc20, i64* %column.addr, align 8
-  br label %if.end21
+if.else20:                                        ; preds = %for.body
+  %23 = load i8*, i8** %buffer.addr, align 8
+  %24 = load i64, i64* %written, align 8
+  %add.ptr = getelementptr inbounds i8, i8* %23, i64 %24
+  %25 = load i64, i64* %to_write, align 8
+  %26 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
+  %call21 = call i64 bitcast (i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fwrite_unlocked to i64 (i8*, i64, i64, %struct._IO_FILE*)*)(i8* %add.ptr, i64 1, i64 %25, %struct._IO_FILE* %26)
+  %27 = load i64, i64* %to_write, align 8
+  %cmp22 = icmp ult i64 %call21, %27
+  br i1 %cmp22, label %if.then23, label %if.end25
 
-if.end21:                                         ; preds = %if.then5, %if.then2, %if.then14, %if.else15, %if.then9, %if.else19
-  %9 = load i64, i64* %column.addr, align 8
-  ret i64 %9
+if.then23:                                        ; preds = %if.else20
+  %call24 = call i32* @__errno_location() #26
+  %28 = load i32, i32* %call24, align 4
+  call void (i32, i32, i8*, ...) @error(i32 1, i32 %28, i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.42, i64 0, i64 0))
+  unreachable
+
+if.end25:                                         ; preds = %if.else20
+  %29 = load i64, i64* %to_write, align 8
+  %30 = load i64*, i64** %current_column.addr, align 8
+  %31 = load i64, i64* %30, align 8
+  %add = add i64 %31, %29
+  store i64 %add, i64* %30, align 8
+  %32 = load i64, i64* %to_write, align 8
+  %33 = load i64, i64* %written, align 8
+  %add26 = add i64 %33, %32
+  store i64 %add26, i64* %written, align 8
+  br label %if.end27
+
+if.end27:                                         ; preds = %if.end25, %if.end19
+  br label %for.cond
+
+if.end28:                                         ; preds = %for.cond, %if.then
+  ret void
 }
 
 ; Function Attrs: noinline nounwind uwtable
@@ -10652,142 +11132,819 @@ entry:
   ret i8 %0
 }
 
-; Function Attrs: noinline nounwind uwtable
-define dso_local i8* @x2nrealloc(i8* %p, i64* %pn, i64 %s) #3 {
-entry:
-  %p.addr = alloca i8*, align 8
-  %pn.addr = alloca i64*, align 8
-  %s.addr = alloca i64, align 8
-  %n = alloca i64, align 8
-  store i8* %p, i8** %p.addr, align 8
-  store i64* %pn, i64** %pn.addr, align 8
-  store i64 %s, i64* %s.addr, align 8
-  %0 = load i64*, i64** %pn.addr, align 8
-  %1 = load i64, i64* %0, align 8
-  store i64 %1, i64* %n, align 8
-  %2 = load i8*, i8** %p.addr, align 8
-  %tobool = icmp ne i8* %2, null
-  br i1 %tobool, label %if.else, label %if.then
-
-if.then:                                          ; preds = %entry
-  %3 = load i64, i64* %n, align 8
-  %tobool1 = icmp ne i64 %3, 0
-  br i1 %tobool1, label %if.end, label %if.then2
-
-if.then2:                                         ; preds = %if.then
-  %4 = load i64, i64* %s.addr, align 8
-  %div = udiv i64 128, %4
-  store i64 %div, i64* %n, align 8
-  %5 = load i64, i64* %n, align 8
-  %tobool3 = icmp ne i64 %5, 0
-  %lnot = xor i1 %tobool3, true
-  %lnot.ext = zext i1 %lnot to i32
-  %conv = sext i32 %lnot.ext to i64
-  %6 = load i64, i64* %n, align 8
-  %add = add i64 %6, %conv
-  store i64 %add, i64* %n, align 8
-  br label %if.end
-
-if.end:                                           ; preds = %if.then2, %if.then
-  %7 = load i64, i64* %s.addr, align 8
-  %div4 = udiv i64 9223372036854775807, %7
-  %8 = load i64, i64* %n, align 8
-  %cmp = icmp ult i64 %div4, %8
-  br i1 %cmp, label %if.then6, label %if.end16
-
-if.then6:                                         ; preds = %if.end
-  call void @xalloc_die() #24
-  unreachable
-
-if.else:                                          ; preds = %entry
-  %9 = load i64, i64* %s.addr, align 8
-  %div8 = udiv i64 6148914691236517204, %9
-  %10 = load i64, i64* %n, align 8
-  %cmp9 = icmp ule i64 %div8, %10
-  br i1 %cmp9, label %if.then11, label %if.end12
-
-if.then11:                                        ; preds = %if.else
-  call void @xalloc_die() #24
-  unreachable
-
-if.end12:                                         ; preds = %if.else
-  %11 = load i64, i64* %n, align 8
-  %div13 = udiv i64 %11, 2
-  %add14 = add i64 %div13, 1
-  %12 = load i64, i64* %n, align 8
-  %add15 = add i64 %12, %add14
-  store i64 %add15, i64* %n, align 8
-  br label %if.end16
-
-if.end16:                                         ; preds = %if.end, %if.end12
-  %13 = load i64, i64* %n, align 8
-  %14 = load i64*, i64** %pn.addr, align 8
-  store i64 %13, i64* %14, align 8
-  %15 = load i8*, i8** %p.addr, align 8
-  %16 = load i64, i64* %n, align 8
-  %17 = load i64, i64* %s.addr, align 8
-  %mul = mul i64 %16, %17
-  %call = call i8* @xrealloc(i8* %15, i64 %mul)
-  ret i8* %call
-}
-
 ; Function Attrs: noinline noreturn nounwind uwtable
 define dso_local void @xalloc_die() #6 {
 entry:
   %0 = load volatile i32, i32* @exit_failure, align 4
-  call void (i32, i32, i8*, ...) @error(i32 %0, i32 0, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.114, i64 0, i64 0), i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.1.115, i64 0, i64 0))
-  call void @abort() #26
+  call void (i32, i32, i8*, ...) @error(i32 %0, i32 0, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.131, i64 0, i64 0), i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.1.132, i64 0, i64 0))
+  call void @abort() #27
   unreachable
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define dso_local i8* @xrealloc(i8* %p, i64 %n) #3 {
+define dso_local void @base32_decode_ctx_init(%struct.base32_decode_context* %ctx) #3 {
 entry:
-  %retval = alloca i8*, align 8
-  %p.addr = alloca i8*, align 8
-  %n.addr = alloca i64, align 8
-  store i8* %p, i8** %p.addr, align 8
-  store i64 %n, i64* %n.addr, align 8
-  %0 = load i64, i64* %n.addr, align 8
-  %tobool = icmp eq i64 %0, 0
-  %1 = load i8*, i8** %p.addr, align 8
-  %tobool1 = icmp ne i8* %1, null
-  %or.cond = and i1 %tobool, %tobool1
-  %2 = load i8*, i8** %p.addr, align 8
-  br i1 %or.cond, label %if.then, label %if.end
+  %ctx.addr = alloca %struct.base32_decode_context*, align 8
+  store %struct.base32_decode_context* %ctx, %struct.base32_decode_context** %ctx.addr, align 8
+  %0 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %i = getelementptr inbounds %struct.base32_decode_context, %struct.base32_decode_context* %0, i32 0, i32 0
+  store i32 0, i32* %i, align 4
+  ret void
+}
+
+; Function Attrs: noinline nounwind readnone uwtable
+define dso_local zeroext i1 @isbase32(i8 signext %ch) #15 {
+entry:
+  %ch.addr = alloca i8, align 1
+  store i8 %ch, i8* %ch.addr, align 1
+  %0 = load i8, i8* %ch.addr, align 1
+  %call = call zeroext i8 @to_uchar(i8 signext %0)
+  %idxprom = zext i8 %call to i64
+  %arrayidx = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom
+  %1 = load i8, i8* %arrayidx, align 1
+  %conv = sext i8 %1 to i32
+  %cmp = icmp sle i32 0, %conv
+  ret i1 %cmp
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local zeroext i1 @base32_decode_ctx(%struct.base32_decode_context* %ctx, i8* noalias %in, i64 %inlen, i8* noalias %out, i64* %outlen) #3 {
+entry:
+  %ctx.addr = alloca %struct.base32_decode_context*, align 8
+  %in.addr = alloca i8*, align 8
+  %inlen.addr = alloca i64, align 8
+  %out.addr = alloca i8*, align 8
+  %outlen.addr = alloca i64*, align 8
+  %outleft = alloca i64, align 8
+  %ignore_newlines = alloca i8, align 1
+  %flush_ctx = alloca i8, align 1
+  %ctx_i = alloca i32, align 4
+  %outleft_save = alloca i64, align 8
+  %in_end = alloca i8*, align 8
+  %non_nl = alloca i8*, align 8
+  store %struct.base32_decode_context* %ctx, %struct.base32_decode_context** %ctx.addr, align 8
+  store i8* %in, i8** %in.addr, align 8
+  store i64 %inlen, i64* %inlen.addr, align 8
+  store i8* %out, i8** %out.addr, align 8
+  store i64* %outlen, i64** %outlen.addr, align 8
+  %0 = load i64*, i64** %outlen.addr, align 8
+  %1 = load i64, i64* %0, align 8
+  store i64 %1, i64* %outleft, align 8
+  %2 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %cmp = icmp ne %struct.base32_decode_context* %2, null
+  %frombool = zext i1 %cmp to i8
+  store i8 %frombool, i8* %ignore_newlines, align 1
+  store i8 0, i8* %flush_ctx, align 1
+  store i32 0, i32* %ctx_i, align 4
+  %3 = load i8, i8* %ignore_newlines, align 1
+  %tobool = trunc i8 %3 to i1
+  br i1 %tobool, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @free(i8* %2) #11
-  store i8* null, i8** %retval, align 8
+  %4 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %i = getelementptr inbounds %struct.base32_decode_context, %struct.base32_decode_context* %4, i32 0, i32 0
+  %5 = load i32, i32* %i, align 4
+  store i32 %5, i32* %ctx_i, align 4
+  %6 = load i64, i64* %inlen.addr, align 8
+  %cmp1 = icmp eq i64 %6, 0
+  %frombool2 = zext i1 %cmp1 to i8
+  store i8 %frombool2, i8* %flush_ctx, align 1
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %entry
+  br label %while.body
+
+while.body:                                       ; preds = %if.end, %if.then23, %if.end45
+  %7 = load i64, i64* %outleft, align 8
+  store i64 %7, i64* %outleft_save, align 8
+  %8 = load i32, i32* %ctx_i, align 4
+  %cmp3 = icmp eq i32 %8, 0
+  br i1 %cmp3, label %land.lhs.true, label %if.end10
+
+land.lhs.true:                                    ; preds = %while.body
+  %9 = load i8, i8* %flush_ctx, align 1
+  %tobool4 = trunc i8 %9 to i1
+  br i1 %tobool4, label %if.end10, label %while.body7
+
+while.body7:                                      ; preds = %land.lhs.true, %if.end9
+  %10 = load i64, i64* %outleft, align 8
+  store i64 %10, i64* %outleft_save, align 8
+  %11 = load i8*, i8** %in.addr, align 8
+  %12 = load i64, i64* %inlen.addr, align 8
+  %call = call zeroext i1 @decode_8(i8* %11, i64 %12, i8** %out.addr, i64* %outleft)
+  br i1 %call, label %if.end9, label %if.end10
+
+if.end9:                                          ; preds = %while.body7
+  %13 = load i8*, i8** %in.addr, align 8
+  %add.ptr = getelementptr inbounds i8, i8* %13, i64 8
+  store i8* %add.ptr, i8** %in.addr, align 8
+  %14 = load i64, i64* %inlen.addr, align 8
+  %sub = sub i64 %14, 8
+  store i64 %sub, i64* %inlen.addr, align 8
+  br label %while.body7
+
+if.end10:                                         ; preds = %while.body7, %land.lhs.true, %while.body
+  %15 = load i64, i64* %inlen.addr, align 8
+  %cmp11 = icmp eq i64 %15, 0
+  br i1 %cmp11, label %land.lhs.true12, label %if.end15
+
+land.lhs.true12:                                  ; preds = %if.end10
+  %16 = load i8, i8* %flush_ctx, align 1
+  %tobool13 = trunc i8 %16 to i1
+  br i1 %tobool13, label %if.end15, label %while.end46
+
+if.end15:                                         ; preds = %land.lhs.true12, %if.end10
+  %17 = load i64, i64* %inlen.addr, align 8
+  %tobool16 = icmp ne i64 %17, 0
+  br i1 %tobool16, label %land.lhs.true17, label %if.end24
+
+land.lhs.true17:                                  ; preds = %if.end15
+  %18 = load i8*, i8** %in.addr, align 8
+  %19 = load i8, i8* %18, align 1
+  %conv = sext i8 %19 to i32
+  %cmp18 = icmp eq i32 %conv, 10
+  br i1 %cmp18, label %land.lhs.true20, label %if.end24
+
+land.lhs.true20:                                  ; preds = %land.lhs.true17
+  %20 = load i8, i8* %ignore_newlines, align 1
+  %tobool21 = trunc i8 %20 to i1
+  br i1 %tobool21, label %if.then23, label %if.end24
+
+if.then23:                                        ; preds = %land.lhs.true20
+  %21 = load i8*, i8** %in.addr, align 8
+  %incdec.ptr = getelementptr inbounds i8, i8* %21, i32 1
+  store i8* %incdec.ptr, i8** %in.addr, align 8
+  %22 = load i64, i64* %inlen.addr, align 8
+  %dec = add i64 %22, -1
+  store i64 %dec, i64* %inlen.addr, align 8
+  br label %while.body
+
+if.end24:                                         ; preds = %land.lhs.true20, %land.lhs.true17, %if.end15
+  %23 = load i64, i64* %outleft_save, align 8
+  %24 = load i64, i64* %outleft, align 8
+  %sub25 = sub i64 %23, %24
+  %25 = load i8*, i8** %out.addr, align 8
+  %idx.neg = sub i64 0, %sub25
+  %add.ptr26 = getelementptr inbounds i8, i8* %25, i64 %idx.neg
+  store i8* %add.ptr26, i8** %out.addr, align 8
+  %26 = load i64, i64* %outleft_save, align 8
+  store i64 %26, i64* %outleft, align 8
+  %27 = load i8*, i8** %in.addr, align 8
+  %28 = load i64, i64* %inlen.addr, align 8
+  %add.ptr27 = getelementptr inbounds i8, i8* %27, i64 %28
+  store i8* %add.ptr27, i8** %in_end, align 8
+  %29 = load i8, i8* %ignore_newlines, align 1
+  %tobool28 = trunc i8 %29 to i1
+  br i1 %tobool28, label %if.then29, label %if.else
+
+if.then29:                                        ; preds = %if.end24
+  %30 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %31 = load i8*, i8** %in_end, align 8
+  %call30 = call i8* @get_8(%struct.base32_decode_context* %30, i8** %in.addr, i8* %31, i64* %inlen.addr)
+  store i8* %call30, i8** %non_nl, align 8
+  br label %if.end31
+
+if.else:                                          ; preds = %if.end24
+  %32 = load i8*, i8** %in.addr, align 8
+  store i8* %32, i8** %non_nl, align 8
+  br label %if.end31
+
+if.end31:                                         ; preds = %if.else, %if.then29
+  %33 = load i64, i64* %inlen.addr, align 8
+  %cmp32 = icmp eq i64 %33, 0
+  br i1 %cmp32, label %if.then41, label %lor.lhs.false
+
+lor.lhs.false:                                    ; preds = %if.end31
+  %34 = load i64, i64* %inlen.addr, align 8
+  %cmp34 = icmp ult i64 %34, 8
+  br i1 %cmp34, label %land.lhs.true36, label %if.end42
+
+land.lhs.true36:                                  ; preds = %lor.lhs.false
+  %35 = load i8, i8* %flush_ctx, align 1
+  %tobool37 = trunc i8 %35 to i1
+  br i1 %tobool37, label %if.end42, label %land.lhs.true38
+
+land.lhs.true38:                                  ; preds = %land.lhs.true36
+  %36 = load i8, i8* %ignore_newlines, align 1
+  %tobool39 = trunc i8 %36 to i1
+  br i1 %tobool39, label %if.then41, label %if.end42
+
+if.then41:                                        ; preds = %land.lhs.true38, %if.end31
+  store i64 0, i64* %inlen.addr, align 8
+  br label %while.end46
+
+if.end42:                                         ; preds = %land.lhs.true38, %land.lhs.true36, %lor.lhs.false
+  %37 = load i8*, i8** %non_nl, align 8
+  %38 = load i64, i64* %inlen.addr, align 8
+  %call43 = call zeroext i1 @decode_8(i8* %37, i64 %38, i8** %out.addr, i64* %outleft)
+  br i1 %call43, label %if.end45, label %while.end46
+
+if.end45:                                         ; preds = %if.end42
+  %39 = load i8*, i8** %in_end, align 8
+  %40 = load i8*, i8** %in.addr, align 8
+  %sub.ptr.lhs.cast = ptrtoint i8* %39 to i64
+  %sub.ptr.rhs.cast = ptrtoint i8* %40 to i64
+  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast
+  store i64 %sub.ptr.sub, i64* %inlen.addr, align 8
+  br label %while.body
+
+while.end46:                                      ; preds = %if.end42, %land.lhs.true12, %if.then41
+  %41 = load i64, i64* %outleft, align 8
+  %42 = load i64*, i64** %outlen.addr, align 8
+  %43 = load i64, i64* %42, align 8
+  %sub47 = sub i64 %43, %41
+  store i64 %sub47, i64* %42, align 8
+  %44 = load i64, i64* %inlen.addr, align 8
+  %cmp48 = icmp eq i64 %44, 0
+  ret i1 %cmp48
+}
+
+; Function Attrs: noinline nounwind uwtable
+define internal zeroext i1 @decode_8(i8* noalias %in, i64 %inlen, i8** %outp, i64* %outleft) #3 {
+entry:
+  %retval = alloca i1, align 1
+  %in.addr = alloca i8*, align 8
+  %inlen.addr = alloca i64, align 8
+  %outp.addr = alloca i8**, align 8
+  %outleft.addr = alloca i64*, align 8
+  %out = alloca i8*, align 8
+  store i8* %in, i8** %in.addr, align 8
+  store i64 %inlen, i64* %inlen.addr, align 8
+  store i8** %outp, i8*** %outp.addr, align 8
+  store i64* %outleft, i64** %outleft.addr, align 8
+  %0 = load i8**, i8*** %outp.addr, align 8
+  %1 = load i8*, i8** %0, align 8
+  store i8* %1, i8** %out, align 8
+  %2 = load i64, i64* %inlen.addr, align 8
+  %cmp = icmp ult i64 %2, 8
+  br i1 %cmp, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  store i1 false, i1* %retval, align 1
   br label %return
 
 if.end:                                           ; preds = %entry
-  %3 = load i64, i64* %n.addr, align 8
-  %call = call i8* @realloc(i8* %2, i64 %3) #11
-  store i8* %call, i8** %p.addr, align 8
-  %4 = load i8*, i8** %p.addr, align 8
-  %tobool2 = icmp eq i8* %4, null
-  %5 = load i64, i64* %n.addr, align 8
-  %tobool4 = icmp ne i64 %5, 0
-  %or.cond1 = and i1 %tobool2, %tobool4
-  br i1 %or.cond1, label %if.then5, label %if.end6
+  %3 = load i8*, i8** %in.addr, align 8
+  %arrayidx = getelementptr inbounds i8, i8* %3, i64 0
+  %4 = load i8, i8* %arrayidx, align 1
+  %call = call zeroext i1 @isbase32(i8 signext %4) #26
+  br i1 %call, label %lor.lhs.false, label %if.then3
 
-if.then5:                                         ; preds = %if.end
-  call void @xalloc_die() #24
-  unreachable
+lor.lhs.false:                                    ; preds = %if.end
+  %5 = load i8*, i8** %in.addr, align 8
+  %arrayidx1 = getelementptr inbounds i8, i8* %5, i64 1
+  %6 = load i8, i8* %arrayidx1, align 1
+  %call2 = call zeroext i1 @isbase32(i8 signext %6) #26
+  br i1 %call2, label %if.end4, label %if.then3
 
-if.end6:                                          ; preds = %if.end
-  %6 = load i8*, i8** %p.addr, align 8
-  store i8* %6, i8** %retval, align 8
+if.then3:                                         ; preds = %lor.lhs.false, %if.end
+  store i1 false, i1* %retval, align 1
   br label %return
 
-return:                                           ; preds = %if.end6, %if.then
-  %7 = load i8*, i8** %retval, align 8
-  ret i8* %7
+if.end4:                                          ; preds = %lor.lhs.false
+  %7 = load i64*, i64** %outleft.addr, align 8
+  %8 = load i64, i64* %7, align 8
+  %tobool = icmp ne i64 %8, 0
+  br i1 %tobool, label %if.then5, label %if.end15
+
+if.then5:                                         ; preds = %if.end4
+  %9 = load i8*, i8** %in.addr, align 8
+  %arrayidx6 = getelementptr inbounds i8, i8* %9, i64 0
+  %10 = load i8, i8* %arrayidx6, align 1
+  %call7 = call zeroext i8 @to_uchar(i8 signext %10)
+  %idxprom = zext i8 %call7 to i64
+  %arrayidx8 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom
+  %11 = load i8, i8* %arrayidx8, align 1
+  %conv = sext i8 %11 to i32
+  %shl = shl i32 %conv, 3
+  %12 = load i8*, i8** %in.addr, align 8
+  %arrayidx9 = getelementptr inbounds i8, i8* %12, i64 1
+  %13 = load i8, i8* %arrayidx9, align 1
+  %call10 = call zeroext i8 @to_uchar(i8 signext %13)
+  %idxprom11 = zext i8 %call10 to i64
+  %arrayidx12 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom11
+  %14 = load i8, i8* %arrayidx12, align 1
+  %conv13 = sext i8 %14 to i32
+  %shr = ashr i32 %conv13, 2
+  %or = or i32 %shl, %shr
+  %conv14 = trunc i32 %or to i8
+  %15 = load i8*, i8** %out, align 8
+  %incdec.ptr = getelementptr inbounds i8, i8* %15, i32 1
+  store i8* %incdec.ptr, i8** %out, align 8
+  store i8 %conv14, i8* %15, align 1
+  %16 = load i64*, i64** %outleft.addr, align 8
+  %17 = load i64, i64* %16, align 8
+  %dec = add i64 %17, -1
+  store i64 %dec, i64* %16, align 8
+  br label %if.end15
+
+if.end15:                                         ; preds = %if.then5, %if.end4
+  %18 = load i8*, i8** %in.addr, align 8
+  %arrayidx16 = getelementptr inbounds i8, i8* %18, i64 2
+  %19 = load i8, i8* %arrayidx16, align 1
+  %conv17 = sext i8 %19 to i32
+  %cmp18 = icmp eq i32 %conv17, 61
+  %20 = load i8*, i8** %in.addr, align 8
+  br i1 %cmp18, label %if.then20, label %if.else
+
+if.then20:                                        ; preds = %if.end15
+  %arrayidx21 = getelementptr inbounds i8, i8* %20, i64 3
+  %21 = load i8, i8* %arrayidx21, align 1
+  %conv22 = sext i8 %21 to i32
+  %cmp23 = icmp ne i32 %conv22, 61
+  br i1 %cmp23, label %do.body, label %lor.lhs.false25
+
+lor.lhs.false25:                                  ; preds = %if.then20
+  %22 = load i8*, i8** %in.addr, align 8
+  %arrayidx26 = getelementptr inbounds i8, i8* %22, i64 4
+  %23 = load i8, i8* %arrayidx26, align 1
+  %conv27 = sext i8 %23 to i32
+  %cmp28 = icmp ne i32 %conv27, 61
+  br i1 %cmp28, label %do.body, label %lor.lhs.false30
+
+lor.lhs.false30:                                  ; preds = %lor.lhs.false25
+  %24 = load i8*, i8** %in.addr, align 8
+  %arrayidx31 = getelementptr inbounds i8, i8* %24, i64 5
+  %25 = load i8, i8* %arrayidx31, align 1
+  %conv32 = sext i8 %25 to i32
+  %cmp33 = icmp ne i32 %conv32, 61
+  br i1 %cmp33, label %do.body, label %lor.lhs.false35
+
+lor.lhs.false35:                                  ; preds = %lor.lhs.false30
+  %26 = load i8*, i8** %in.addr, align 8
+  %arrayidx36 = getelementptr inbounds i8, i8* %26, i64 6
+  %27 = load i8, i8* %arrayidx36, align 1
+  %conv37 = sext i8 %27 to i32
+  %cmp38 = icmp ne i32 %conv37, 61
+  br i1 %cmp38, label %do.body, label %lor.lhs.false40
+
+lor.lhs.false40:                                  ; preds = %lor.lhs.false35
+  %28 = load i8*, i8** %in.addr, align 8
+  %arrayidx41 = getelementptr inbounds i8, i8* %28, i64 7
+  %29 = load i8, i8* %arrayidx41, align 1
+  %conv42 = sext i8 %29 to i32
+  %cmp43 = icmp ne i32 %conv42, 61
+  br i1 %cmp43, label %do.body, label %if.end217
+
+do.body:                                          ; preds = %if.then20, %lor.lhs.false25, %lor.lhs.false30, %lor.lhs.false35, %lor.lhs.false40
+  %30 = load i8*, i8** %out, align 8
+  %31 = load i8**, i8*** %outp.addr, align 8
+  store i8* %30, i8** %31, align 8
+  store i1 false, i1* %retval, align 1
+  br label %return
+
+if.else:                                          ; preds = %if.end15
+  %arrayidx47 = getelementptr inbounds i8, i8* %20, i64 2
+  %32 = load i8, i8* %arrayidx47, align 1
+  %call48 = call zeroext i1 @isbase32(i8 signext %32) #26
+  br i1 %call48, label %lor.lhs.false49, label %do.body53
+
+lor.lhs.false49:                                  ; preds = %if.else
+  %33 = load i8*, i8** %in.addr, align 8
+  %arrayidx50 = getelementptr inbounds i8, i8* %33, i64 3
+  %34 = load i8, i8* %arrayidx50, align 1
+  %call51 = call zeroext i1 @isbase32(i8 signext %34) #26
+  br i1 %call51, label %if.end55, label %do.body53
+
+do.body53:                                        ; preds = %if.else, %lor.lhs.false49
+  %35 = load i8*, i8** %out, align 8
+  %36 = load i8**, i8*** %outp.addr, align 8
+  store i8* %35, i8** %36, align 8
+  store i1 false, i1* %retval, align 1
+  br label %return
+
+if.end55:                                         ; preds = %lor.lhs.false49
+  %37 = load i64*, i64** %outleft.addr, align 8
+  %38 = load i64, i64* %37, align 8
+  %tobool56 = icmp ne i64 %38, 0
+  br i1 %tobool56, label %if.then57, label %if.end81
+
+if.then57:                                        ; preds = %if.end55
+  %39 = load i8*, i8** %in.addr, align 8
+  %arrayidx58 = getelementptr inbounds i8, i8* %39, i64 1
+  %40 = load i8, i8* %arrayidx58, align 1
+  %call59 = call zeroext i8 @to_uchar(i8 signext %40)
+  %idxprom60 = zext i8 %call59 to i64
+  %arrayidx61 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom60
+  %41 = load i8, i8* %arrayidx61, align 1
+  %conv62 = sext i8 %41 to i32
+  %shl63 = shl i32 %conv62, 6
+  %42 = load i8*, i8** %in.addr, align 8
+  %arrayidx64 = getelementptr inbounds i8, i8* %42, i64 2
+  %43 = load i8, i8* %arrayidx64, align 1
+  %call65 = call zeroext i8 @to_uchar(i8 signext %43)
+  %idxprom66 = zext i8 %call65 to i64
+  %arrayidx67 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom66
+  %44 = load i8, i8* %arrayidx67, align 1
+  %conv68 = sext i8 %44 to i32
+  %shl69 = shl i32 %conv68, 1
+  %or70 = or i32 %shl63, %shl69
+  %45 = load i8*, i8** %in.addr, align 8
+  %arrayidx71 = getelementptr inbounds i8, i8* %45, i64 3
+  %46 = load i8, i8* %arrayidx71, align 1
+  %call72 = call zeroext i8 @to_uchar(i8 signext %46)
+  %idxprom73 = zext i8 %call72 to i64
+  %arrayidx74 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom73
+  %47 = load i8, i8* %arrayidx74, align 1
+  %conv75 = sext i8 %47 to i32
+  %shr76 = ashr i32 %conv75, 4
+  %or77 = or i32 %or70, %shr76
+  %conv78 = trunc i32 %or77 to i8
+  %48 = load i8*, i8** %out, align 8
+  %incdec.ptr79 = getelementptr inbounds i8, i8* %48, i32 1
+  store i8* %incdec.ptr79, i8** %out, align 8
+  store i8 %conv78, i8* %48, align 1
+  %49 = load i64*, i64** %outleft.addr, align 8
+  %50 = load i64, i64* %49, align 8
+  %dec80 = add i64 %50, -1
+  store i64 %dec80, i64* %49, align 8
+  br label %if.end81
+
+if.end81:                                         ; preds = %if.then57, %if.end55
+  %51 = load i8*, i8** %in.addr, align 8
+  %arrayidx82 = getelementptr inbounds i8, i8* %51, i64 4
+  %52 = load i8, i8* %arrayidx82, align 1
+  %conv83 = sext i8 %52 to i32
+  %cmp84 = icmp eq i32 %conv83, 61
+  %53 = load i8*, i8** %in.addr, align 8
+  br i1 %cmp84, label %if.then86, label %if.else105
+
+if.then86:                                        ; preds = %if.end81
+  %arrayidx87 = getelementptr inbounds i8, i8* %53, i64 5
+  %54 = load i8, i8* %arrayidx87, align 1
+  %conv88 = sext i8 %54 to i32
+  %cmp89 = icmp ne i32 %conv88, 61
+  br i1 %cmp89, label %do.body102, label %lor.lhs.false91
+
+lor.lhs.false91:                                  ; preds = %if.then86
+  %55 = load i8*, i8** %in.addr, align 8
+  %arrayidx92 = getelementptr inbounds i8, i8* %55, i64 6
+  %56 = load i8, i8* %arrayidx92, align 1
+  %conv93 = sext i8 %56 to i32
+  %cmp94 = icmp ne i32 %conv93, 61
+  br i1 %cmp94, label %do.body102, label %lor.lhs.false96
+
+lor.lhs.false96:                                  ; preds = %lor.lhs.false91
+  %57 = load i8*, i8** %in.addr, align 8
+  %arrayidx97 = getelementptr inbounds i8, i8* %57, i64 7
+  %58 = load i8, i8* %arrayidx97, align 1
+  %conv98 = sext i8 %58 to i32
+  %cmp99 = icmp ne i32 %conv98, 61
+  br i1 %cmp99, label %do.body102, label %if.end217
+
+do.body102:                                       ; preds = %if.then86, %lor.lhs.false91, %lor.lhs.false96
+  %59 = load i8*, i8** %out, align 8
+  %60 = load i8**, i8*** %outp.addr, align 8
+  store i8* %59, i8** %60, align 8
+  store i1 false, i1* %retval, align 1
+  br label %return
+
+if.else105:                                       ; preds = %if.end81
+  %arrayidx106 = getelementptr inbounds i8, i8* %53, i64 4
+  %61 = load i8, i8* %arrayidx106, align 1
+  %call107 = call zeroext i1 @isbase32(i8 signext %61) #26
+  br i1 %call107, label %if.end111, label %do.body109
+
+do.body109:                                       ; preds = %if.else105
+  %62 = load i8*, i8** %out, align 8
+  %63 = load i8**, i8*** %outp.addr, align 8
+  store i8* %62, i8** %63, align 8
+  store i1 false, i1* %retval, align 1
+  br label %return
+
+if.end111:                                        ; preds = %if.else105
+  %64 = load i64*, i64** %outleft.addr, align 8
+  %65 = load i64, i64* %64, align 8
+  %tobool112 = icmp ne i64 %65, 0
+  br i1 %tobool112, label %if.then113, label %if.end130
+
+if.then113:                                       ; preds = %if.end111
+  %66 = load i8*, i8** %in.addr, align 8
+  %arrayidx114 = getelementptr inbounds i8, i8* %66, i64 3
+  %67 = load i8, i8* %arrayidx114, align 1
+  %call115 = call zeroext i8 @to_uchar(i8 signext %67)
+  %idxprom116 = zext i8 %call115 to i64
+  %arrayidx117 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom116
+  %68 = load i8, i8* %arrayidx117, align 1
+  %conv118 = sext i8 %68 to i32
+  %shl119 = shl i32 %conv118, 4
+  %69 = load i8*, i8** %in.addr, align 8
+  %arrayidx120 = getelementptr inbounds i8, i8* %69, i64 4
+  %70 = load i8, i8* %arrayidx120, align 1
+  %call121 = call zeroext i8 @to_uchar(i8 signext %70)
+  %idxprom122 = zext i8 %call121 to i64
+  %arrayidx123 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom122
+  %71 = load i8, i8* %arrayidx123, align 1
+  %conv124 = sext i8 %71 to i32
+  %shr125 = ashr i32 %conv124, 1
+  %or126 = or i32 %shl119, %shr125
+  %conv127 = trunc i32 %or126 to i8
+  %72 = load i8*, i8** %out, align 8
+  %incdec.ptr128 = getelementptr inbounds i8, i8* %72, i32 1
+  store i8* %incdec.ptr128, i8** %out, align 8
+  store i8 %conv127, i8* %72, align 1
+  %73 = load i64*, i64** %outleft.addr, align 8
+  %74 = load i64, i64* %73, align 8
+  %dec129 = add i64 %74, -1
+  store i64 %dec129, i64* %73, align 8
+  br label %if.end130
+
+if.end130:                                        ; preds = %if.then113, %if.end111
+  %75 = load i8*, i8** %in.addr, align 8
+  %arrayidx131 = getelementptr inbounds i8, i8* %75, i64 5
+  %76 = load i8, i8* %arrayidx131, align 1
+  %conv132 = sext i8 %76 to i32
+  %cmp133 = icmp eq i32 %conv132, 61
+  %77 = load i8*, i8** %in.addr, align 8
+  br i1 %cmp133, label %if.then135, label %if.else149
+
+if.then135:                                       ; preds = %if.end130
+  %arrayidx136 = getelementptr inbounds i8, i8* %77, i64 6
+  %78 = load i8, i8* %arrayidx136, align 1
+  %conv137 = sext i8 %78 to i32
+  %cmp138 = icmp ne i32 %conv137, 61
+  br i1 %cmp138, label %do.body146, label %lor.lhs.false140
+
+lor.lhs.false140:                                 ; preds = %if.then135
+  %79 = load i8*, i8** %in.addr, align 8
+  %arrayidx141 = getelementptr inbounds i8, i8* %79, i64 7
+  %80 = load i8, i8* %arrayidx141, align 1
+  %conv142 = sext i8 %80 to i32
+  %cmp143 = icmp ne i32 %conv142, 61
+  br i1 %cmp143, label %do.body146, label %if.end217
+
+do.body146:                                       ; preds = %if.then135, %lor.lhs.false140
+  %81 = load i8*, i8** %out, align 8
+  %82 = load i8**, i8*** %outp.addr, align 8
+  store i8* %81, i8** %82, align 8
+  store i1 false, i1* %retval, align 1
+  br label %return
+
+if.else149:                                       ; preds = %if.end130
+  %arrayidx150 = getelementptr inbounds i8, i8* %77, i64 5
+  %83 = load i8, i8* %arrayidx150, align 1
+  %call151 = call zeroext i1 @isbase32(i8 signext %83) #26
+  br i1 %call151, label %lor.lhs.false152, label %do.body156
+
+lor.lhs.false152:                                 ; preds = %if.else149
+  %84 = load i8*, i8** %in.addr, align 8
+  %arrayidx153 = getelementptr inbounds i8, i8* %84, i64 6
+  %85 = load i8, i8* %arrayidx153, align 1
+  %call154 = call zeroext i1 @isbase32(i8 signext %85) #26
+  br i1 %call154, label %if.end158, label %do.body156
+
+do.body156:                                       ; preds = %if.else149, %lor.lhs.false152
+  %86 = load i8*, i8** %out, align 8
+  %87 = load i8**, i8*** %outp.addr, align 8
+  store i8* %86, i8** %87, align 8
+  store i1 false, i1* %retval, align 1
+  br label %return
+
+if.end158:                                        ; preds = %lor.lhs.false152
+  %88 = load i64*, i64** %outleft.addr, align 8
+  %89 = load i64, i64* %88, align 8
+  %tobool159 = icmp ne i64 %89, 0
+  br i1 %tobool159, label %if.then160, label %if.end184
+
+if.then160:                                       ; preds = %if.end158
+  %90 = load i8*, i8** %in.addr, align 8
+  %arrayidx161 = getelementptr inbounds i8, i8* %90, i64 4
+  %91 = load i8, i8* %arrayidx161, align 1
+  %call162 = call zeroext i8 @to_uchar(i8 signext %91)
+  %idxprom163 = zext i8 %call162 to i64
+  %arrayidx164 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom163
+  %92 = load i8, i8* %arrayidx164, align 1
+  %conv165 = sext i8 %92 to i32
+  %shl166 = shl i32 %conv165, 7
+  %93 = load i8*, i8** %in.addr, align 8
+  %arrayidx167 = getelementptr inbounds i8, i8* %93, i64 5
+  %94 = load i8, i8* %arrayidx167, align 1
+  %call168 = call zeroext i8 @to_uchar(i8 signext %94)
+  %idxprom169 = zext i8 %call168 to i64
+  %arrayidx170 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom169
+  %95 = load i8, i8* %arrayidx170, align 1
+  %conv171 = sext i8 %95 to i32
+  %shl172 = shl i32 %conv171, 2
+  %or173 = or i32 %shl166, %shl172
+  %96 = load i8*, i8** %in.addr, align 8
+  %arrayidx174 = getelementptr inbounds i8, i8* %96, i64 6
+  %97 = load i8, i8* %arrayidx174, align 1
+  %call175 = call zeroext i8 @to_uchar(i8 signext %97)
+  %idxprom176 = zext i8 %call175 to i64
+  %arrayidx177 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom176
+  %98 = load i8, i8* %arrayidx177, align 1
+  %conv178 = sext i8 %98 to i32
+  %shr179 = ashr i32 %conv178, 3
+  %or180 = or i32 %or173, %shr179
+  %conv181 = trunc i32 %or180 to i8
+  %99 = load i8*, i8** %out, align 8
+  %incdec.ptr182 = getelementptr inbounds i8, i8* %99, i32 1
+  store i8* %incdec.ptr182, i8** %out, align 8
+  store i8 %conv181, i8* %99, align 1
+  %100 = load i64*, i64** %outleft.addr, align 8
+  %101 = load i64, i64* %100, align 8
+  %dec183 = add i64 %101, -1
+  store i64 %dec183, i64* %100, align 8
+  br label %if.end184
+
+if.end184:                                        ; preds = %if.then160, %if.end158
+  %102 = load i8*, i8** %in.addr, align 8
+  %arrayidx185 = getelementptr inbounds i8, i8* %102, i64 7
+  %103 = load i8, i8* %arrayidx185, align 1
+  %conv186 = sext i8 %103 to i32
+  %cmp187 = icmp ne i32 %conv186, 61
+  br i1 %cmp187, label %if.then189, label %if.end217
+
+if.then189:                                       ; preds = %if.end184
+  %104 = load i8*, i8** %in.addr, align 8
+  %arrayidx190 = getelementptr inbounds i8, i8* %104, i64 7
+  %105 = load i8, i8* %arrayidx190, align 1
+  %call191 = call zeroext i1 @isbase32(i8 signext %105) #26
+  br i1 %call191, label %if.end195, label %do.body193
+
+do.body193:                                       ; preds = %if.then189
+  %106 = load i8*, i8** %out, align 8
+  %107 = load i8**, i8*** %outp.addr, align 8
+  store i8* %106, i8** %107, align 8
+  store i1 false, i1* %retval, align 1
+  br label %return
+
+if.end195:                                        ; preds = %if.then189
+  %108 = load i64*, i64** %outleft.addr, align 8
+  %109 = load i64, i64* %108, align 8
+  %tobool196 = icmp ne i64 %109, 0
+  br i1 %tobool196, label %if.then197, label %if.end217
+
+if.then197:                                       ; preds = %if.end195
+  %110 = load i8*, i8** %in.addr, align 8
+  %arrayidx198 = getelementptr inbounds i8, i8* %110, i64 6
+  %111 = load i8, i8* %arrayidx198, align 1
+  %call199 = call zeroext i8 @to_uchar(i8 signext %111)
+  %idxprom200 = zext i8 %call199 to i64
+  %arrayidx201 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom200
+  %112 = load i8, i8* %arrayidx201, align 1
+  %conv202 = sext i8 %112 to i32
+  %shl203 = shl i32 %conv202, 5
+  %113 = load i8*, i8** %in.addr, align 8
+  %arrayidx204 = getelementptr inbounds i8, i8* %113, i64 7
+  %114 = load i8, i8* %arrayidx204, align 1
+  %call205 = call zeroext i8 @to_uchar(i8 signext %114)
+  %idxprom206 = zext i8 %call205 to i64
+  %arrayidx207 = getelementptr inbounds [256 x i8], [256 x i8]* @b32, i64 0, i64 %idxprom206
+  %115 = load i8, i8* %arrayidx207, align 1
+  %conv208 = sext i8 %115 to i32
+  %or209 = or i32 %shl203, %conv208
+  %conv210 = trunc i32 %or209 to i8
+  %116 = load i8*, i8** %out, align 8
+  %incdec.ptr211 = getelementptr inbounds i8, i8* %116, i32 1
+  store i8* %incdec.ptr211, i8** %out, align 8
+  store i8 %conv210, i8* %116, align 1
+  %117 = load i64*, i64** %outleft.addr, align 8
+  %118 = load i64, i64* %117, align 8
+  %dec212 = add i64 %118, -1
+  store i64 %dec212, i64* %117, align 8
+  br label %if.end217
+
+if.end217:                                        ; preds = %lor.lhs.false96, %if.end184, %if.then197, %if.end195, %lor.lhs.false140, %lor.lhs.false40
+  %119 = load i8*, i8** %out, align 8
+  %120 = load i8**, i8*** %outp.addr, align 8
+  store i8* %119, i8** %120, align 8
+  store i1 true, i1* %retval, align 1
+  br label %return
+
+return:                                           ; preds = %if.end217, %do.body193, %do.body156, %do.body146, %do.body109, %do.body102, %do.body53, %do.body, %if.then3, %if.then
+  %121 = load i1, i1* %retval, align 1
+  ret i1 %121
 }
 
-; Function Attrs: nounwind
-declare dso_local i8* @realloc(i8*, i64) #4
+; Function Attrs: noinline nounwind uwtable
+define internal i8* @get_8(%struct.base32_decode_context* %ctx, i8** %in, i8* noalias %in_end, i64* %n_non_newline) #3 {
+entry:
+  %retval = alloca i8*, align 8
+  %ctx.addr = alloca %struct.base32_decode_context*, align 8
+  %in.addr = alloca i8**, align 8
+  %in_end.addr = alloca i8*, align 8
+  %n_non_newline.addr = alloca i64*, align 8
+  %t = alloca i8*, align 8
+  %p = alloca i8*, align 8
+  %c = alloca i8, align 1
+  store %struct.base32_decode_context* %ctx, %struct.base32_decode_context** %ctx.addr, align 8
+  store i8** %in, i8*** %in.addr, align 8
+  store i8* %in_end, i8** %in_end.addr, align 8
+  store i64* %n_non_newline, i64** %n_non_newline.addr, align 8
+  %0 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %i = getelementptr inbounds %struct.base32_decode_context, %struct.base32_decode_context* %0, i32 0, i32 0
+  %1 = load i32, i32* %i, align 4
+  %cmp = icmp eq i32 %1, 8
+  br i1 %cmp, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  %2 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %i1 = getelementptr inbounds %struct.base32_decode_context, %struct.base32_decode_context* %2, i32 0, i32 0
+  store i32 0, i32* %i1, align 4
+  br label %if.end
+
+if.end:                                           ; preds = %if.then, %entry
+  %3 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %i2 = getelementptr inbounds %struct.base32_decode_context, %struct.base32_decode_context* %3, i32 0, i32 0
+  %4 = load i32, i32* %i2, align 4
+  %cmp3 = icmp eq i32 %4, 0
+  br i1 %cmp3, label %if.then4, label %if.end9
+
+if.then4:                                         ; preds = %if.end
+  %5 = load i8**, i8*** %in.addr, align 8
+  %6 = load i8*, i8** %5, align 8
+  store i8* %6, i8** %t, align 8
+  %7 = load i8*, i8** %in_end.addr, align 8
+  %8 = load i8**, i8*** %in.addr, align 8
+  %9 = load i8*, i8** %8, align 8
+  %sub.ptr.lhs.cast = ptrtoint i8* %7 to i64
+  %sub.ptr.rhs.cast = ptrtoint i8* %9 to i64
+  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast
+  %cmp5 = icmp sle i64 8, %sub.ptr.sub
+  br i1 %cmp5, label %land.lhs.true, label %if.end9
+
+land.lhs.true:                                    ; preds = %if.then4
+  %10 = load i8*, i8** %t, align 8
+  %call = call i8* @memchr(i8* %10, i32 10, i64 8) #24
+  %cmp6 = icmp eq i8* %call, null
+  br i1 %cmp6, label %if.then7, label %if.end9
+
+if.then7:                                         ; preds = %land.lhs.true
+  %11 = load i8**, i8*** %in.addr, align 8
+  %12 = load i8*, i8** %11, align 8
+  %add.ptr = getelementptr inbounds i8, i8* %12, i64 8
+  store i8* %add.ptr, i8** %11, align 8
+  %13 = load i64*, i64** %n_non_newline.addr, align 8
+  store i64 8, i64* %13, align 8
+  %14 = load i8*, i8** %t, align 8
+  store i8* %14, i8** %retval, align 8
+  br label %return
+
+if.end9:                                          ; preds = %if.then4, %land.lhs.true, %if.end
+  %15 = load i8**, i8*** %in.addr, align 8
+  %16 = load i8*, i8** %15, align 8
+  store i8* %16, i8** %p, align 8
+  br label %while.cond
+
+while.cond:                                       ; preds = %if.end20, %if.end9
+  %17 = load i8*, i8** %p, align 8
+  %18 = load i8*, i8** %in_end.addr, align 8
+  %cmp10 = icmp ult i8* %17, %18
+  br i1 %cmp10, label %while.body, label %while.end
+
+while.body:                                       ; preds = %while.cond
+  %19 = load i8*, i8** %p, align 8
+  %incdec.ptr = getelementptr inbounds i8, i8* %19, i32 1
+  store i8* %incdec.ptr, i8** %p, align 8
+  %20 = load i8, i8* %19, align 1
+  store i8 %20, i8* %c, align 1
+  %21 = load i8, i8* %c, align 1
+  %conv = sext i8 %21 to i32
+  %cmp11 = icmp ne i32 %conv, 10
+  br i1 %cmp11, label %if.then13, label %if.end20
+
+if.then13:                                        ; preds = %while.body
+  %22 = load i8, i8* %c, align 1
+  %23 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %buf = getelementptr inbounds %struct.base32_decode_context, %struct.base32_decode_context* %23, i32 0, i32 1
+  %24 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %i14 = getelementptr inbounds %struct.base32_decode_context, %struct.base32_decode_context* %24, i32 0, i32 0
+  %25 = load i32, i32* %i14, align 4
+  %inc = add i32 %25, 1
+  store i32 %inc, i32* %i14, align 4
+  %idxprom = zext i32 %25 to i64
+  %arrayidx = getelementptr inbounds [8 x i8], [8 x i8]* %buf, i64 0, i64 %idxprom
+  store i8 %22, i8* %arrayidx, align 1
+  %26 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %i15 = getelementptr inbounds %struct.base32_decode_context, %struct.base32_decode_context* %26, i32 0, i32 0
+  %27 = load i32, i32* %i15, align 4
+  %cmp16 = icmp eq i32 %27, 8
+  br i1 %cmp16, label %while.end, label %if.end20
+
+if.end20:                                         ; preds = %if.then13, %while.body
+  br label %while.cond
+
+while.end:                                        ; preds = %if.then13, %while.cond
+  %28 = load i8*, i8** %p, align 8
+  %29 = load i8**, i8*** %in.addr, align 8
+  store i8* %28, i8** %29, align 8
+  %30 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %i21 = getelementptr inbounds %struct.base32_decode_context, %struct.base32_decode_context* %30, i32 0, i32 0
+  %31 = load i32, i32* %i21, align 4
+  %conv22 = zext i32 %31 to i64
+  %32 = load i64*, i64** %n_non_newline.addr, align 8
+  store i64 %conv22, i64* %32, align 8
+  %33 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %buf23 = getelementptr inbounds %struct.base32_decode_context, %struct.base32_decode_context* %33, i32 0, i32 1
+  %arraydecay = getelementptr inbounds [8 x i8], [8 x i8]* %buf23, i64 0, i64 0
+  store i8* %arraydecay, i8** %retval, align 8
+  br label %return
+
+return:                                           ; preds = %while.end, %if.then7
+  %34 = load i8*, i8** %retval, align 8
+  ret i8* %34
+}
 
 ; Function Attrs: noinline nounwind uwtable
 define dso_local void @fdadvise(i32 %fd, i64 %offset, i64 %len, i32 %advice) #3 {
@@ -10826,7 +11983,7 @@ entry:
   br i1 %cmp, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @abort() #26
+  call void @abort() #27
   unreachable
 
 if.end:                                           ; preds = %entry
@@ -10906,7 +12063,7 @@ entry:
   store i8* %arg, i8** %arg.addr, align 8
   store i64 %argsize, i64* %argsize.addr, align 8
   store %struct.quoting_options* %options, %struct.quoting_options** %options.addr, align 8
-  %call = call i32* @__errno_location() #25
+  %call = call i32* @__errno_location() #26
   %0 = load i32, i32* %call, align 4
   store i32 %0, i32* %e, align 4
   %1 = load %struct.slotvec*, %struct.slotvec** @slotvec, align 8
@@ -10916,7 +12073,7 @@ entry:
   br i1 %cmp, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @abort() #26
+  call void @abort() #27
   unreachable
 
 if.end:                                           ; preds = %entry
@@ -10937,7 +12094,7 @@ if.then2:                                         ; preds = %if.end
   br i1 %cmp4, label %if.then5, label %if.end6
 
 if.then5:                                         ; preds = %if.then2
-  call void @xalloc_die() #24
+  call void @xalloc_die() #25
   unreachable
 
 if.end6:                                          ; preds = %if.then2
@@ -11077,10 +12234,56 @@ if.end32:                                         ; preds = %if.then31, %if.then
 
 if.end43:                                         ; preds = %if.end32, %if.end15
   %66 = load i32, i32* %e, align 4
-  %call44 = call i32* @__errno_location() #25
+  %call44 = call i32* @__errno_location() #26
   store i32 %66, i32* %call44, align 4
   %67 = load i8*, i8** %val, align 8
   ret i8* %67
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local i8* @xrealloc(i8* %p, i64 %n) #3 {
+entry:
+  %retval = alloca i8*, align 8
+  %p.addr = alloca i8*, align 8
+  %n.addr = alloca i64, align 8
+  store i8* %p, i8** %p.addr, align 8
+  store i64 %n, i64* %n.addr, align 8
+  %0 = load i64, i64* %n.addr, align 8
+  %tobool = icmp eq i64 %0, 0
+  %1 = load i8*, i8** %p.addr, align 8
+  %tobool1 = icmp ne i8* %1, null
+  %or.cond = and i1 %tobool, %tobool1
+  %2 = load i8*, i8** %p.addr, align 8
+  br i1 %or.cond, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  call void @free(i8* %2) #11
+  store i8* null, i8** %retval, align 8
+  br label %return
+
+if.end:                                           ; preds = %entry
+  %3 = load i64, i64* %n.addr, align 8
+  %call = call i8* @realloc(i8* %2, i64 %3) #11
+  store i8* %call, i8** %p.addr, align 8
+  %4 = load i8*, i8** %p.addr, align 8
+  %tobool2 = icmp eq i8* %4, null
+  %5 = load i64, i64* %n.addr, align 8
+  %tobool4 = icmp ne i64 %5, 0
+  %or.cond1 = and i1 %tobool2, %tobool4
+  br i1 %or.cond1, label %if.then5, label %if.end6
+
+if.then5:                                         ; preds = %if.end
+  call void @xalloc_die() #25
+  unreachable
+
+if.end6:                                          ; preds = %if.end
+  %6 = load i8*, i8** %p.addr, align 8
+  store i8* %6, i8** %retval, align 8
+  br label %return
+
+return:                                           ; preds = %if.end6, %if.then
+  %7 = load i8*, i8** %retval, align 8
+  ret i8* %7
 }
 
 ; Function Attrs: noinline nounwind uwtable
@@ -11226,7 +12429,7 @@ if.end:                                           ; preds = %if.then5, %do.body
 
 if.end6:                                          ; preds = %if.end, %sw.bb3
   store i8 1, i8* %backslash_escapes, align 1
-  store i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.10.64, i64 0, i64 0), i8** %quote_string, align 8
+  store i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.10.79, i64 0, i64 0), i8** %quote_string, align 8
   store i64 1, i64* %quote_string_len, align 8
   br label %sw.epilog
 
@@ -11242,10 +12445,10 @@ sw.bb8:                                           ; preds = %NodeBlock21, %NodeB
 
 if.then10:                                        ; preds = %sw.bb8
   %9 = load i32, i32* %quoting_style.addr, align 4
-  %call11 = call i8* @gettext_quote(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.11.65, i64 0, i64 0), i32 %9)
+  %call11 = call i8* @gettext_quote(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.11.80, i64 0, i64 0), i32 %9)
   store i8* %call11, i8** %left_quote.addr, align 8
   %10 = load i32, i32* %quoting_style.addr, align 4
-  %call12 = call i8* @gettext_quote(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.12.66, i64 0, i64 0), i32 %10)
+  %call12 = call i8* @gettext_quote(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.12.81, i64 0, i64 0), i32 %10)
   store i8* %call12, i8** %right_quote.addr, align 8
   br label %if.end13
 
@@ -11294,7 +12497,7 @@ if.end24:                                         ; preds = %for.cond, %if.end13
   %23 = load i8*, i8** %right_quote.addr, align 8
   store i8* %23, i8** %quote_string, align 8
   %24 = load i8*, i8** %quote_string, align 8
-  %call25 = call i64 @strlen(i8* %24) #23
+  %call25 = call i64 @strlen(i8* %24) #24
   store i64 %call25, i64* %quote_string_len, align 8
   br label %sw.epilog
 
@@ -11341,7 +12544,7 @@ if.end39:                                         ; preds = %if.then37, %do.body
   br label %if.end42
 
 if.end42:                                         ; preds = %if.end39, %sw.bb32
-  store i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.12.66, i64 0, i64 0), i8** %quote_string, align 8
+  store i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.12.81, i64 0, i64 0), i8** %quote_string, align 8
   store i64 1, i64* %quote_string_len, align 8
   br label %sw.epilog
 
@@ -11353,7 +12556,7 @@ newDefault:                                       ; preds = %NodeBlock
   br label %sw.default
 
 sw.default:                                       ; preds = %newDefault
-  call void @abort() #26
+  call void @abort() #27
   unreachable
 
 sw.epilog:                                        ; preds = %sw.bb43, %if.end42, %if.end24, %sw.bb7, %if.end6
@@ -11415,7 +12618,7 @@ land.lhs.true59:                                  ; preds = %for.body52
 
 cond.true65:                                      ; preds = %land.lhs.true59
   %45 = load i8*, i8** %arg.addr, align 8
-  %call66 = call i64 @strlen(i8* %45) #23
+  %call66 = call i64 @strlen(i8* %45) #24
   store i64 %call66, i64* %argsize.addr, align 8
   br label %cond.end68
 
@@ -11434,7 +12637,7 @@ land.lhs.true72:                                  ; preds = %cond.end68
   %add.ptr = getelementptr inbounds i8, i8* %47, i64 %48
   %49 = load i8*, i8** %quote_string, align 8
   %50 = load i64, i64* %quote_string_len, align 8
-  %call73 = call i32 @memcmp(i8* %add.ptr, i8* %49, i64 %50) #23
+  %call73 = call i32 @memcmp(i8* %add.ptr, i8* %49, i64 %50) #24
   %cmp74 = icmp eq i32 %call73, 0
   br i1 %cmp74, label %if.then76, label %if.end80
 
@@ -12399,7 +13602,7 @@ sw.default335:                                    ; preds = %newDefault29
 
 if.then337:                                       ; preds = %sw.default335
   store i64 1, i64* %m, align 8
-  %call338 = call i16** @__ctype_b_loc() #25
+  %call338 = call i16** @__ctype_b_loc() #26
   %174 = load i16*, i16** %call338, align 8
   %175 = load i8, i8* %c, align 1
   %conv339 = zext i8 %175 to i32
@@ -12424,7 +13627,7 @@ if.else346:                                       ; preds = %sw.default335
 
 if.then349:                                       ; preds = %if.else346
   %180 = load i8*, i8** %arg.addr, align 8
-  %call350 = call i64 @strlen(i8* %180) #23
+  %call350 = call i64 @strlen(i8* %180) #24
   store i64 %call350, i64* %argsize.addr, align 8
   br label %if.end351
 
@@ -12565,7 +13768,7 @@ if.end401:                                        ; preds = %if.then400, %if.end
   %210 = load i64, i64* %m, align 8
   %add402 = add i64 %210, %209
   store i64 %add402, i64* %m, align 8
-  %call406 = call i32 bitcast (i32 (%struct.__mbstate_t.512*)* @mbsinit to i32 (%struct.__mbstate_t*)*)(%struct.__mbstate_t* %mbstate) #23
+  %call406 = call i32 bitcast (i32 (%struct.__mbstate_t.512*)* @mbsinit to i32 (%struct.__mbstate_t*)*)(%struct.__mbstate_t* %mbstate) #24
   %tobool407 = icmp ne i32 %call406, 0
   %lnot408 = xor i1 %tobool407, true
   br i1 %lnot408, label %do.body352, label %if.end410
@@ -13218,31 +14421,6 @@ entry:
   ret i8* %call
 }
 
-; Function Attrs: noinline nounwind uwtable
-define dso_local noalias i8* @xmalloc(i64 %n) #3 {
-entry:
-  %n.addr = alloca i64, align 8
-  %p = alloca i8*, align 8
-  store i64 %n, i64* %n.addr, align 8
-  %0 = load i64, i64* %n.addr, align 8
-  %call = call noalias i8* @malloc(i64 %0) #11
-  store i8* %call, i8** %p, align 8
-  %1 = load i8*, i8** %p, align 8
-  %tobool = icmp eq i8* %1, null
-  %2 = load i64, i64* %n.addr, align 8
-  %cmp = icmp ne i64 %2, 0
-  %or.cond = and i1 %tobool, %cmp
-  br i1 %or.cond, label %if.then, label %if.end
-
-if.then:                                          ; preds = %entry
-  call void @xalloc_die() #24
-  unreachable
-
-if.end:                                           ; preds = %entry
-  %3 = load i8*, i8** %p, align 8
-  ret i8* %3
-}
-
 ; Function Attrs: nounwind
 declare dso_local i64 @__ctype_get_mb_cur_max() #4
 
@@ -13272,7 +14450,7 @@ if.end:                                           ; preds = %entry
   %call = call i8* @locale_charset()
   store i8* %call, i8** %locale_code, align 8
   %4 = load i8*, i8** %locale_code, align 8
-  %call1 = call i32 @c_strcasecmp(i8* %4, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.13.67, i64 0, i64 0)) #23
+  %call1 = call i32 @c_strcasecmp(i8* %4, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.13.82, i64 0, i64 0)) #24
   %cmp2 = icmp eq i32 %call1, 0
   br i1 %cmp2, label %if.then3, label %if.end6
 
@@ -13283,13 +14461,13 @@ if.then3:                                         ; preds = %if.end
   %conv = sext i8 %6 to i32
   %cmp4 = icmp eq i32 %conv, 96
   %7 = zext i1 %cmp4 to i64
-  %cond = select i1 %cmp4, i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.14.68, i64 0, i64 0), i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.15.69, i64 0, i64 0)
+  %cond = select i1 %cmp4, i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.14.83, i64 0, i64 0), i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.15.84, i64 0, i64 0)
   store i8* %cond, i8** %retval, align 8
   br label %return
 
 if.end6:                                          ; preds = %if.end
   %8 = load i8*, i8** %locale_code, align 8
-  %call7 = call i32 @c_strcasecmp(i8* %8, i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.16.70, i64 0, i64 0)) #23
+  %call7 = call i32 @c_strcasecmp(i8* %8, i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.16.85, i64 0, i64 0)) #24
   %cmp8 = icmp eq i32 %call7, 0
   br i1 %cmp8, label %if.then10, label %if.end16
 
@@ -13300,7 +14478,7 @@ if.then10:                                        ; preds = %if.end6
   %conv12 = sext i8 %10 to i32
   %cmp13 = icmp eq i32 %conv12, 96
   %11 = zext i1 %cmp13 to i64
-  %cond15 = select i1 %cmp13, i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.17.71, i64 0, i64 0), i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.18.72, i64 0, i64 0)
+  %cond15 = select i1 %cmp13, i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.17.86, i64 0, i64 0), i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.18.87, i64 0, i64 0)
   store i8* %cond15, i8** %retval, align 8
   br label %return
 
@@ -13308,7 +14486,7 @@ if.end16:                                         ; preds = %if.end6
   %12 = load i32, i32* %s.addr, align 4
   %cmp17 = icmp eq i32 %12, 9
   %13 = zext i1 %cmp17 to i64
-  %cond19 = select i1 %cmp17, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.10.64, i64 0, i64 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.12.66, i64 0, i64 0)
+  %cond19 = select i1 %cmp17, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.10.79, i64 0, i64 0), i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.12.81, i64 0, i64 0)
   store i8* %cond19, i8** %retval, align 8
   br label %return
 
@@ -13398,13 +14576,13 @@ if.then:                                          ; preds = %entry
 
 if.end:                                           ; preds = %entry
   %arraydecay1 = getelementptr inbounds [257 x i8], [257 x i8]* %locale, i64 0, i64 0
-  %call2 = call i32 @strcmp(i8* %arraydecay1, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.137, i64 0, i64 0)) #23
+  %call2 = call i32 @strcmp(i8* %arraydecay1, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.158, i64 0, i64 0)) #24
   %cmp = icmp eq i32 %call2, 0
   br i1 %cmp, label %lor.end, label %lor.rhs
 
 lor.rhs:                                          ; preds = %if.end
   %arraydecay3 = getelementptr inbounds [257 x i8], [257 x i8]* %locale, i64 0, i64 0
-  %call4 = call i32 @strcmp(i8* %arraydecay3, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.1.138, i64 0, i64 0)) #23
+  %call4 = call i32 @strcmp(i8* %arraydecay3, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.1.159, i64 0, i64 0)) #24
   %cmp5 = icmp eq i32 %call4, 0
   br label %lor.end
 
@@ -13471,7 +14649,7 @@ if.end:                                           ; preds = %if.then2, %if.then
 
 if.else:                                          ; preds = %entry
   %4 = load i8*, i8** %result, align 8
-  %call3 = call i64 @strlen(i8* %4) #23
+  %call3 = call i64 @strlen(i8* %4) #24
   store i64 %call3, i64* %length, align 8
   %5 = load i64, i64* %length, align 8
   %6 = load i64, i64* %bufsize.addr, align 8
@@ -13535,21 +14713,21 @@ entry:
   store i8* %call, i8** %codeset, align 8
   %0 = load i8*, i8** %codeset, align 8
   %cmp = icmp eq i8* %0, null
-  %spec.store.select = select i1 %cmp, i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.141, i64 0, i64 0), i8* %call
+  %spec.store.select = select i1 %cmp, i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.162, i64 0, i64 0), i8* %call
   store i8* %spec.store.select, i8** %codeset, align 8
   %1 = load i8*, i8** %codeset, align 8
   %arrayidx = getelementptr inbounds i8, i8* %1, i64 0
   %2 = load i8, i8* %arrayidx, align 1
   %conv = sext i8 %2 to i32
   %cmp1 = icmp eq i32 %conv, 0
-  %spec.store.select1 = select i1 %cmp1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.1.142, i64 0, i64 0), i8* %spec.store.select
+  %spec.store.select1 = select i1 %cmp1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.1.163, i64 0, i64 0), i8* %spec.store.select
   store i8* %spec.store.select1, i8** %codeset, align 8
   %3 = load i8*, i8** %codeset, align 8
   ret i8* %3
 }
 
 ; Function Attrs: noinline nounwind readonly uwtable
-define dso_local i32 @c_strcasecmp(i8* %s1, i8* %s2) #15 {
+define dso_local i32 @c_strcasecmp(i8* %s1, i8* %s2) #16 {
 entry:
   %retval = alloca i32, align 4
   %s1.addr = alloca i8*, align 8
@@ -13644,6 +14822,67 @@ sw.default:                                       ; preds = %entry
 return:                                           ; preds = %sw.default, %sw.bb
   %2 = load i32, i32* %retval, align 4
   ret i32 %2
+}
+
+; Function Attrs: nounwind
+declare dso_local i8* @realloc(i8*, i64) #4
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local i32 @set_binary_mode(i32 %fd, i32 %mode) #3 {
+entry:
+  %fd.addr = alloca i32, align 4
+  %mode.addr = alloca i32, align 4
+  store i32 %fd, i32* %fd.addr, align 4
+  store i32 %mode, i32* %mode.addr, align 4
+  %0 = load i32, i32* %fd.addr, align 4
+  %1 = load i32, i32* %mode.addr, align 4
+  %call = call i32 @__gl_setmode(i32 %0, i32 %1)
+  ret i32 %call
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local void @xset_binary_mode_error() #3 {
+entry:
+  ret void
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local i32 @__gl_setmode(i32 %fd, i32 %mode) #3 {
+entry:
+  %fd.addr = alloca i32, align 4
+  %mode.addr = alloca i32, align 4
+  store i32 %fd, i32* %fd.addr, align 4
+  store i32 %mode, i32* %mode.addr, align 4
+  ret i32 0
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local i8* @quote_n(i32 %n, i8* %arg) #3 {
+entry:
+  %n.addr = alloca i32, align 4
+  %arg.addr = alloca i8*, align 8
+  store i32 %n, i32* %n.addr, align 4
+  store i8* %arg, i8** %arg.addr, align 8
+  %0 = load i32, i32* %n.addr, align 4
+  %1 = load i8*, i8** %arg.addr, align 8
+  %call = call i8* @quote_n_mem(i32 %0, i8* %1, i64 -1)
+  ret i8* %call
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local i8* @quote_n_mem(i32 %n, i8* %arg, i64 %argsize) #3 {
+entry:
+  %n.addr = alloca i32, align 4
+  %arg.addr = alloca i8*, align 8
+  %argsize.addr = alloca i64, align 8
+  store i32 %n, i32* %n.addr, align 4
+  store i8* %arg, i8** %arg.addr, align 8
+  store i64 %argsize, i64* %argsize.addr, align 8
+  %0 = load i32, i32* %n.addr, align 4
+  %1 = load i8*, i8** %arg.addr, align 8
+  %2 = load i64, i64* %argsize.addr, align 8
+  %call = call i8* @quotearg_n_options(i32 %0, i8* %1, i64 %2, %struct.quoting_options* @quote_quoting_options)
+  ret i8* %call
 }
 
 ; Function Attrs: noinline nounwind uwtable
@@ -13743,24 +14982,24 @@ if.then:                                          ; preds = %entry
   %2 = load i8*, i8** %command_name.addr, align 8
   %3 = load i8*, i8** %package.addr, align 8
   %4 = load i8*, i8** %version.addr, align 8
-  %call = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %1, i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.77, i64 0, i64 0), i8* %2, i8* %3, i8* %4)
+  %call = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %1, i8* getelementptr inbounds ([12 x i8], [12 x i8]* @.str.94, i64 0, i64 0), i8* %2, i8* %3, i8* %4)
   br label %if.end
 
 if.else:                                          ; preds = %entry
   %5 = load i8*, i8** %package.addr, align 8
   %6 = load i8*, i8** %version.addr, align 8
-  %call1 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %1, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.1.78, i64 0, i64 0), i8* %5, i8* %6)
+  %call1 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %1, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.1.95, i64 0, i64 0), i8* %5, i8* %6)
   br label %if.end
 
 if.end:                                           ; preds = %if.else, %if.then
   %7 = load %struct._IO_FILE*, %struct._IO_FILE** %stream.addr, align 8
-  %call2 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %7, i8* getelementptr inbounds ([47 x i8], [47 x i8]* @version_etc_copyright, i64 0, i64 0), i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.2.79, i64 0, i64 0), i32 2020)
+  %call2 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %7, i8* getelementptr inbounds ([47 x i8], [47 x i8]* @version_etc_copyright, i64 0, i64 0), i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.2.96, i64 0, i64 0), i32 2020)
   %8 = load %struct._IO_FILE*, %struct._IO_FILE** %stream.addr, align 8
-  %call3 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3.80, i64 0, i64 0), %struct._IO_FILE* %8)
+  %call3 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3.97, i64 0, i64 0), %struct._IO_FILE* %8)
   %9 = load %struct._IO_FILE*, %struct._IO_FILE** %stream.addr, align 8
-  %call4 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %9, i8* getelementptr inbounds ([171 x i8], [171 x i8]* @.str.4.81, i64 0, i64 0), i8* getelementptr inbounds ([34 x i8], [34 x i8]* @.str.5.82, i64 0, i64 0))
+  %call4 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %9, i8* getelementptr inbounds ([171 x i8], [171 x i8]* @.str.4.98, i64 0, i64 0), i8* getelementptr inbounds ([34 x i8], [34 x i8]* @.str.5.99, i64 0, i64 0))
   %10 = load %struct._IO_FILE*, %struct._IO_FILE** %stream.addr, align 8
-  %call5 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3.80, i64 0, i64 0), %struct._IO_FILE* %10)
+  %call5 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3.97, i64 0, i64 0), %struct._IO_FILE* %10)
   %11 = load i64, i64* %n_authors.addr, align 8
   br label %NodeBlock17
 
@@ -13809,7 +15048,7 @@ sw.bb6:                                           ; preds = %NodeBlock15
   %13 = load i8**, i8*** %authors.addr, align 8
   %arrayidx = getelementptr inbounds i8*, i8** %13, i64 0
   %14 = load i8*, i8** %arrayidx, align 8
-  %call7 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %12, i8* getelementptr inbounds ([16 x i8], [16 x i8]* @.str.6.83, i64 0, i64 0), i8* %14)
+  %call7 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %12, i8* getelementptr inbounds ([16 x i8], [16 x i8]* @.str.6.100, i64 0, i64 0), i8* %14)
   br label %sw.epilog
 
 sw.bb8:                                           ; preds = %NodeBlock13
@@ -13820,7 +15059,7 @@ sw.bb8:                                           ; preds = %NodeBlock13
   %18 = load i8**, i8*** %authors.addr, align 8
   %arrayidx10 = getelementptr inbounds i8*, i8** %18, i64 1
   %19 = load i8*, i8** %arrayidx10, align 8
-  %call11 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %15, i8* getelementptr inbounds ([23 x i8], [23 x i8]* @.str.7.84, i64 0, i64 0), i8* %17, i8* %19)
+  %call11 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %15, i8* getelementptr inbounds ([23 x i8], [23 x i8]* @.str.7.101, i64 0, i64 0), i8* %17, i8* %19)
   br label %sw.epilog
 
 sw.bb12:                                          ; preds = %NodeBlock11
@@ -13834,7 +15073,7 @@ sw.bb12:                                          ; preds = %NodeBlock11
   %25 = load i8**, i8*** %authors.addr, align 8
   %arrayidx15 = getelementptr inbounds i8*, i8** %25, i64 2
   %26 = load i8*, i8** %arrayidx15, align 8
-  %call16 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %20, i8* getelementptr inbounds ([28 x i8], [28 x i8]* @.str.8.85, i64 0, i64 0), i8* %22, i8* %24, i8* %26)
+  %call16 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %20, i8* getelementptr inbounds ([28 x i8], [28 x i8]* @.str.8.102, i64 0, i64 0), i8* %22, i8* %24, i8* %26)
   br label %sw.epilog
 
 sw.bb17:                                          ; preds = %NodeBlock9
@@ -13851,7 +15090,7 @@ sw.bb17:                                          ; preds = %NodeBlock9
   %34 = load i8**, i8*** %authors.addr, align 8
   %arrayidx21 = getelementptr inbounds i8*, i8** %34, i64 3
   %35 = load i8*, i8** %arrayidx21, align 8
-  %call22 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %27, i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.9.86, i64 0, i64 0), i8* %29, i8* %31, i8* %33, i8* %35)
+  %call22 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %27, i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.9.103, i64 0, i64 0), i8* %29, i8* %31, i8* %33, i8* %35)
   br label %sw.epilog
 
 sw.bb23:                                          ; preds = %NodeBlock7
@@ -13871,7 +15110,7 @@ sw.bb23:                                          ; preds = %NodeBlock7
   %45 = load i8**, i8*** %authors.addr, align 8
   %arrayidx28 = getelementptr inbounds i8*, i8** %45, i64 4
   %46 = load i8*, i8** %arrayidx28, align 8
-  %call29 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %36, i8* getelementptr inbounds ([36 x i8], [36 x i8]* @.str.10.87, i64 0, i64 0), i8* %38, i8* %40, i8* %42, i8* %44, i8* %46)
+  %call29 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %36, i8* getelementptr inbounds ([36 x i8], [36 x i8]* @.str.10.104, i64 0, i64 0), i8* %38, i8* %40, i8* %42, i8* %44, i8* %46)
   br label %sw.epilog
 
 sw.bb30:                                          ; preds = %NodeBlock5
@@ -13894,7 +15133,7 @@ sw.bb30:                                          ; preds = %NodeBlock5
   %58 = load i8**, i8*** %authors.addr, align 8
   %arrayidx36 = getelementptr inbounds i8*, i8** %58, i64 5
   %59 = load i8*, i8** %arrayidx36, align 8
-  %call37 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %47, i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.11.88, i64 0, i64 0), i8* %49, i8* %51, i8* %53, i8* %55, i8* %57, i8* %59)
+  %call37 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %47, i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.11.105, i64 0, i64 0), i8* %49, i8* %51, i8* %53, i8* %55, i8* %57, i8* %59)
   br label %sw.epilog
 
 sw.bb38:                                          ; preds = %NodeBlock3
@@ -13920,7 +15159,7 @@ sw.bb38:                                          ; preds = %NodeBlock3
   %73 = load i8**, i8*** %authors.addr, align 8
   %arrayidx45 = getelementptr inbounds i8*, i8** %73, i64 6
   %74 = load i8*, i8** %arrayidx45, align 8
-  %call46 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %60, i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.12.89, i64 0, i64 0), i8* %62, i8* %64, i8* %66, i8* %68, i8* %70, i8* %72, i8* %74)
+  %call46 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %60, i8* getelementptr inbounds ([44 x i8], [44 x i8]* @.str.12.106, i64 0, i64 0), i8* %62, i8* %64, i8* %66, i8* %68, i8* %70, i8* %72, i8* %74)
   br label %sw.epilog
 
 sw.bb47:                                          ; preds = %NodeBlock1
@@ -13949,7 +15188,7 @@ sw.bb47:                                          ; preds = %NodeBlock1
   %90 = load i8**, i8*** %authors.addr, align 8
   %arrayidx55 = getelementptr inbounds i8*, i8** %90, i64 7
   %91 = load i8*, i8** %arrayidx55, align 8
-  %call56 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %75, i8* getelementptr inbounds ([48 x i8], [48 x i8]* @.str.13.90, i64 0, i64 0), i8* %77, i8* %79, i8* %81, i8* %83, i8* %85, i8* %87, i8* %89, i8* %91)
+  %call56 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %75, i8* getelementptr inbounds ([48 x i8], [48 x i8]* @.str.13.107, i64 0, i64 0), i8* %77, i8* %79, i8* %81, i8* %83, i8* %85, i8* %87, i8* %89, i8* %91)
   br label %sw.epilog
 
 sw.bb57:                                          ; preds = %NodeBlock
@@ -13981,7 +15220,7 @@ sw.bb57:                                          ; preds = %NodeBlock
   %109 = load i8**, i8*** %authors.addr, align 8
   %arrayidx66 = getelementptr inbounds i8*, i8** %109, i64 8
   %110 = load i8*, i8** %arrayidx66, align 8
-  %call67 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %92, i8* getelementptr inbounds ([52 x i8], [52 x i8]* @.str.14.91, i64 0, i64 0), i8* %94, i8* %96, i8* %98, i8* %100, i8* %102, i8* %104, i8* %106, i8* %108, i8* %110)
+  %call67 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %92, i8* getelementptr inbounds ([52 x i8], [52 x i8]* @.str.14.108, i64 0, i64 0), i8* %94, i8* %96, i8* %98, i8* %100, i8* %102, i8* %104, i8* %106, i8* %108, i8* %110)
   br label %sw.epilog
 
 newDefault:                                       ; preds = %NodeBlock
@@ -14016,7 +15255,7 @@ sw.default:                                       ; preds = %newDefault
   %128 = load i8**, i8*** %authors.addr, align 8
   %arrayidx76 = getelementptr inbounds i8*, i8** %128, i64 8
   %129 = load i8*, i8** %arrayidx76, align 8
-  %call77 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %111, i8* getelementptr inbounds ([60 x i8], [60 x i8]* @.str.15.92, i64 0, i64 0), i8* %113, i8* %115, i8* %117, i8* %119, i8* %121, i8* %123, i8* %125, i8* %127, i8* %129)
+  %call77 = call i32 (%struct._IO_FILE*, i8*, ...) bitcast (i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...)* @fprintf to i32 (%struct._IO_FILE*, i8*, ...)*)(%struct._IO_FILE* %111, i8* getelementptr inbounds ([60 x i8], [60 x i8]* @.str.15.109, i64 0, i64 0), i8* %113, i8* %115, i8* %117, i8* %119, i8* %121, i8* %123, i8* %125, i8* %127, i8* %129)
   br label %sw.epilog
 
 sw.epilog:                                        ; preds = %NodeBlock17, %sw.default, %sw.bb57, %sw.bb47, %sw.bb38, %sw.bb30, %sw.bb23, %sw.bb17, %sw.bb12, %sw.bb8, %sw.bb6
@@ -14067,7 +15306,7 @@ if.then3:                                         ; preds = %lor.lhs.false, %if.
   store i32 1, i32* %s_err, align 4
   %8 = load i64, i64* %tnum, align 8
   %cmp4 = icmp ugt i64 %8, 1073741823
-  %call6 = call i32* @__errno_location() #25
+  %call6 = call i32* @__errno_location() #26
   br i1 %cmp4, label %if.then5, label %if.else
 
 if.then5:                                         ; preds = %if.then3
@@ -14084,7 +15323,7 @@ if.else9:                                         ; preds = %entry
   br i1 %cmp10, label %if.then11, label %if.else13
 
 if.then11:                                        ; preds = %if.else9
-  %call12 = call i32* @__errno_location() #25
+  %call12 = call i32* @__errno_location() #26
   store i32 75, i32* %call12, align 4
   br label %if.end19
 
@@ -14094,7 +15333,7 @@ if.else13:                                        ; preds = %if.else9
   br i1 %cmp14, label %if.then15, label %if.end19
 
 if.then15:                                        ; preds = %if.else13
-  %call16 = call i32* @__errno_location() #25
+  %call16 = call i32* @__errno_location() #26
   store i32 0, i32* %call16, align 4
   br label %if.end19
 
@@ -14108,13 +15347,13 @@ if.then21:                                        ; preds = %if.end19
   %tobool = icmp ne i32 %12, 0
   %13 = load i32, i32* %err_exit.addr, align 4
   %cond = select i1 %tobool, i32 %13, i32 1
-  %call22 = call i32* @__errno_location() #25
+  %call22 = call i32* @__errno_location() #26
   %14 = load i32, i32* %call22, align 4
   %cmp23 = icmp eq i32 %14, 22
   br i1 %cmp23, label %cond.end27, label %cond.false25
 
 cond.false25:                                     ; preds = %if.then21
-  %call26 = call i32* @__errno_location() #25
+  %call26 = call i32* @__errno_location() #26
   %15 = load i32, i32* %call26, align 4
   br label %cond.end27
 
@@ -14123,7 +15362,7 @@ cond.end27:                                       ; preds = %if.then21, %cond.fa
   %16 = load i8*, i8** %err.addr, align 8
   %17 = load i8*, i8** %n_str.addr, align 8
   %call29 = call i8* @quote(i8* %17)
-  call void (i32, i32, i8*, ...) @error(i32 %cond, i32 %cond28, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.116, i64 0, i64 0), i8* %16, i8* %call29)
+  call void (i32, i32, i8*, ...) @error(i32 %cond, i32 %cond28, i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.135, i64 0, i64 0), i8* %16, i8* %call29)
   br label %if.end30
 
 if.end30:                                         ; preds = %cond.end27, %if.end19
@@ -14163,7 +15402,7 @@ entry:
   br i1 %or.cond, label %if.end, label %if.else
 
 if.else:                                          ; preds = %entry
-  call void @__assert_fail(i8* getelementptr inbounds ([38 x i8], [38 x i8]* @.str.121, i64 0, i64 0), i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.1.122, i64 0, i64 0), i32 84, i8* getelementptr inbounds ([79 x i8], [79 x i8]* @__PRETTY_FUNCTION__.xstrtoumax, i64 0, i64 0)) #26
+  call void @__assert_fail(i8* getelementptr inbounds ([38 x i8], [38 x i8]* @.str.140, i64 0, i64 0), i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.1.141, i64 0, i64 0), i32 84, i8* getelementptr inbounds ([79 x i8], [79 x i8]* @__PRETTY_FUNCTION__.xstrtoumax, i64 0, i64 0)) #27
   unreachable
 
 if.end:                                           ; preds = %entry
@@ -14172,7 +15411,7 @@ if.end:                                           ; preds = %entry
   %3 = load i8**, i8*** %ptr.addr, align 8
   %cond = select i1 %tobool, i8** %3, i8** %t_ptr
   store i8** %cond, i8*** %p, align 8
-  %call = call i32* @__errno_location() #25
+  %call = call i32* @__errno_location() #26
   store i32 0, i32* %call, align 4
   %4 = load i8*, i8** %s.addr, align 8
   store i8* %4, i8** %q, align 8
@@ -14182,7 +15421,7 @@ if.end:                                           ; preds = %entry
   br label %while.cond
 
 while.cond:                                       ; preds = %while.body, %if.end
-  %call2 = call i16** @__ctype_b_loc() #25
+  %call2 = call i16** @__ctype_b_loc() #26
   %7 = load i16*, i16** %call2, align 8
   %8 = load i8, i8* %ch, align 1
   %conv = zext i8 %8 to i32
@@ -14243,7 +15482,7 @@ land.lhs.true18:                                  ; preds = %land.lhs.true15
   %25 = load i8*, i8** %24, align 8
   %26 = load i8, i8* %25, align 1
   %conv19 = sext i8 %26 to i32
-  %call20 = call i8* @strchr(i8* %23, i32 %conv19) #23
+  %call20 = call i8* @strchr(i8* %23, i32 %conv19) #24
   %tobool21 = icmp ne i8* %call20, null
   br i1 %tobool21, label %if.then22, label %if.else23
 
@@ -14256,13 +15495,13 @@ if.else23:                                        ; preds = %land.lhs.true18, %l
   br label %return
 
 if.else25:                                        ; preds = %if.end9
-  %call26 = call i32* @__errno_location() #25
+  %call26 = call i32* @__errno_location() #26
   %27 = load i32, i32* %call26, align 4
   %cmp27 = icmp ne i32 %27, 0
   br i1 %cmp27, label %if.then29, label %if.end36
 
 if.then29:                                        ; preds = %if.else25
-  %call30 = call i32* @__errno_location() #25
+  %call30 = call i32* @__errno_location() #26
   %28 = load i32, i32* %call30, align 4
   %cmp31 = icmp ne i32 %28, 34
   br i1 %cmp31, label %if.then33, label %if.end34
@@ -14304,7 +15543,7 @@ if.then43:                                        ; preds = %if.end39
   %38 = load i8*, i8** %37, align 8
   %39 = load i8, i8* %38, align 1
   %conv44 = sext i8 %39 to i32
-  %call45 = call i8* @strchr(i8* %36, i32 %conv44) #23
+  %call45 = call i8* @strchr(i8* %36, i32 %conv44) #24
   %tobool46 = icmp ne i8* %call45, null
   br i1 %tobool46, label %if.end48, label %if.then47
 
@@ -14374,7 +15613,7 @@ NodeBlock:                                        ; preds = %NodeBlock1
 
 sw.bb:                                            ; preds = %NodeBlock21, %NodeBlock19, %NodeBlock17, %NodeBlock15, %NodeBlock13, %NodeBlock11, %NodeBlock9, %NodeBlock7, %NodeBlock5, %NodeBlock3, %NodeBlock1, %NodeBlock
   %46 = load i8*, i8** %valid_suffixes.addr, align 8
-  %call50 = call i8* @strchr(i8* %46, i32 48) #23
+  %call50 = call i8* @strchr(i8* %46, i32 48) #24
   %tobool51 = icmp ne i8* %call50, null
   br i1 %tobool51, label %if.then52, label %sw.epilog66
 
@@ -14615,45 +15854,6 @@ return:                                           ; preds = %if.end98, %sw.defau
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define dso_local i8* @quote(i8* %arg) #3 {
-entry:
-  %arg.addr = alloca i8*, align 8
-  store i8* %arg, i8** %arg.addr, align 8
-  %0 = load i8*, i8** %arg.addr, align 8
-  %call = call i8* @quote_n(i32 0, i8* %0)
-  ret i8* %call
-}
-
-; Function Attrs: noinline nounwind uwtable
-define dso_local i8* @quote_n(i32 %n, i8* %arg) #3 {
-entry:
-  %n.addr = alloca i32, align 4
-  %arg.addr = alloca i8*, align 8
-  store i32 %n, i32* %n.addr, align 4
-  store i8* %arg, i8** %arg.addr, align 8
-  %0 = load i32, i32* %n.addr, align 4
-  %1 = load i8*, i8** %arg.addr, align 8
-  %call = call i8* @quote_n_mem(i32 %0, i8* %1, i64 -1)
-  ret i8* %call
-}
-
-; Function Attrs: noinline nounwind uwtable
-define dso_local i8* @quote_n_mem(i32 %n, i8* %arg, i64 %argsize) #3 {
-entry:
-  %n.addr = alloca i32, align 4
-  %arg.addr = alloca i8*, align 8
-  %argsize.addr = alloca i64, align 8
-  store i32 %n, i32* %n.addr, align 4
-  store i8* %arg, i8** %arg.addr, align 8
-  store i64 %argsize, i64* %argsize.addr, align 8
-  %0 = load i32, i32* %n.addr, align 4
-  %1 = load i8*, i8** %arg.addr, align 8
-  %2 = load i64, i64* %argsize.addr, align 8
-  %call = call i8* @quotearg_n_options(i32 %0, i8* %1, i64 %2, %struct.quoting_options* @quote_quoting_options)
-  ret i8* %call
-}
-
-; Function Attrs: noinline nounwind uwtable
 define internal i32 @bkm_scale(i64* %x, i32 %scale_factor) #3 {
 entry:
   %retval = alloca i32, align 4
@@ -14763,7 +15963,7 @@ land.lhs.true:                                    ; preds = %lor.lhs.false
   br i1 %tobool8, label %if.then, label %lor.lhs.false9
 
 lor.lhs.false9:                                   ; preds = %land.lhs.true
-  %call10 = call i32* @__errno_location() #25
+  %call10 = call i32* @__errno_location() #26
   %6 = load i32, i32* %call10, align 4
   %cmp11 = icmp ne i32 %6, 9
   br i1 %cmp11, label %if.then, label %if.end15
@@ -14774,7 +15974,7 @@ if.then:                                          ; preds = %lor.lhs.false9, %la
   br i1 %tobool12, label %if.end, label %if.then13
 
 if.then13:                                        ; preds = %if.then
-  %call14 = call i32* @__errno_location() #25
+  %call14 = call i32* @__errno_location() #26
   store i32 0, i32* %call14, align 4
   br label %if.end
 
@@ -14835,6 +16035,137 @@ entry:
 }
 
 ; Function Attrs: noinline nounwind uwtable
+define dso_local i64 @base32_encode_alloc(i8* %in, i64 %inlen, i8** %out) #3 {
+entry:
+  %retval = alloca i64, align 8
+  %in.addr = alloca i8*, align 8
+  %inlen.addr = alloca i64, align 8
+  %out.addr = alloca i8**, align 8
+  %outlen = alloca i64, align 8
+  store i8* %in, i8** %in.addr, align 8
+  store i64 %inlen, i64* %inlen.addr, align 8
+  store i8** %out, i8*** %out.addr, align 8
+  %0 = load i64, i64* %inlen.addr, align 8
+  %add = add i64 %0, 4
+  %div = udiv i64 %add, 5
+  %mul = mul i64 %div, 8
+  %add1 = add i64 1, %mul
+  store i64 %add1, i64* %outlen, align 8
+  %1 = load i64, i64* %inlen.addr, align 8
+  %2 = load i64, i64* %outlen, align 8
+  %cmp = icmp ugt i64 %1, %2
+  br i1 %cmp, label %if.then, label %if.end
+
+if.then:                                          ; preds = %entry
+  %3 = load i8**, i8*** %out.addr, align 8
+  store i8* null, i8** %3, align 8
+  store i64 0, i64* %retval, align 8
+  br label %return
+
+if.end:                                           ; preds = %entry
+  %4 = load i64, i64* %outlen, align 8
+  %call = call noalias i8* @malloc(i64 %4) #11
+  %5 = load i8**, i8*** %out.addr, align 8
+  store i8* %call, i8** %5, align 8
+  %6 = load i8**, i8*** %out.addr, align 8
+  %7 = load i8*, i8** %6, align 8
+  %tobool = icmp ne i8* %7, null
+  br i1 %tobool, label %if.end3, label %if.then2
+
+if.then2:                                         ; preds = %if.end
+  %8 = load i64, i64* %outlen, align 8
+  store i64 %8, i64* %retval, align 8
+  br label %return
+
+if.end3:                                          ; preds = %if.end
+  %9 = load i8*, i8** %in.addr, align 8
+  %10 = load i64, i64* %inlen.addr, align 8
+  %11 = load i8**, i8*** %out.addr, align 8
+  %12 = load i8*, i8** %11, align 8
+  %13 = load i64, i64* %outlen, align 8
+  call void @base32_encode(i8* %9, i64 %10, i8* %12, i64 %13)
+  %14 = load i64, i64* %outlen, align 8
+  %sub = sub i64 %14, 1
+  store i64 %sub, i64* %retval, align 8
+  br label %return
+
+return:                                           ; preds = %if.end3, %if.then2, %if.then
+  %15 = load i64, i64* %retval, align 8
+  ret i64 %15
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local zeroext i1 @base32_decode_alloc_ctx(%struct.base32_decode_context* %ctx, i8* %in, i64 %inlen, i8** %out, i64* %outlen) #3 {
+entry:
+  %retval = alloca i1, align 1
+  %ctx.addr = alloca %struct.base32_decode_context*, align 8
+  %in.addr = alloca i8*, align 8
+  %inlen.addr = alloca i64, align 8
+  %out.addr = alloca i8**, align 8
+  %outlen.addr = alloca i64*, align 8
+  %needlen = alloca i64, align 8
+  store %struct.base32_decode_context* %ctx, %struct.base32_decode_context** %ctx.addr, align 8
+  store i8* %in, i8** %in.addr, align 8
+  store i64 %inlen, i64* %inlen.addr, align 8
+  store i8** %out, i8*** %out.addr, align 8
+  store i64* %outlen, i64** %outlen.addr, align 8
+  %0 = load i64, i64* %inlen.addr, align 8
+  %div = udiv i64 %0, 8
+  %mul = mul i64 5, %div
+  %add = add i64 %mul, 5
+  store i64 %add, i64* %needlen, align 8
+  %1 = load i64, i64* %needlen, align 8
+  %call = call noalias i8* @malloc(i64 %1) #11
+  %2 = load i8**, i8*** %out.addr, align 8
+  store i8* %call, i8** %2, align 8
+  %3 = load i8**, i8*** %out.addr, align 8
+  %4 = load i8*, i8** %3, align 8
+  %tobool = icmp ne i8* %4, null
+  br i1 %tobool, label %if.end, label %if.then
+
+if.then:                                          ; preds = %entry
+  store i1 true, i1* %retval, align 1
+  br label %return
+
+if.end:                                           ; preds = %entry
+  %5 = load %struct.base32_decode_context*, %struct.base32_decode_context** %ctx.addr, align 8
+  %6 = load i8*, i8** %in.addr, align 8
+  %7 = load i64, i64* %inlen.addr, align 8
+  %8 = load i8**, i8*** %out.addr, align 8
+  %9 = load i8*, i8** %8, align 8
+  %call1 = call zeroext i1 @base32_decode_ctx(%struct.base32_decode_context* %5, i8* %6, i64 %7, i8* %9, i64* %needlen)
+  br i1 %call1, label %if.end3, label %if.then2
+
+if.then2:                                         ; preds = %if.end
+  %10 = load i8**, i8*** %out.addr, align 8
+  %11 = load i8*, i8** %10, align 8
+  call void @free(i8* %11) #11
+  %12 = load i8**, i8*** %out.addr, align 8
+  store i8* null, i8** %12, align 8
+  store i1 false, i1* %retval, align 1
+  br label %return
+
+if.end3:                                          ; preds = %if.end
+  %13 = load i64*, i64** %outlen.addr, align 8
+  %tobool4 = icmp ne i64* %13, null
+  br i1 %tobool4, label %if.then5, label %if.end6
+
+if.then5:                                         ; preds = %if.end3
+  %14 = load i64, i64* %needlen, align 8
+  %15 = load i64*, i64** %outlen.addr, align 8
+  store i64 %14, i64* %15, align 8
+  br label %if.end6
+
+if.end6:                                          ; preds = %if.then5, %if.end3
+  store i1 true, i1* %retval, align 1
+  br label %return
+
+return:                                           ; preds = %if.end6, %if.then2, %if.then
+  %16 = load i1, i1* %retval, align 1
+  ret i1 %16
+}
+
+; Function Attrs: noinline nounwind uwtable
 define dso_local void @close_stdout_set_file_name(i8* %file) #3 {
 entry:
   %file.addr = alloca i8*, align 8
@@ -14864,7 +16195,7 @@ entry:
   %e = alloca i32, align 4
   %p = alloca %struct.quoting_options*, align 8
   store %struct.quoting_options* %o, %struct.quoting_options** %o.addr, align 8
-  %call = call i32* @__errno_location() #25
+  %call = call i32* @__errno_location() #26
   %0 = load i32, i32* %call, align 4
   store i32 %0, i32* %e, align 4
   %1 = load %struct.quoting_options*, %struct.quoting_options** %o.addr, align 8
@@ -14876,7 +16207,7 @@ entry:
   %4 = bitcast i8* %call1 to %struct.quoting_options*
   store %struct.quoting_options* %4, %struct.quoting_options** %p, align 8
   %5 = load i32, i32* %e, align 4
-  %call2 = call i32* @__errno_location() #25
+  %call2 = call i32* @__errno_location() #26
   store i32 %5, i32* %call2, align 4
   %6 = load %struct.quoting_options*, %struct.quoting_options** %p, align 8
   ret %struct.quoting_options* %6
@@ -14986,7 +16317,7 @@ if.end:                                           ; preds = %if.then, %entry
   br i1 %or.cond, label %if.end4, label %if.then3
 
 if.then3:                                         ; preds = %if.end
-  call void @abort() #26
+  call void @abort() #27
   unreachable
 
 if.end4:                                          ; preds = %if.end
@@ -15022,7 +16353,7 @@ entry:
   %1 = load %struct.quoting_options*, %struct.quoting_options** %o.addr, align 8
   %cond = select i1 %tobool, %struct.quoting_options* %1, %struct.quoting_options* @default_quoting_options
   store %struct.quoting_options* %cond, %struct.quoting_options** %p, align 8
-  %call = call i32* @__errno_location() #25
+  %call = call i32* @__errno_location() #26
   %2 = load i32, i32* %call, align 4
   store i32 %2, i32* %e, align 4
   %3 = load i8*, i8** %buffer.addr, align 8
@@ -15047,7 +16378,7 @@ entry:
   %call1 = call i64 @quotearg_buffer_restyled(i8* %3, i64 %4, i8* %5, i64 %6, i32 %8, i32 %10, i32* %arraydecay, i8* %13, i8* %15)
   store i64 %call1, i64* %r, align 8
   %16 = load i32, i32* %e, align 4
-  %call2 = call i32* @__errno_location() #25
+  %call2 = call i32* @__errno_location() #26
   store i32 %16, i32* %call2, align 4
   %17 = load i64, i64* %r, align 8
   ret i64 %17
@@ -15090,7 +16421,7 @@ entry:
   %1 = load %struct.quoting_options*, %struct.quoting_options** %o.addr, align 8
   %cond = select i1 %tobool, %struct.quoting_options* %1, %struct.quoting_options* @default_quoting_options
   store %struct.quoting_options* %cond, %struct.quoting_options** %p, align 8
-  %call = call i32* @__errno_location() #25
+  %call = call i32* @__errno_location() #26
   %2 = load i32, i32* %call, align 4
   store i32 %2, i32* %e, align 4
   %3 = load %struct.quoting_options*, %struct.quoting_options** %p, align 8
@@ -15142,7 +16473,7 @@ entry:
   %29 = load i8*, i8** %right_quote10, align 8
   %call11 = call i64 @quotearg_buffer_restyled(i8* %18, i64 %19, i8* %20, i64 %21, i32 %23, i32 %24, i32* %arraydecay8, i8* %27, i8* %29)
   %30 = load i32, i32* %e, align 4
-  %call12 = call i32* @__errno_location() #25
+  %call12 = call i32* @__errno_location() #26
   store i32 %30, i32* %call12, align 4
   %31 = load i64*, i64** %size.addr, align 8
   %tobool13 = icmp ne i64* %31, null
@@ -15495,10 +16826,10 @@ for.end:                                          ; preds = %for.cond
 define dso_local void @emit_bug_reporting_address() #3 {
 entry:
   %0 = load %struct._IO_FILE*, %struct._IO_FILE** bitcast (%struct.__STDIO_FILE_STRUCT.568** @stdout to %struct._IO_FILE**), align 8
-  %call = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3.80, i64 0, i64 0), %struct._IO_FILE* %0)
-  %call1 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.16.95, i64 0, i64 0), i8* getelementptr inbounds ([22 x i8], [22 x i8]* @.str.17.96, i64 0, i64 0))
-  %call2 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.18.97, i64 0, i64 0), i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.19.98, i64 0, i64 0), i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.20.99, i64 0, i64 0))
-  %call3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([39 x i8], [39 x i8]* @.str.21.100, i64 0, i64 0), i8* getelementptr inbounds ([29 x i8], [29 x i8]* @.str.22.101, i64 0, i64 0))
+  %call = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct._IO_FILE*)*)(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3.97, i64 0, i64 0), %struct._IO_FILE* %0)
+  %call1 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.16.112, i64 0, i64 0), i8* getelementptr inbounds ([22 x i8], [22 x i8]* @.str.17.113, i64 0, i64 0))
+  %call2 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.18.114, i64 0, i64 0), i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.19.115, i64 0, i64 0), i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.20.116, i64 0, i64 0))
+  %call3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([39 x i8], [39 x i8]* @.str.21.117, i64 0, i64 0), i8* getelementptr inbounds ([29 x i8], [29 x i8]* @.str.22.118, i64 0, i64 0))
   ret void
 }
 
@@ -15516,7 +16847,7 @@ entry:
   br i1 %cmp, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @xalloc_die() #24
+  call void @xalloc_die() #25
   unreachable
 
 if.end:                                           ; preds = %entry
@@ -15543,7 +16874,7 @@ entry:
   br i1 %cmp, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @xalloc_die() #24
+  call void @xalloc_die() #25
   unreachable
 
 if.end:                                           ; preds = %entry
@@ -15552,6 +16883,98 @@ if.end:                                           ; preds = %entry
   %4 = load i64, i64* %s.addr, align 8
   %mul = mul i64 %3, %4
   %call = call i8* @xrealloc(i8* %2, i64 %mul)
+  ret i8* %call
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local i8* @x2nrealloc(i8* %p, i64* %pn, i64 %s) #3 {
+entry:
+  %p.addr = alloca i8*, align 8
+  %pn.addr = alloca i64*, align 8
+  %s.addr = alloca i64, align 8
+  %n = alloca i64, align 8
+  store i8* %p, i8** %p.addr, align 8
+  store i64* %pn, i64** %pn.addr, align 8
+  store i64 %s, i64* %s.addr, align 8
+  %0 = load i64*, i64** %pn.addr, align 8
+  %1 = load i64, i64* %0, align 8
+  store i64 %1, i64* %n, align 8
+  %2 = load i8*, i8** %p.addr, align 8
+  %tobool = icmp ne i8* %2, null
+  br i1 %tobool, label %if.else, label %if.then
+
+if.then:                                          ; preds = %entry
+  %3 = load i64, i64* %n, align 8
+  %tobool1 = icmp ne i64 %3, 0
+  br i1 %tobool1, label %if.end, label %if.then2
+
+if.then2:                                         ; preds = %if.then
+  %4 = load i64, i64* %s.addr, align 8
+  %div = udiv i64 128, %4
+  store i64 %div, i64* %n, align 8
+  %5 = load i64, i64* %n, align 8
+  %tobool3 = icmp ne i64 %5, 0
+  %lnot = xor i1 %tobool3, true
+  %lnot.ext = zext i1 %lnot to i32
+  %conv = sext i32 %lnot.ext to i64
+  %6 = load i64, i64* %n, align 8
+  %add = add i64 %6, %conv
+  store i64 %add, i64* %n, align 8
+  br label %if.end
+
+if.end:                                           ; preds = %if.then2, %if.then
+  %7 = load i64, i64* %s.addr, align 8
+  %div4 = udiv i64 9223372036854775807, %7
+  %8 = load i64, i64* %n, align 8
+  %cmp = icmp ult i64 %div4, %8
+  br i1 %cmp, label %if.then6, label %if.end16
+
+if.then6:                                         ; preds = %if.end
+  call void @xalloc_die() #25
+  unreachable
+
+if.else:                                          ; preds = %entry
+  %9 = load i64, i64* %s.addr, align 8
+  %div8 = udiv i64 6148914691236517204, %9
+  %10 = load i64, i64* %n, align 8
+  %cmp9 = icmp ule i64 %div8, %10
+  br i1 %cmp9, label %if.then11, label %if.end12
+
+if.then11:                                        ; preds = %if.else
+  call void @xalloc_die() #25
+  unreachable
+
+if.end12:                                         ; preds = %if.else
+  %11 = load i64, i64* %n, align 8
+  %div13 = udiv i64 %11, 2
+  %add14 = add i64 %div13, 1
+  %12 = load i64, i64* %n, align 8
+  %add15 = add i64 %12, %add14
+  store i64 %add15, i64* %n, align 8
+  br label %if.end16
+
+if.end16:                                         ; preds = %if.end, %if.end12
+  %13 = load i64, i64* %n, align 8
+  %14 = load i64*, i64** %pn.addr, align 8
+  store i64 %13, i64* %14, align 8
+  %15 = load i8*, i8** %p.addr, align 8
+  %16 = load i64, i64* %n, align 8
+  %17 = load i64, i64* %s.addr, align 8
+  %mul = mul i64 %16, %17
+  %call = call i8* @xrealloc(i8* %15, i64 %mul)
+  ret i8* %call
+}
+
+; Function Attrs: noinline nounwind uwtable
+define dso_local i8* @x2realloc(i8* %p, i64* %pn) #3 {
+entry:
+  %p.addr = alloca i8*, align 8
+  %pn.addr = alloca i64*, align 8
+  store i8* %p, i8** %p.addr, align 8
+  store i64* %pn, i64** %pn.addr, align 8
+  %0 = load i8*, i8** %p.addr, align 8
+  %1 = load i64*, i64** %pn.addr, align 8
+  %call = call i8* @x2nrealloc(i8* %0, i64* %1, i64 1)
   ret i8* %call
 }
 
@@ -15588,7 +17011,7 @@ lor.lhs.false:                                    ; preds = %entry
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %lor.lhs.false, %entry
-  call void @xalloc_die() #24
+  call void @xalloc_die() #25
   unreachable
 
 if.end:                                           ; preds = %lor.lhs.false
@@ -15603,7 +17026,7 @@ entry:
   store i8* %string, i8** %string.addr, align 8
   %0 = load i8*, i8** %string.addr, align 8
   %1 = load i8*, i8** %string.addr, align 8
-  %call = call i64 @strlen(i8* %1) #23
+  %call = call i64 @strlen(i8* %1) #24
   %add = add i64 %call, 1
   %call1 = call i8* @xmemdup(i8* %0, i64 %add)
   ret i8* %call1
@@ -16817,7 +18240,7 @@ entry:
   br i1 %or.cond, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  call void @llsc_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 124, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #24
+  call void @gs_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 124, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #25
   unreachable
 
 if.end:                                           ; preds = %entry
@@ -16862,7 +18285,7 @@ if.then7:                                         ; preds = %for.end
   br i1 %tobool9, label %if.end11, label %if.then10
 
 if.then10:                                        ; preds = %if.then7
-  call void @llsc_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 135, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #24
+  call void @gs_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 135, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #25
   unreachable
 
 if.end11:                                         ; preds = %if.then7
@@ -16917,7 +18340,7 @@ if.then14:                                        ; preds = %if.end12
   br i1 %or.cond4, label %if.end30, label %if.then29
 
 if.then29:                                        ; preds = %if.then14
-  call void @llsc_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 150, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #24
+  call void @gs_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 150, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #25
   unreachable
 
 if.end30:                                         ; preds = %if.then14
@@ -16952,7 +18375,7 @@ if.then33:                                        ; preds = %if.end31
   br i1 %tobool35, label %if.end37, label %if.then36
 
 if.then36:                                        ; preds = %if.then33
-  call void @llsc_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 163, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #24
+  call void @gs_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 163, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #25
   unreachable
 
 if.end37:                                         ; preds = %if.then33
@@ -16974,12 +18397,12 @@ if.end39:                                         ; preds = %if.else38, %if.end3
   store i32 %call40, i32* getelementptr inbounds (%struct.exe_sym_env_t, %struct.exe_sym_env_t* bitcast ({ <{ %struct.exe_file_t, %struct.exe_file_t, %struct.exe_file_t, [29 x %struct.exe_file_t] }>, i32, i32, i32, [4 x i8] }* @__exe_env to %struct.exe_sym_env_t*), i32 0, i32 2), align 4
   %48 = load i32, i32* getelementptr inbounds (%struct.exe_sym_env_t, %struct.exe_sym_env_t* bitcast ({ <{ %struct.exe_file_t, %struct.exe_file_t, %struct.exe_file_t, [29 x %struct.exe_file_t] }>, i32, i32, i32, [4 x i8] }* @__exe_env to %struct.exe_sym_env_t*), i32 0, i32 2), align 4
   %cmp41 = icmp eq i32 %48, 1
-  call void @llsc_assume(i1 zeroext %cmp41)
+  call void @gs_assume(i1 zeroext %cmp41)
   ret void
 }
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define internal void @llsc_report_error.143(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
+define internal void @gs_report_error.143(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
 entry:
   %file.addr = alloca i8*, align 8
   %line.addr = alloca i32, align 4
@@ -16998,7 +18421,7 @@ entry:
   %3 = load i8*, i8** %suffix.addr, align 8
   call void @print_string(i8* %3)
   call void @print_string(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.12.154, i64 0, i64 0))
-  call void @stop(i32 -1) #24
+  call void @stop(i32 -1) #25
   unreachable
 }
 
@@ -17024,7 +18447,7 @@ entry:
   br i1 %tobool, label %if.end, label %if.then
 
 if.then:                                          ; preds = %entry
-  call void @llsc_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 47, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #24
+  call void @gs_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 47, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #25
   unreachable
 
 if.end:                                           ; preds = %entry
@@ -17065,7 +18488,7 @@ for.end:                                          ; preds = %for.cond
   br i1 %tobool6, label %if.end8, label %if.else
 
 if.else:                                          ; preds = %for.end
-  call void @__assert_fail(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.14.153, i64 0, i64 0), i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 55, i8* getelementptr inbounds ([88 x i8], [88 x i8]* @__PRETTY_FUNCTION__.__create_new_dfile, i64 0, i64 0)) #26
+  call void @__assert_fail(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.14.153, i64 0, i64 0), i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 55, i8* getelementptr inbounds ([88 x i8], [88 x i8]* @__PRETTY_FUNCTION__.__create_new_dfile, i64 0, i64 0)) #27
   unreachable
 
 if.end8:                                          ; preds = %for.end
@@ -17088,7 +18511,7 @@ if.end8:                                          ; preds = %for.end
   br i1 %tobool13, label %if.end15, label %if.then14
 
 if.then14:                                        ; preds = %if.end8
-  call void @llsc_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 60, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #24
+  call void @gs_report_error.143(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.1.140, i64 0, i64 0), i32 60, i8* getelementptr inbounds ([31 x i8], [31 x i8]* @.str.2.141, i64 0, i64 0), i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.3.142, i64 0, i64 0)) #25
   unreachable
 
 if.end15:                                         ; preds = %if.end8
@@ -17108,7 +18531,7 @@ if.end15:                                         ; preds = %if.end8
   %27 = load %struct.stat64*, %struct.stat64** %s, align 8
   %st_ino = getelementptr inbounds %struct.stat64, %struct.stat64* %27, i32 0, i32 1
   %28 = load i64, i64* %st_ino, align 8
-  %call19 = call i32 @llsc_is_symbolic(i64 %28)
+  %call19 = call i32 @gs_is_symbolic(i64 %28)
   %tobool20 = icmp ne i32 %call19, 0
   br i1 %tobool20, label %if.end26, label %land.lhs.true
 
@@ -17135,13 +18558,13 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %35 = load i64, i64* %st_ino27, align 8
   %and28 = and i64 %35, 2147483647
   %cmp29 = icmp ne i64 %and28, 0
-  call void @llsc_assume(i1 zeroext %cmp29)
+  call void @gs_assume(i1 zeroext %cmp29)
   %36 = load %struct.stat64*, %struct.stat64** %s, align 8
   %st_blksize = getelementptr inbounds %struct.stat64, %struct.stat64* %36, i32 0, i32 9
   %37 = load i64, i64* %st_blksize, align 8
   %and31 = and i64 %37, -65536
   %cmp32 = icmp eq i64 %and31, 0
-  call void @llsc_assume(i1 zeroext %cmp32)
+  call void @gs_assume(i1 zeroext %cmp32)
   %38 = load %struct.stat64*, %struct.stat64** %s, align 8
   %39 = bitcast %struct.stat64* %38 to i8*
   %40 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17150,7 +18573,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %and34 = and i32 %41, -61952
   %tobool35 = icmp ne i32 %and34, 0
   %lnot = xor i1 %tobool35, true
-  call void @llsc_prefer_cex(i8* %39, i1 zeroext %lnot)
+  call void @gs_prefer_cex(i8* %39, i1 zeroext %lnot)
   %42 = load %struct.stat64*, %struct.stat64** %s, align 8
   %43 = bitcast %struct.stat64* %42 to i8*
   %44 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17160,7 +18583,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %st_dev36 = getelementptr inbounds %struct.stat64, %struct.stat64* %46, i32 0, i32 0
   %47 = load i64, i64* %st_dev36, align 8
   %cmp37 = icmp eq i64 %45, %47
-  call void @llsc_prefer_cex(i8* %43, i1 zeroext %cmp37)
+  call void @gs_prefer_cex(i8* %43, i1 zeroext %cmp37)
   %48 = load %struct.stat64*, %struct.stat64** %s, align 8
   %49 = bitcast %struct.stat64* %48 to i8*
   %50 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17170,7 +18593,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %st_rdev39 = getelementptr inbounds %struct.stat64, %struct.stat64* %52, i32 0, i32 7
   %53 = load i64, i64* %st_rdev39, align 8
   %cmp40 = icmp eq i64 %51, %53
-  call void @llsc_prefer_cex(i8* %49, i1 zeroext %cmp40)
+  call void @gs_prefer_cex(i8* %49, i1 zeroext %cmp40)
   %54 = load %struct.stat64*, %struct.stat64** %s, align 8
   %55 = bitcast %struct.stat64* %54 to i8*
   %56 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17178,7 +18601,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %57 = load i32, i32* %st_mode42, align 8
   %and43 = and i32 %57, 448
   %cmp44 = icmp eq i32 %and43, 384
-  call void @llsc_prefer_cex(i8* %55, i1 zeroext %cmp44)
+  call void @gs_prefer_cex(i8* %55, i1 zeroext %cmp44)
   %58 = load %struct.stat64*, %struct.stat64** %s, align 8
   %59 = bitcast %struct.stat64* %58 to i8*
   %60 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17186,7 +18609,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %61 = load i32, i32* %st_mode46, align 8
   %and47 = and i32 %61, 56
   %cmp48 = icmp eq i32 %and47, 32
-  call void @llsc_prefer_cex(i8* %59, i1 zeroext %cmp48)
+  call void @gs_prefer_cex(i8* %59, i1 zeroext %cmp48)
   %62 = load %struct.stat64*, %struct.stat64** %s, align 8
   %63 = bitcast %struct.stat64* %62 to i8*
   %64 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17194,7 +18617,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %65 = load i32, i32* %st_mode50, align 8
   %and51 = and i32 %65, 7
   %cmp52 = icmp eq i32 %and51, 4
-  call void @llsc_prefer_cex(i8* %63, i1 zeroext %cmp52)
+  call void @gs_prefer_cex(i8* %63, i1 zeroext %cmp52)
   %66 = load %struct.stat64*, %struct.stat64** %s, align 8
   %67 = bitcast %struct.stat64* %66 to i8*
   %68 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17202,14 +18625,14 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %69 = load i32, i32* %st_mode54, align 8
   %and55 = and i32 %69, 61440
   %cmp56 = icmp eq i32 %and55, 32768
-  call void @llsc_prefer_cex(i8* %67, i1 zeroext %cmp56)
+  call void @gs_prefer_cex(i8* %67, i1 zeroext %cmp56)
   %70 = load %struct.stat64*, %struct.stat64** %s, align 8
   %71 = bitcast %struct.stat64* %70 to i8*
   %72 = load %struct.stat64*, %struct.stat64** %s, align 8
   %st_nlink = getelementptr inbounds %struct.stat64, %struct.stat64* %72, i32 0, i32 2
   %73 = load i64, i64* %st_nlink, align 8
   %cmp58 = icmp eq i64 %73, 1
-  call void @llsc_prefer_cex(i8* %71, i1 zeroext %cmp58)
+  call void @gs_prefer_cex(i8* %71, i1 zeroext %cmp58)
   %74 = load %struct.stat64*, %struct.stat64** %s, align 8
   %75 = bitcast %struct.stat64* %74 to i8*
   %76 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17219,7 +18642,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %st_uid60 = getelementptr inbounds %struct.stat64, %struct.stat64* %78, i32 0, i32 4
   %79 = load i32, i32* %st_uid60, align 4
   %cmp61 = icmp eq i32 %77, %79
-  call void @llsc_prefer_cex(i8* %75, i1 zeroext %cmp61)
+  call void @gs_prefer_cex(i8* %75, i1 zeroext %cmp61)
   %80 = load %struct.stat64*, %struct.stat64** %s, align 8
   %81 = bitcast %struct.stat64* %80 to i8*
   %82 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17229,14 +18652,14 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %st_gid63 = getelementptr inbounds %struct.stat64, %struct.stat64* %84, i32 0, i32 5
   %85 = load i32, i32* %st_gid63, align 8
   %cmp64 = icmp eq i32 %83, %85
-  call void @llsc_prefer_cex(i8* %81, i1 zeroext %cmp64)
+  call void @gs_prefer_cex(i8* %81, i1 zeroext %cmp64)
   %86 = load %struct.stat64*, %struct.stat64** %s, align 8
   %87 = bitcast %struct.stat64* %86 to i8*
   %88 = load %struct.stat64*, %struct.stat64** %s, align 8
   %st_blksize66 = getelementptr inbounds %struct.stat64, %struct.stat64* %88, i32 0, i32 9
   %89 = load i64, i64* %st_blksize66, align 8
   %cmp67 = icmp eq i64 %89, 4096
-  call void @llsc_prefer_cex(i8* %87, i1 zeroext %cmp67)
+  call void @gs_prefer_cex(i8* %87, i1 zeroext %cmp67)
   %90 = load %struct.stat64*, %struct.stat64** %s, align 8
   %91 = bitcast %struct.stat64* %90 to i8*
   %92 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17248,7 +18671,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %tv_sec70 = getelementptr inbounds %struct.timespec, %struct.timespec* %st_atim69, i32 0, i32 0
   %95 = load i64, i64* %tv_sec70, align 8
   %cmp71 = icmp eq i64 %93, %95
-  call void @llsc_prefer_cex(i8* %91, i1 zeroext %cmp71)
+  call void @gs_prefer_cex(i8* %91, i1 zeroext %cmp71)
   %96 = load %struct.stat64*, %struct.stat64** %s, align 8
   %97 = bitcast %struct.stat64* %96 to i8*
   %98 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17260,7 +18683,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %tv_sec75 = getelementptr inbounds %struct.timespec, %struct.timespec* %st_mtim74, i32 0, i32 0
   %101 = load i64, i64* %tv_sec75, align 8
   %cmp76 = icmp eq i64 %99, %101
-  call void @llsc_prefer_cex(i8* %97, i1 zeroext %cmp76)
+  call void @gs_prefer_cex(i8* %97, i1 zeroext %cmp76)
   %102 = load %struct.stat64*, %struct.stat64** %s, align 8
   %103 = bitcast %struct.stat64* %102 to i8*
   %104 = load %struct.stat64*, %struct.stat64** %s, align 8
@@ -17272,7 +18695,7 @@ if.end26:                                         ; preds = %if.then23, %land.lh
   %tv_sec80 = getelementptr inbounds %struct.timespec, %struct.timespec* %st_ctim79, i32 0, i32 0
   %107 = load i64, i64* %tv_sec80, align 8
   %cmp81 = icmp eq i64 %105, %107
-  call void @llsc_prefer_cex(i8* %103, i1 zeroext %cmp81)
+  call void @gs_prefer_cex(i8* %103, i1 zeroext %cmp81)
   %108 = load %struct.exe_disk_file_t*, %struct.exe_disk_file_t** %dfile.addr, align 8
   %size83 = getelementptr inbounds %struct.exe_disk_file_t, %struct.exe_disk_file_t* %108, i32 0, i32 0
   %109 = load i32, i32* %size83, align 8
@@ -17303,7 +18726,7 @@ entry:
   ret i32 %2
 }
 
-declare dso_local void @llsc_prefer_cex(i8*, i1 zeroext) #5
+declare dso_local void @gs_prefer_cex(i8*, i1 zeroext) #5
 
 ; Function Attrs: noinline nounwind uwtable
 define weak hidden i32 @__syscall_rt_sigaction(i32 %signum, %struct.sigaction.800* %act, %struct.sigaction.800* %oldact, i64 %_something) #3 {
@@ -17316,7 +18739,7 @@ entry:
   store %struct.sigaction.800* %act, %struct.sigaction.800** %act.addr, align 8
   store %struct.sigaction.800* %oldact, %struct.sigaction.800** %oldact.addr, align 8
   store i64 %_something, i64* %_something.addr, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.155, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.155, i64 0, i64 0))
   ret i32 0
 }
 
@@ -17329,7 +18752,7 @@ entry:
   store i32 %signum, i32* %signum.addr, align 4
   store %struct.sigaction.800* %act, %struct.sigaction.800** %act.addr, align 8
   store %struct.sigaction.800* %oldact, %struct.sigaction.800** %oldact.addr, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.155, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.155, i64 0, i64 0))
   ret i32 0
 }
 
@@ -17342,7 +18765,7 @@ entry:
   store i32 %how, i32* %how.addr, align 4
   store %struct.fd_set* %set, %struct.fd_set** %set.addr, align 8
   store %struct.fd_set* %oldset, %struct.fd_set** %oldset.addr, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.155, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.155, i64 0, i64 0))
   ret i32 0
 }
 
@@ -17367,14 +18790,14 @@ entry:
   %args.addr = alloca i32*, align 8
   store i32 %type, i32* %type.addr, align 4
   store i32* %args, i32** %args.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.str.1.160, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.str.1.160, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 97, i32* %call, align 4
   ret i32 -1
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define internal void @llsc_warning.161(i8* %message) #3 {
+define internal void @gs_warning.161(i8* %message) #3 {
 entry:
   %message.addr = alloca i8*, align 8
   store i8* %message, i8** %message.addr, align 8
@@ -17414,8 +18837,8 @@ entry:
   %mode.addr = alloca i32, align 4
   store i8* %pathname, i8** %pathname.addr, align 8
   store i32 %mode, i32* %mode.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.165, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.165, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 5, i32* %call, align 4
   ret i32 -1
 }
@@ -17427,8 +18850,8 @@ entry:
   %mode.addr = alloca i32, align 4
   store i8* %pathname, i8** %pathname.addr, align 8
   store i32 %mode, i32* %mode.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.165, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.165, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 5, i32* %call, align 4
   ret i32 -1
 }
@@ -17442,8 +18865,8 @@ entry:
   store i8* %pathname, i8** %pathname.addr, align 8
   store i32 %mode, i32* %mode.addr, align 4
   store i64 %dev, i64* %dev.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.165, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([15 x i8], [15 x i8]* @.str.2.165, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 5, i32* %call, align 4
   ret i32 -1
 }
@@ -17453,8 +18876,8 @@ define weak dso_local i32 @pipe(i32* %filedes) #3 {
 entry:
   %filedes.addr = alloca i32*, align 8
   store i32* %filedes, i32** %filedes.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.3.166, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.3.166, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 23, i32* %call, align 4
   ret i32 -1
 }
@@ -17466,8 +18889,8 @@ entry:
   %newpath.addr = alloca i8*, align 8
   store i8* %oldpath, i8** %oldpath.addr, align 8
   store i8* %newpath, i8** %newpath.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -17479,8 +18902,8 @@ entry:
   %newpath.addr = alloca i8*, align 8
   store i8* %oldpath, i8** %oldpath.addr, align 8
   store i8* %newpath, i8** %newpath.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -17492,8 +18915,8 @@ entry:
   %newpath.addr = alloca i8*, align 8
   store i8* %oldpath, i8** %oldpath.addr, align 8
   store i8* %newpath, i8** %newpath.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -17538,8 +18961,8 @@ entry:
   %res.addr = alloca %struct.timespec*, align 8
   store i32 %clk_id, i32* %clk_id.addr, align 4
   store %struct.timespec* %res, %struct.timespec** %res.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -17578,11 +19001,11 @@ entry:
   br i1 %tobool, label %if.else, label %if.then
 
 if.then:                                          ; preds = %entry
-  call void @llsc_warning.161(i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.5.168, i64 0, i64 0))
+  call void @gs_warning.161(i8* getelementptr inbounds ([13 x i8], [13 x i8]* @.str.5.168, i64 0, i64 0))
   br label %if.end
 
 if.else:                                          ; preds = %entry
-  call void @llsc_warning.161(i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.6.169, i64 0, i64 0))
+  call void @gs_warning.161(i8* getelementptr inbounds ([40 x i8], [40 x i8]* @.str.6.169, i64 0, i64 0))
   %1 = load %struct.tms*, %struct.tms** %buf.addr, align 8
   %tms_utime = getelementptr inbounds %struct.tms, %struct.tms* %1, i32 0, i32 0
   store i64 0, i64* %tms_utime, align 8
@@ -17688,8 +19111,8 @@ entry:
   %buf.addr = alloca %struct.timespec*, align 8
   store i8* %filename, i8** %filename.addr, align 8
   store %struct.timespec* %buf, %struct.timespec** %buf.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -17701,14 +19124,14 @@ entry:
   %times.addr = alloca %struct.timespec*, align 8
   store i32 %fd, i32* %fd.addr, align 4
   store %struct.timespec* %times, %struct.timespec** %times.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.7.170, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.7.170, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 9, i32* %call, align 4
   ret i32 -1
 }
 
 ; Function Attrs: noinline nounwind readonly uwtable
-define dso_local i32 @strverscmp(i8* nonnull %__s1, i8* nonnull %__s2) #15 {
+define dso_local i32 @strverscmp(i8* nonnull %__s1, i8* nonnull %__s2) #16 {
 entry:
   %__s1.addr = alloca i8*, align 8
   %__s2.addr = alloca i8*, align 8
@@ -17716,7 +19139,7 @@ entry:
   store i8* %__s2, i8** %__s2.addr, align 8
   %0 = load i8*, i8** %__s1.addr, align 8
   %1 = load i8*, i8** %__s2.addr, align 8
-  %call = call i32 @strcmp(i8* %0, i8* %1) #23
+  %call = call i32 @strcmp(i8* %0, i8* %1) #24
   ret i32 %call
 }
 
@@ -17828,7 +19251,7 @@ entry:
   %nelem.addr = alloca i32, align 4
   store double* %loadavg, double** %loadavg.addr, align 8
   store i32 %nelem, i32* %nelem.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @.str.8.173, i64 0, i64 0))
+  call void @gs_warning.161(i8* getelementptr inbounds ([21 x i8], [21 x i8]* @.str.8.173, i64 0, i64 0))
   ret i32 -1
 }
 
@@ -17837,8 +19260,8 @@ define weak dso_local i32 @wait(i32* %status) #3 {
 entry:
   %status.addr = alloca i32*, align 8
   store i32* %status, i32** %status.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.174, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.174, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 10, i32* %call, align 4
   ret i32 -1
 }
@@ -17852,8 +19275,8 @@ entry:
   store i32* %status, i32** %status.addr, align 8
   store i32 %options, i32* %options.addr, align 4
   store %struct.rusage* %rusage, %struct.rusage** %rusage.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.174, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.174, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 10, i32* %call, align 4
   ret i32 -1
 }
@@ -17869,8 +19292,8 @@ entry:
   store i32* %status, i32** %status.addr, align 8
   store i32 %options, i32* %options.addr, align 4
   store %struct.rusage* %rusage, %struct.rusage** %rusage.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.174, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.174, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 10, i32* %call, align 4
   ret i32 -1
 }
@@ -17884,8 +19307,8 @@ entry:
   store i32 %pid, i32* %pid.addr, align 4
   store i32* %status, i32** %status.addr, align 8
   store i32 %options, i32* %options.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.174, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.174, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 10, i32* %call, align 4
   ret i32 -1
 }
@@ -17901,8 +19324,8 @@ entry:
   store i32 %id, i32* %id.addr, align 4
   store %struct.siginfo_t* %infop, %struct.siginfo_t** %infop.addr, align 8
   store i32 %options, i32* %options.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.174, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.9.174, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 10, i32* %call, align 4
   ret i32 -1
 }
@@ -17920,8 +19343,8 @@ entry:
   store i8* %filesystemtype, i8** %filesystemtype.addr, align 8
   store i64 %mountflags, i64* %mountflags.addr, align 8
   store i8* %data, i8** %data.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -17931,8 +19354,8 @@ define weak dso_local i32 @umount(i8* %target) #3 {
 entry:
   %target.addr = alloca i8*, align 8
   store i8* %target, i8** %target.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -17944,8 +19367,8 @@ entry:
   %flags.addr = alloca i32, align 4
   store i8* %target, i8** %target.addr, align 8
   store i32 %flags, i32* %flags.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -17957,8 +19380,8 @@ entry:
   %swapflags.addr = alloca i32, align 4
   store i8* %path, i8** %path.addr, align 8
   store i32 %swapflags, i32* %swapflags.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -17968,8 +19391,8 @@ define weak dso_local i32 @swapoff(i8* %path) #3 {
 entry:
   %path.addr = alloca i8*, align 8
   store i8* %path, i8** %path.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -17979,7 +19402,7 @@ define weak dso_local i32 @setgid(i32 %gid) #3 {
 entry:
   %gid.addr = alloca i32, align 4
   store i32 %gid, i32* %gid.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.10.175, i64 0, i64 0))
+  call void @gs_warning.161(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.10.175, i64 0, i64 0))
   ret i32 0
 }
 
@@ -17990,8 +19413,8 @@ entry:
   %list.addr = alloca i32*, align 8
   store i64 %size, i64* %size.addr, align 8
   store i32* %list, i32** %list.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18003,8 +19426,8 @@ entry:
   %len.addr = alloca i64, align 8
   store i8* %name, i8** %name.addr, align 8
   store i64 %len, i64* %len.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18016,8 +19439,8 @@ entry:
   %pgid.addr = alloca i32, align 4
   store i32 %pid, i32* %pid.addr, align 4
   store i32 %pgid, i32* %pgid.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18025,8 +19448,8 @@ entry:
 ; Function Attrs: noinline nounwind uwtable
 define weak dso_local i32 @setpgrp() #3 {
 entry:
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18040,8 +19463,8 @@ entry:
   store i32 %which, i32* %which.addr, align 4
   store i32 %who, i32* %who.addr, align 4
   store i32 %prio, i32* %prio.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18055,8 +19478,8 @@ entry:
   store i32 %rgid, i32* %rgid.addr, align 4
   store i32 %egid, i32* %egid.addr, align 4
   store i32 %sgid, i32* %sgid.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18070,8 +19493,8 @@ entry:
   store i32 %ruid, i32* %ruid.addr, align 4
   store i32 %euid, i32* %euid.addr, align 4
   store i32 %suid, i32* %suid.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18083,8 +19506,8 @@ entry:
   %rlim.addr = alloca %struct.timespec*, align 8
   store i32 %resource, i32* %resource.addr, align 4
   store %struct.timespec* %rlim, %struct.timespec** %rlim.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18096,8 +19519,8 @@ entry:
   %rlim.addr = alloca %struct.timespec*, align 8
   store i32 %resource, i32* %resource.addr, align 4
   store %struct.timespec* %rlim, %struct.timespec** %rlim.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18105,8 +19528,8 @@ entry:
 ; Function Attrs: noinline nounwind uwtable
 define weak dso_local i32 @setsid() #3 {
 entry:
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18118,8 +19541,8 @@ entry:
   %tz.addr = alloca %struct.__mbstate_t.512*, align 8
   store %struct.timespec* %tv, %struct.timespec** %tv.addr, align 8
   store %struct.__mbstate_t.512* %tz, %struct.__mbstate_t.512** %tz.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18129,7 +19552,7 @@ define weak dso_local i32 @setuid(i32 %uid) #3 {
 entry:
   %uid.addr = alloca i32, align 4
   store i32 %uid, i32* %uid.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.10.175, i64 0, i64 0))
+  call void @gs_warning.161(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.10.175, i64 0, i64 0))
   ret i32 0
 }
 
@@ -18138,8 +19561,8 @@ define weak dso_local i32 @reboot(i32 %flag) #3 {
 entry:
   %flag.addr = alloca i32, align 4
   store i32 %flag, i32* %flag.addr, align 4
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18151,8 +19574,8 @@ entry:
   %len.addr = alloca i64, align 8
   store i8* %addr, i8** %addr.addr, align 8
   store i64 %len, i64* %len.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18164,8 +19587,8 @@ entry:
   %len.addr = alloca i64, align 8
   store i8* %addr, i8** %addr.addr, align 8
   store i64 %len, i64* %len.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18173,8 +19596,8 @@ entry:
 ; Function Attrs: noinline nounwind uwtable
 define weak dso_local i32 @pause() #3 {
 entry:
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18188,8 +19611,8 @@ entry:
   store i32 %fd, i32* %fd.addr, align 4
   store i64* %offset, i64** %offset.addr, align 8
   store i64 %count, i64* %count.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i64 -1
 }
@@ -18209,8 +19632,8 @@ entry:
   store i32 %flags, i32* %flags.addr, align 4
   store i32 %fd, i32* %fd.addr, align 4
   store i64 %offset, i64* %offset.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i8* inttoptr (i64 -1 to i8*)
 }
@@ -18230,8 +19653,8 @@ entry:
   store i32 %flags, i32* %flags.addr, align 4
   store i32 %fd, i32* %fd.addr, align 4
   store i64 %offset, i64* %offset.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i8* inttoptr (i64 -1 to i8*)
 }
@@ -18243,8 +19666,8 @@ entry:
   %length.addr = alloca i64, align 8
   store i8* %start, i8** %start.addr, align 8
   store i64 %length, i64* %length.addr, align 8
-  call void @llsc_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.161(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.4.167, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
@@ -18276,7 +19699,7 @@ if.then:                                          ; preds = %entry
   %__mask = getelementptr inbounds %struct.__mbstate_t.512, %struct.__mbstate_t.512* %ps, i32 0, i32 0
   store i32 0, i32* %__mask, align 4
   %3 = load i32*, i32** %dst.addr, align 8
-  %call = call i64 @_wchar_utf8sntowcs(i32* %3, i64 1, i8** %p, i64 -1, %struct.__mbstate_t.512* %ps, i32 1) #18
+  %call = call i64 @_wchar_utf8sntowcs(i32* %3, i64 1, i8** %p, i64 -1, %struct.__mbstate_t.512* %ps, i32 1) #19
   store i64 %call, i64* %r, align 8
   %4 = load i64, i64* %r, align 8
   %cmp2 = icmp eq i64 %4, 1
@@ -18366,9 +19789,9 @@ define hidden i32 @__raise(i32 %signo) #0 {
 entry:
   %signo.addr = alloca i32, align 4
   store i32 %signo, i32* %signo.addr, align 4
-  %call = call i32 @getpid() #19
+  %call = call i32 @getpid() #20
   %0 = load i32, i32* %signo.addr, align 4
-  %call1 = call i32 @kill(i32 %call, i32 %0) #19
+  %call1 = call i32 @kill(i32 %call, i32 %0) #20
   ret i32 %call1
 }
 
@@ -18400,7 +19823,7 @@ if.then:                                          ; preds = %entry
   %4 = load %struct.sigaction.800*, %struct.sigaction.800** %act.addr, align 8
   %sa_mask1 = getelementptr inbounds %struct.sigaction.800, %struct.sigaction.800* %4, i32 0, i32 1
   %5 = bitcast %struct.fd_set* %sa_mask1 to i8*
-  %call = call i8* @memcpy(i8* %3, i8* %5, i64 128) #19
+  %call = call i8* @memcpy(i8* %3, i8* %5, i64 128) #20
   %6 = load %struct.sigaction.800*, %struct.sigaction.800** %act.addr, align 8
   %sa_flags = getelementptr inbounds %struct.sigaction.800, %struct.sigaction.800* %6, i32 0, i32 2
   %7 = load i32, i32* %sa_flags, align 8
@@ -18422,7 +19845,7 @@ if.end:                                           ; preds = %if.then, %entry
   %12 = load %struct.sigaction.800*, %struct.sigaction.800** %oact.addr, align 8
   %tobool5 = icmp ne %struct.sigaction.800* %12, null
   %cond9 = select i1 %tobool5, %struct.kernel_sigaction* %koact, %struct.kernel_sigaction* null
-  %call10 = call i32 bitcast (i32 (i32, %struct.sigaction.800*, %struct.sigaction.800*, i64)* @__syscall_rt_sigaction to i32 (i32, %struct.kernel_sigaction*, %struct.kernel_sigaction*, i64)*)(i32 %10, %struct.kernel_sigaction* %kact., %struct.kernel_sigaction* %cond9, i64 8) #18
+  %call10 = call i32 bitcast (i32 (i32, %struct.sigaction.800*, %struct.sigaction.800*, i64)* @__syscall_rt_sigaction to i32 (i32, %struct.kernel_sigaction*, %struct.kernel_sigaction*, i64)*)(i32 %10, %struct.kernel_sigaction* %kact., %struct.kernel_sigaction* %cond9, i64 8) #19
   store i32 %call10, i32* %result, align 4
   %13 = load %struct.sigaction.800*, %struct.sigaction.800** %oact.addr, align 8
   %tobool11 = icmp ne %struct.sigaction.800* %13, null
@@ -18443,7 +19866,7 @@ if.then13:                                        ; preds = %if.end
   %18 = bitcast %struct.fd_set* %sa_mask17 to i8*
   %sa_mask18 = getelementptr inbounds %struct.kernel_sigaction, %struct.kernel_sigaction* %koact, i32 0, i32 3
   %19 = bitcast %struct.fd_set* %sa_mask18 to i8*
-  %call19 = call i8* @memcpy(i8* %18, i8* %19, i64 128) #19
+  %call19 = call i8* @memcpy(i8* %18, i8* %19, i64 128) #20
   %sa_flags20 = getelementptr inbounds %struct.kernel_sigaction, %struct.kernel_sigaction* %koact, i32 0, i32 1
   %20 = load i64, i64* %sa_flags20, align 8
   %conv21 = trunc i64 %20 to i32
@@ -18589,7 +20012,7 @@ if.then:                                          ; preds = %entry
   %__bufstart3 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %8, i32 0, i32 3
   %9 = load i8*, i8** %__bufstart3, align 8
   %10 = load i64, i64* %bufsize, align 8
-  %call = call i64 @__stdio_WRITE(%struct.__STDIO_FILE_STRUCT.568* %7, i8* %9, i64 %10) #18
+  %call = call i64 @__stdio_WRITE(%struct.__STDIO_FILE_STRUCT.568* %7, i8* %9, i64 %10) #19
   br label %if.end
 
 if.end:                                           ; preds = %if.then, %entry
@@ -18643,7 +20066,7 @@ if.end:                                           ; preds = %entry
 
 lor.lhs.false:                                    ; preds = %if.end
   %8 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call = call i32 @__stdio_trans2r_o(%struct.__STDIO_FILE_STRUCT.568* %8, i32 128) #18
+  %call = call i32 @__stdio_trans2r_o(%struct.__STDIO_FILE_STRUCT.568* %8, i32 128) #19
   %tobool = icmp ne i32 %call, 0
   br i1 %tobool, label %if.end63, label %if.then5
 
@@ -18726,7 +20149,7 @@ if.end32:                                         ; preds = %if.end25
   br i1 %tobool36, label %if.then37, label %if.end39
 
 if.then37:                                        ; preds = %if.end32
-  %call38 = call i32 @fflush_unlocked(%struct.__STDIO_FILE_STRUCT.568* bitcast (%struct.__STDIO_FILE_STRUCT.568** @_stdio_openlist to %struct.__STDIO_FILE_STRUCT.568*)) #18
+  %call38 = call i32 @fflush_unlocked(%struct.__STDIO_FILE_STRUCT.568* bitcast (%struct.__STDIO_FILE_STRUCT.568** @_stdio_openlist to %struct.__STDIO_FILE_STRUCT.568*)) #19
   br label %if.end39
 
 if.end39:                                         ; preds = %if.then37, %if.end32
@@ -18750,7 +20173,7 @@ if.then44:                                        ; preds = %if.end39
   %__bufgetc_u46 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %32, i32 0, i32 7
   store i8* %31, i8** %__bufgetc_u46, align 8
   %33 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call47 = call i64 @__stdio_rfill(%struct.__STDIO_FILE_STRUCT.568* %33) #18
+  %call47 = call i64 @__stdio_rfill(%struct.__STDIO_FILE_STRUCT.568* %33) #19
   %tobool48 = icmp ne i64 %call47, 0
   br i1 %tobool48, label %if.then49, label %if.end63
 
@@ -18772,7 +20195,7 @@ if.then49:                                        ; preds = %if.then44
   br label %return
 
 if.else:                                          ; preds = %if.end39
-  %call57 = call i64 @__stdio_READ(%struct.__STDIO_FILE_STRUCT.568* %30, i8* %uc56, i64 1) #18
+  %call57 = call i64 @__stdio_READ(%struct.__STDIO_FILE_STRUCT.568* %30, i8* %uc56, i64 1) #19
   %tobool58 = icmp ne i64 %call57, 0
   br i1 %tobool58, label %if.then59, label %if.end63
 
@@ -18806,7 +20229,7 @@ entry:
   %0 = load i8*, i8** %buf.addr, align 8
   %1 = load i8*, i8** %format.addr, align 8
   %arraydecay2 = getelementptr inbounds [1 x %struct.__va_list_tag.0], [1 x %struct.__va_list_tag.0]* %arg, i64 0, i64 0
-  %call = call i32 @vsnprintf(i8* %0, i64 -1, i8* %1, %struct.__va_list_tag.0* %arraydecay2) #19
+  %call = call i32 @vsnprintf(i8* %0, i64 -1, i8* %1, %struct.__va_list_tag.0* %arraydecay2) #20
   store i32 %call, i32* %rv, align 4
   %arraydecay3 = getelementptr inbounds [1 x %struct.__va_list_tag.0], [1 x %struct.__va_list_tag.0]* %arg, i64 0, i64 0
   %arraydecay34 = bitcast %struct.__va_list_tag.0* %arraydecay3 to i8*
@@ -18938,7 +20361,7 @@ entry:
   %term = alloca %struct.termios, align 4
   store i32 %fd, i32* %fd.addr, align 4
   %0 = load i32, i32* %fd.addr, align 4
-  %call = call i32 @tcgetattr(i32 %0, %struct.termios* %term) #19
+  %call = call i32 @tcgetattr(i32 %0, %struct.termios* %term) #20
   %cmp = icmp eq i32 %call, 0
   %conv = zext i1 %cmp to i32
   ret i32 %conv
@@ -19223,29 +20646,29 @@ entry:
   %sig.addr = alloca i32, align 4
   store i32 %pid, i32* %pid.addr, align 4
   store i32 %sig, i32* %sig.addr, align 4
-  call void @llsc_warning.217(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.216, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.215(i8* getelementptr inbounds ([17 x i8], [17 x i8]* @.str.214, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 1, i32* %call, align 4
   ret i32 -1
 }
 
 ; Function Attrs: noinline nounwind uwtable
-define internal void @llsc_warning.217(i8* %message) #3 {
+define internal void @gs_warning.215(i8* %message) #3 {
 entry:
   %message.addr = alloca i8*, align 8
   store i8* %message, i8** %message.addr, align 8
   %0 = load i8*, i8** %message.addr, align 8
   call void @print_string(i8* %0)
-  call void @print_string(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.7.218, i64 0, i64 0))
+  call void @print_string(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.7.216, i64 0, i64 0))
   ret void
 }
 
 ; Function Attrs: noinline nounwind returns_twice uwtable
-define weak dso_local i32 @_setjmp(%struct.__jmp_buf_tag* %__env) #16 {
+define weak dso_local i32 @_setjmp(%struct.__jmp_buf_tag* %__env) #17 {
 entry:
   %__env.addr = alloca %struct.__jmp_buf_tag*, align 8
   store %struct.__jmp_buf_tag* %__env, %struct.__jmp_buf_tag** %__env.addr, align 8
-  call void @llsc_warning_once(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.1.219, i64 0, i64 0))
+  call void @gs_warning_once(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.1.217, i64 0, i64 0))
   ret i32 0
 }
 
@@ -19256,12 +20679,12 @@ entry:
   %val.addr = alloca i32, align 4
   store %struct.__jmp_buf_tag* %env, %struct.__jmp_buf_tag** %env.addr, align 8
   store i32 %val, i32* %val.addr, align 4
-  call void @llsc_report_error.223(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.2.220, i64 0, i64 0), i32 37, i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.3.221, i64 0, i64 0), i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.4.222, i64 0, i64 0)) #24
+  call void @gs_report_error.221(i8* getelementptr inbounds ([82 x i8], [82 x i8]* @.str.2.218, i64 0, i64 0), i32 37, i8* getelementptr inbounds ([20 x i8], [20 x i8]* @.str.3.219, i64 0, i64 0), i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.4.220, i64 0, i64 0)) #25
   unreachable
 }
 
 ; Function Attrs: noinline noreturn nounwind uwtable
-define internal void @llsc_report_error.223(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
+define internal void @gs_report_error.221(i8* %file, i32 %line, i8* %message, i8* %suffix) #6 {
 entry:
   %file.addr = alloca i8*, align 8
   %line.addr = alloca i32, align 4
@@ -19279,8 +20702,8 @@ entry:
   call void @print_string(i8* %2)
   %3 = load i8*, i8** %suffix.addr, align 8
   call void @print_string(i8* %3)
-  call void @print_string(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.7.218, i64 0, i64 0))
-  call void @stop(i32 -1) #24
+  call void @print_string(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.7.216, i64 0, i64 0))
+  call void @stop(i32 -1) #25
   unreachable
 }
 
@@ -19291,8 +20714,8 @@ entry:
   %arg.addr = alloca i8*, align 8
   store i8* %path, i8** %path.addr, align 8
   store i8* %arg, i8** %arg.addr, align 8
-  call void @llsc_warning.217(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.224, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.215(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.222, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 13, i32* %call, align 4
   ret i32 -1
 }
@@ -19304,8 +20727,8 @@ entry:
   %arg.addr = alloca i8*, align 8
   store i8* %file, i8** %file.addr, align 8
   store i8* %arg, i8** %arg.addr, align 8
-  call void @llsc_warning.217(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.224, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.215(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.222, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 13, i32* %call, align 4
   ret i32 -1
 }
@@ -19317,8 +20740,8 @@ entry:
   %arg.addr = alloca i8*, align 8
   store i8* %path, i8** %path.addr, align 8
   store i8* %arg, i8** %arg.addr, align 8
-  call void @llsc_warning.217(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.224, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.215(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.222, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 13, i32* %call, align 4
   ret i32 -1
 }
@@ -19330,8 +20753,8 @@ entry:
   %argv.addr = alloca i8**, align 8
   store i8* %path, i8** %path.addr, align 8
   store i8** %argv, i8*** %argv.addr, align 8
-  call void @llsc_warning.217(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.224, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.215(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.222, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 13, i32* %call, align 4
   ret i32 -1
 }
@@ -19343,8 +20766,8 @@ entry:
   %argv.addr = alloca i8**, align 8
   store i8* %file, i8** %file.addr, align 8
   store i8** %argv, i8*** %argv.addr, align 8
-  call void @llsc_warning.217(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.224, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.215(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.222, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 13, i32* %call, align 4
   ret i32 -1
 }
@@ -19358,8 +20781,8 @@ entry:
   store i8* %file, i8** %file.addr, align 8
   store i8** %argv, i8*** %argv.addr, align 8
   store i8** %envp, i8*** %envp.addr, align 8
-  call void @llsc_warning.217(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.224, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.215(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.5.222, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 13, i32* %call, align 4
   ret i32 -1
 }
@@ -19367,14 +20790,14 @@ entry:
 ; Function Attrs: noinline nounwind uwtable
 define dso_local i32 @fork() #3 {
 entry:
-  call void @llsc_warning.217(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.6.225, i64 0, i64 0))
-  %call = call i32* @__errno_location() #25
+  call void @gs_warning.215(i8* getelementptr inbounds ([18 x i8], [18 x i8]* @.str.6.223, i64 0, i64 0))
+  %call = call i32* @__errno_location() #26
   store i32 12, i32* %call, align 4
   ret i32 -1
 }
 
 ; Function Attrs: noinline nounwind returns_twice uwtable
-define dso_local i32 @vfork() #16 {
+define dso_local i32 @vfork() #17 {
 entry:
   %call = call i32 @fork() #11
   ret i32 %call
@@ -19401,14 +20824,14 @@ entry:
   store i32 %errnum, i32* %errnum.addr, align 4
   store i8* %message, i8** %message.addr, align 8
   %0 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** @stdout, align 8
-  %call = call i32 @fflush(%struct.__STDIO_FILE_STRUCT.568* %0) #18
+  %call = call i32 @fflush(%struct.__STDIO_FILE_STRUCT.568* %0) #19
   %arraydecay = getelementptr inbounds [1 x %struct.__va_list_tag.0], [1 x %struct.__va_list_tag.0]* %args, i64 0, i64 0
   %arraydecay1 = bitcast %struct.__va_list_tag.0* %arraydecay to i8*
   call void @llvm.va_start(i8* %arraydecay1)
   %1 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** @stderr, align 8
   %2 = load i8*, i8** %message.addr, align 8
   %arraydecay2 = getelementptr inbounds [1 x %struct.__va_list_tag.0], [1 x %struct.__va_list_tag.0]* %args, i64 0, i64 0
-  %call3 = call i32 @vfprintf(%struct.__STDIO_FILE_STRUCT.568* %1, i8* %2, %struct.__va_list_tag.0* %arraydecay2) #18
+  %call3 = call i32 @vfprintf(%struct.__STDIO_FILE_STRUCT.568* %1, i8* %2, %struct.__va_list_tag.0* %arraydecay2) #19
   %arraydecay4 = getelementptr inbounds [1 x %struct.__va_list_tag.0], [1 x %struct.__va_list_tag.0]* %args, i64 0, i64 0
   %arraydecay45 = bitcast %struct.__va_list_tag.0* %arraydecay4 to i8*
   call void @llvm.va_end(i8* %arraydecay45)
@@ -19422,8 +20845,8 @@ entry:
 if.then:                                          ; preds = %entry
   %5 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** @stderr, align 8
   %6 = load i32, i32* %errnum.addr, align 4
-  %call6 = call i8* @strerror(i32 %6) #19
-  %call7 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %5, i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.228, i64 0, i64 0), i8* %call6) #18
+  %call6 = call i8* @strerror(i32 %6) #20
+  %call7 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %5, i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.226, i64 0, i64 0), i8* %call6) #19
   br label %if.end
 
 if.end:                                           ; preds = %if.then, %entry
@@ -19448,7 +20871,7 @@ cond.true:                                        ; preds = %if.end
   br label %cond.end
 
 cond.false:                                       ; preds = %if.end
-  %call9 = call i32 @__fputc_unlocked(i32 10, %struct.__STDIO_FILE_STRUCT.568* %12) #18
+  %call9 = call i32 @__fputc_unlocked(i32 10, %struct.__STDIO_FILE_STRUCT.568* %12) #19
   br label %cond.end
 
 cond.end:                                         ; preds = %cond.false, %cond.true
@@ -19461,7 +20884,7 @@ cond.end:                                         ; preds = %cond.false, %cond.t
 
 if.then11:                                        ; preds = %cond.end
   %16 = load i32, i32* %status.addr, align 4
-  call void @exit(i32 %16) #22
+  call void @exit(i32 %16) #23
   unreachable
 
 if.end12:                                         ; preds = %cond.end
@@ -19503,7 +20926,7 @@ land.lhs.true:                                    ; preds = %if.then
 lor.lhs.false:                                    ; preds = %land.lhs.true
   %5 = load i8*, i8** @__error_at_line.old_file_name, align 8
   %6 = load i8*, i8** %file_name.addr, align 8
-  %call = call i32 @strcmp(i8* %5, i8* %6) #20
+  %call = call i32 @strcmp(i8* %5, i8* %6) #21
   %tobool2 = icmp ne i32 %call, 0
   br i1 %tobool2, label %if.end, label %if.end25
 
@@ -19516,7 +20939,7 @@ if.end:                                           ; preds = %lor.lhs.false, %if.
 
 if.end4:                                          ; preds = %if.end, %entry
   %9 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** @stdout, align 8
-  %call5 = call i32 @fflush(%struct.__STDIO_FILE_STRUCT.568* %9) #18
+  %call5 = call i32 @fflush(%struct.__STDIO_FILE_STRUCT.568* %9) #19
   %10 = load i8*, i8** %file_name.addr, align 8
   %cmp6 = icmp ne i8* %10, null
   br i1 %cmp6, label %if.then7, label %if.end9
@@ -19525,7 +20948,7 @@ if.then7:                                         ; preds = %if.end4
   %11 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** @stderr, align 8
   %12 = load i8*, i8** %file_name.addr, align 8
   %13 = load i32, i32* %line_number.addr, align 4
-  %call8 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %11, i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.1.229, i64 0, i64 0), i8* %12, i32 %13) #18
+  %call8 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %11, i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.1.227, i64 0, i64 0), i8* %12, i32 %13) #19
   br label %if.end9
 
 if.end9:                                          ; preds = %if.then7, %if.end4
@@ -19535,7 +20958,7 @@ if.end9:                                          ; preds = %if.then7, %if.end4
   %14 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** @stderr, align 8
   %15 = load i8*, i8** %message.addr, align 8
   %arraydecay11 = getelementptr inbounds [1 x %struct.__va_list_tag.0], [1 x %struct.__va_list_tag.0]* %args, i64 0, i64 0
-  %call12 = call i32 @vfprintf(%struct.__STDIO_FILE_STRUCT.568* %14, i8* %15, %struct.__va_list_tag.0* %arraydecay11) #18
+  %call12 = call i32 @vfprintf(%struct.__STDIO_FILE_STRUCT.568* %14, i8* %15, %struct.__va_list_tag.0* %arraydecay11) #19
   %arraydecay13 = getelementptr inbounds [1 x %struct.__va_list_tag.0], [1 x %struct.__va_list_tag.0]* %args, i64 0, i64 0
   %arraydecay1314 = bitcast %struct.__va_list_tag.0* %arraydecay13 to i8*
   call void @llvm.va_end(i8* %arraydecay1314)
@@ -19549,8 +20972,8 @@ if.end9:                                          ; preds = %if.then7, %if.end4
 if.then16:                                        ; preds = %if.end9
   %18 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** @stderr, align 8
   %19 = load i32, i32* %errnum.addr, align 4
-  %call17 = call i8* @strerror(i32 %19) #19
-  %call18 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %18, i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.228, i64 0, i64 0), i8* %call17) #18
+  %call17 = call i8* @strerror(i32 %19) #20
+  %call18 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %18, i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.226, i64 0, i64 0), i8* %call17) #19
   br label %if.end19
 
 if.end19:                                         ; preds = %if.then16, %if.end9
@@ -19575,7 +20998,7 @@ cond.true:                                        ; preds = %if.end19
   br label %cond.end
 
 cond.false:                                       ; preds = %if.end19
-  %call22 = call i32 @__fputc_unlocked(i32 10, %struct.__STDIO_FILE_STRUCT.568* %25) #18
+  %call22 = call i32 @__fputc_unlocked(i32 10, %struct.__STDIO_FILE_STRUCT.568* %25) #19
   br label %cond.end
 
 cond.end:                                         ; preds = %cond.false, %cond.true
@@ -19588,7 +21011,7 @@ cond.end:                                         ; preds = %cond.false, %cond.t
 
 if.then24:                                        ; preds = %cond.end
   %29 = load i32, i32* %status.addr, align 4
-  call void @exit(i32 %29) #22
+  call void @exit(i32 %29) #23
   unreachable
 
 if.end25:                                         ; preds = %land.lhs.true, %lor.lhs.false, %cond.end
@@ -19602,7 +21025,7 @@ entry:
   store i32 %item, i32* %item.addr, align 4
   %0 = load i32, i32* %item.addr, align 4
   %1 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** @__curlocale_var, align 8
-  %call = call i8* @nl_langinfo_l(i32 %0, %struct.__uclibc_locale_struct.201* %1) #18
+  %call = call i8* @nl_langinfo_l(i32 %0, %struct.__uclibc_locale_struct.201* %1) #19
   ret i8* %call
 }
 
@@ -19632,7 +21055,7 @@ if.then2:                                         ; preds = %if.end
   %shl = shl i32 1, %2
   %3 = load i8*, i8** %locale.addr, align 8
   %4 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** @__global_locale, align 8
-  %call = call %struct.__uclibc_locale_struct.201* @newlocale(i32 %shl, i8* %3, %struct.__uclibc_locale_struct.201* %4) #19
+  %call = call %struct.__uclibc_locale_struct.201* @newlocale(i32 %shl, i8* %3, %struct.__uclibc_locale_struct.201* %4) #20
   %tobool = icmp ne %struct.__uclibc_locale_struct.201* %call, null
   br i1 %tobool, label %if.end4, label %if.then3
 
@@ -19644,7 +21067,7 @@ if.end4:                                          ; preds = %if.then2
   %5 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** @__global_locale, align 8
   %cur_locale = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %5, i32 0, i32 6
   %arraydecay = getelementptr inbounds [14 x i8], [14 x i8]* %cur_locale, i64 0, i64 0
-  call void @update_hr_locale(i8* %arraydecay) #18
+  call void @update_hr_locale(i8* %arraydecay) #19
   br label %if.end5
 
 if.end5:                                          ; preds = %if.end4, %if.end
@@ -19811,7 +21234,7 @@ if.then46:                                        ; preds = %if.then35
   %conv51 = zext i8 %35 to i32
   %idx.ext52 = sext i32 %conv51 to i64
   %add.ptr53 = getelementptr inbounds i8, i8* %arraydecay47, i64 %idx.ext52
-  %call = call i8* @stpcpy(i8* %31, i8* %add.ptr53) #19
+  %call = call i8* @stpcpy(i8* %31, i8* %add.ptr53) #20
   store i8* %call, i8** %n, align 8
   %36 = load i8*, i8** %n, align 8
   %incdec.ptr = getelementptr inbounds i8, i8* %36, i32 1
@@ -19848,7 +21271,7 @@ if.else:                                          ; preds = %if.end54
   %mul62 = mul nsw i32 5, %sub
   %idx.ext63 = sext i32 %mul62 to i64
   %add.ptr64 = getelementptr inbounds i8, i8* %arraydecay60, i64 %idx.ext63
-  %call65 = call i8* @memcpy(i8* %41, i8* %add.ptr64, i64 5) #19
+  %call65 = call i8* @memcpy(i8* %41, i8* %add.ptr64, i64 5) #20
   %45 = load i8*, i8** %n, align 8
   %arrayidx66 = getelementptr inbounds i8, i8* %45, i64 2
   %46 = load i8, i8* %arrayidx66, align 1
@@ -19883,7 +21306,7 @@ if.end73:                                         ; preds = %if.then70, %if.else
 
 if.then80:                                        ; preds = %if.end73
   %54 = load i8*, i8** %n, align 8
-  %call81 = call i8* @stpcpy(i8* %54, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @utf8.236, i64 0, i64 0)) #19
+  %call81 = call i8* @stpcpy(i8* %54, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @utf8.234, i64 0, i64 0)) #20
   store i8* %call81, i8** %n, align 8
   br label %if.end100
 
@@ -19913,7 +21336,7 @@ if.then87:                                        ; preds = %if.else82
   %conv95 = zext i8 %62 to i32
   %idx.ext96 = sext i32 %conv95 to i64
   %add.ptr97 = getelementptr inbounds i8, i8* %arraydecay88, i64 %idx.ext96
-  %call98 = call i8* @stpcpy(i8* %57, i8* %add.ptr97) #19
+  %call98 = call i8* @stpcpy(i8* %57, i8* %add.ptr97) #20
   store i8* %call98, i8** %n, align 8
   br label %if.end100
 
@@ -19947,7 +21370,7 @@ if.then110:                                       ; preds = %do.body104
   %69 = load i8*, i8** %n, align 8
   %70 = load i8*, i8** %q, align 8
   %add.ptr111 = getelementptr inbounds i8, i8* %70, i64 2
-  %call112 = call i8* @stpcpy(i8* %69, i8* %add.ptr111) #19
+  %call112 = call i8* @stpcpy(i8* %69, i8* %add.ptr111) #20
   store i8* %call112, i8** %n, align 8
   br label %if.end120
 
@@ -20003,7 +21426,7 @@ do.end132:                                        ; preds = %do.end127
 ; Function Attrs: noinline nounwind uwtable
 define void @setutent() #0 {
 entry:
-  call void @__setutent() #18
+  call void @__setutent() #19
   ret void
 }
 
@@ -20017,21 +21440,21 @@ entry:
 
 if.then:                                          ; preds = %entry
   %1 = load i8*, i8** @static_ut_name, align 8
-  %call = call i32 (i8*, i32, ...) @open(i8* %1, i32 2) #18
+  %call = call i32 (i8*, i32, ...) @open(i8* %1, i32 2) #19
   store i32 %call, i32* @static_fd, align 4
   %cmp1 = icmp slt i32 %call, 0
   br i1 %cmp1, label %if.then2, label %if.end6
 
 if.then2:                                         ; preds = %if.then
   %2 = load i8*, i8** @static_ut_name, align 8
-  %call3 = call i32 (i8*, i32, ...) @open(i8* %2, i32 0) #18
+  %call3 = call i32 (i8*, i32, ...) @open(i8* %2, i32 0) #19
   store i32 %call3, i32* @static_fd, align 4
   %cmp4 = icmp slt i32 %call3, 0
   br i1 %cmp4, label %bummer, label %if.end6
 
 if.end6:                                          ; preds = %if.then2, %if.then
   %3 = load i32, i32* @static_fd, align 4
-  %call7 = call i32 (i32, i32, ...) @fcntl(i32 %3, i32 1, i32 0) #18
+  %call7 = call i32 (i32, i32, ...) @fcntl(i32 %3, i32 1, i32 0) #19
   store i32 %call7, i32* %ret, align 4
   %4 = load i32, i32* %ret, align 4
   %cmp8 = icmp sge i32 %4, 0
@@ -20041,7 +21464,7 @@ if.then9:                                         ; preds = %if.end6
   %5 = load i32, i32* @static_fd, align 4
   %6 = load i32, i32* %ret, align 4
   %or = or i32 %6, 1
-  %call10 = call i32 (i32, i32, ...) @fcntl(i32 %5, i32 2, i32 %or) #18
+  %call10 = call i32 (i32, i32, ...) @fcntl(i32 %5, i32 2, i32 %or) #19
   store i32 %call10, i32* %ret, align 4
   br label %if.end11
 
@@ -20053,12 +21476,12 @@ if.end11:                                         ; preds = %if.then9, %if.end6
 bummer:                                           ; preds = %if.end11, %if.then2
   store i32 -1, i32* @static_fd, align 4
   %8 = load i32, i32* @static_fd, align 4
-  %call14 = call i32 @close(i32 %8) #18
+  %call14 = call i32 @close(i32 %8) #19
   br label %return
 
 if.end16:                                         ; preds = %if.end11, %entry
   %9 = load i32, i32* @static_fd, align 4
-  %call17 = call i64 @lseek(i32 %9, i64 0, i32 0) #19
+  %call17 = call i64 @lseek(i32 %9, i64 0, i32 0) #20
   br label %return
 
 return:                                           ; preds = %if.end16, %bummer
@@ -20074,7 +21497,7 @@ entry:
 
 if.then:                                          ; preds = %entry
   %1 = load i32, i32* @static_fd, align 4
-  %call = call i32 @close(i32 %1) #18
+  %call = call i32 @close(i32 %1) #19
   br label %if.end
 
 if.end:                                           ; preds = %if.then, %entry
@@ -20088,7 +21511,7 @@ entry:
   %ret = alloca %struct.utmp.323*, align 8
   store %struct.utmp.323* null, %struct.utmp.323** %ret, align 8
   %0 = load i32, i32* @static_fd, align 4
-  %call = call %struct.utmp.323* @__getutent(i32 %0) #18
+  %call = call %struct.utmp.323* @__getutent(i32 %0) #19
   store %struct.utmp.323* %call, %struct.utmp.323** %ret, align 8
   %1 = load %struct.utmp.323*, %struct.utmp.323** %ret, align 8
   ret %struct.utmp.323* %1
@@ -20107,7 +21530,7 @@ entry:
   br i1 %cmp, label %if.then, label %if.end
 
 if.then:                                          ; preds = %entry
-  call void @__setutent() #18
+  call void @__setutent() #19
   br label %if.end
 
 if.end:                                           ; preds = %if.then, %entry
@@ -20121,7 +21544,7 @@ if.then2:                                         ; preds = %if.end
 
 if.end3:                                          ; preds = %if.end
   %2 = load i32, i32* %utmp_fd.addr, align 4
-  %call = call i64 @read(i32 %2, i8* bitcast (%struct.utmp.323* @static_utmp to i8*), i64 400) #18
+  %call = call i64 @read(i32 %2, i8* bitcast (%struct.utmp.323* @static_utmp to i8*), i64 400) #19
   %cmp4 = icmp eq i64 %call, 400
   br i1 %cmp4, label %if.then5, label %if.end6
 
@@ -20147,7 +21570,7 @@ entry:
   store %struct.utmp.323* %utmp_entry, %struct.utmp.323** %utmp_entry.addr, align 8
   store %struct.utmp.323* null, %struct.utmp.323** %ret, align 8
   %0 = load %struct.utmp.323*, %struct.utmp.323** %utmp_entry.addr, align 8
-  %call = call %struct.utmp.323* @__getutid(%struct.utmp.323* %0) #18
+  %call = call %struct.utmp.323* @__getutid(%struct.utmp.323* %0) #19
   store %struct.utmp.323* %call, %struct.utmp.323** %ret, align 8
   %1 = load %struct.utmp.323*, %struct.utmp.323** %ret, align 8
   ret %struct.utmp.323* %1
@@ -20164,7 +21587,7 @@ entry:
 
 while.cond:                                       ; preds = %if.end47, %entry
   %0 = load i32, i32* @static_fd, align 4
-  %call = call %struct.utmp.323* @__getutent(i32 %0) #18
+  %call = call %struct.utmp.323* @__getutent(i32 %0) #19
   store %struct.utmp.323* %call, %struct.utmp.323** %lutmp, align 8
   %cmp = icmp ne %struct.utmp.323* %call, null
   br i1 %cmp, label %while.body, label %while.end
@@ -20257,7 +21680,7 @@ land.lhs.true42:                                  ; preds = %lor.lhs.false37, %l
   %23 = load %struct.utmp.323*, %struct.utmp.323** %utmp_entry.addr, align 8
   %ut_id43 = getelementptr inbounds %struct.utmp.323, %struct.utmp.323* %23, i32 0, i32 3
   %arraydecay44 = getelementptr inbounds [4 x i8], [4 x i8]* %ut_id43, i64 0, i64 0
-  %call45 = call i32 @strncmp(i8* %arraydecay, i8* %arraydecay44, i64 4) #20
+  %call45 = call i32 @strncmp(i8* %arraydecay, i8* %arraydecay44, i64 4) #21
   %tobool = icmp ne i32 %call45, 0
   br i1 %tobool, label %if.end47, label %if.then46
 
@@ -20289,7 +21712,7 @@ entry:
 
 while.cond:                                       ; preds = %if.end, %entry
   %0 = load i32, i32* @static_fd, align 4
-  %call = call %struct.utmp.323* @__getutent(i32 %0) #18
+  %call = call %struct.utmp.323* @__getutent(i32 %0) #19
   store %struct.utmp.323* %call, %struct.utmp.323** %lutmp, align 8
   %cmp = icmp ne %struct.utmp.323* %call, null
   br i1 %cmp, label %while.body, label %while.end
@@ -20317,7 +21740,7 @@ land.lhs.true:                                    ; preds = %lor.lhs.false, %whi
   %6 = load %struct.utmp.323*, %struct.utmp.323** %utmp_entry.addr, align 8
   %ut_line7 = getelementptr inbounds %struct.utmp.323, %struct.utmp.323* %6, i32 0, i32 2
   %arraydecay8 = getelementptr inbounds [32 x i8], [32 x i8]* %ut_line7, i64 0, i64 0
-  %call9 = call i32 @strcmp(i8* %arraydecay, i8* %arraydecay8) #20
+  %call9 = call i32 @strcmp(i8* %arraydecay, i8* %arraydecay8) #21
   %tobool = icmp ne i32 %call9, 0
   br i1 %tobool, label %if.end, label %while.end
 
@@ -20335,26 +21758,26 @@ entry:
   %utmp_entry.addr = alloca %struct.utmp.323*, align 8
   store %struct.utmp.323* %utmp_entry, %struct.utmp.323** %utmp_entry.addr, align 8
   %0 = load i32, i32* @static_fd, align 4
-  %call = call i64 @lseek(i32 %0, i64 -400, i32 1) #19
+  %call = call i64 @lseek(i32 %0, i64 -400, i32 1) #20
   %1 = load %struct.utmp.323*, %struct.utmp.323** %utmp_entry.addr, align 8
-  %call1 = call %struct.utmp.323* @__getutid(%struct.utmp.323* %1) #18
+  %call1 = call %struct.utmp.323* @__getutid(%struct.utmp.323* %1) #19
   %cmp = icmp ne %struct.utmp.323* %call1, null
   %2 = load i32, i32* @static_fd, align 4
   br i1 %cmp, label %if.then, label %if.else
 
 if.then:                                          ; preds = %entry
-  %call2 = call i64 @lseek(i32 %2, i64 -400, i32 1) #19
+  %call2 = call i64 @lseek(i32 %2, i64 -400, i32 1) #20
   br label %if.end
 
 if.else:                                          ; preds = %entry
-  %call3 = call i64 @lseek(i32 %2, i64 0, i32 2) #19
+  %call3 = call i64 @lseek(i32 %2, i64 0, i32 2) #20
   br label %if.end
 
 if.end:                                           ; preds = %if.else, %if.then
   %3 = load i32, i32* @static_fd, align 4
   %4 = load %struct.utmp.323*, %struct.utmp.323** %utmp_entry.addr, align 8
   %5 = bitcast %struct.utmp.323* %4 to i8*
-  %call4 = call i64 @write(i32 %3, i8* %5, i64 400) #18
+  %call4 = call i64 @write(i32 %3, i8* %5, i64 400) #19
   %cmp5 = icmp ne i64 %call4, 400
   br i1 %cmp5, label %if.then6, label %if.end7
 
@@ -20383,12 +21806,12 @@ if.then:                                          ; preds = %entry
 
 if.then2:                                         ; preds = %if.then
   %2 = load i8*, i8** @static_ut_name, align 8
-  call void @free(i8* %2) #19
+  call void @free(i8* %2) #20
   br label %if.end
 
 if.end:                                           ; preds = %if.then2, %if.then
   %3 = load i8*, i8** %new_ut_name.addr, align 8
-  %call = call noalias i8* @strdup(i8* %3) #19
+  %call = call noalias i8* @strdup(i8* %3) #20
   store i8* %call, i8** @static_ut_name, align 8
   %4 = load i8*, i8** @static_ut_name, align 8
   %cmp3 = icmp eq i8* %4, null
@@ -20403,7 +21826,7 @@ if.end6:                                          ; preds = %if.end, %entry
 
 if.then8:                                         ; preds = %if.end6
   %6 = load i32, i32* @static_fd, align 4
-  %call9 = call i32 @close(i32 %6) #18
+  %call9 = call i32 @close(i32 %6) #19
   br label %if.end10
 
 if.end10:                                         ; preds = %if.then8, %if.end6
@@ -20802,7 +22225,7 @@ if.end14:                                         ; preds = %if.then12, %if.then
   %15 = load i32*, i32** %pwc.addr, align 8
   %16 = load i64, i64* %n.addr, align 8
   %17 = load %struct.__mbstate_t.512*, %struct.__mbstate_t.512** %ps.addr, align 8
-  %call = call i64 @_wchar_utf8sntowcs(i32* %15, i64 1, i8** %p, i64 %16, %struct.__mbstate_t.512* %17, i32 1) #18
+  %call = call i64 @_wchar_utf8sntowcs(i32* %15, i64 1, i8** %p, i64 %16, %struct.__mbstate_t.512* %17, i32 1) #19
   store i64 %call, i64* %r, align 8
   %18 = load i64, i64* %r, align 8
   %cmp15 = icmp eq i64 %18, 1
@@ -20819,7 +22242,7 @@ if.end14:                                         ; preds = %if.then12, %if.then
 if.end18:                                         ; preds = %if.end7
   %arraydecay19 = getelementptr inbounds [1 x i32], [1 x i32]* %wcbuf, i64 0, i64 0
   %22 = load %struct.__mbstate_t.512*, %struct.__mbstate_t.512** %ps.addr, align 8
-  %call20 = call i64 @mbsnrtowcs(i32* %arraydecay19, i8** %p, i64 -1, i64 1, %struct.__mbstate_t.512* %22) #19
+  %call20 = call i64 @mbsnrtowcs(i32* %arraydecay19, i8** %p, i64 -1, i64 1, %struct.__mbstate_t.512* %22) #20
   store i64 %call20, i64* %r, align 8
   %23 = load i64, i64* %r, align 8
   %cmp21 = icmp sge i64 %23, 0
@@ -20874,7 +22297,7 @@ entry:
   %wc.addr = alloca i32, align 4
   store i32 %wc, i32* %wc.addr, align 4
   %0 = load i32, i32* %wc.addr, align 4
-  %call = call i32 @iswctype(i32 %0, i32 8) #19
+  %call = call i32 @iswctype(i32 %0, i32 8) #20
   ret i32 %call
 }
 
@@ -20912,7 +22335,7 @@ if.end:                                           ; preds = %if.then2, %if.then
   %4 = load i32, i32* %__filedes, align 4
   %5 = load i8*, i8** %buf.addr, align 8
   %6 = load i64, i64* %bufsize.addr, align 8
-  %call = call i64 @read(i32 %4, i8* %5, i64 %6) #18
+  %call = call i64 @read(i32 %4, i8* %5, i64 %6) #19
   store i64 %call, i64* %rv, align 8
   %cmp3 = icmp sle i64 %call, 0
   br i1 %cmp3, label %if.then5, label %if.end18
@@ -20983,7 +22406,7 @@ if.end:                                           ; preds = %do.body
   %6 = load i32, i32* %__filedes, align 4
   %7 = load i8*, i8** %buf.addr, align 8
   %8 = load i64, i64* %stodo, align 8
-  %call = call i64 @write(i32 %6, i8* %7, i64 %8) #18
+  %call = call i64 @write(i32 %6, i8* %7, i64 %8) #19
   store i64 %call, i64* %rv, align 8
   %cmp2 = icmp sge i64 %call, 0
   br i1 %cmp2, label %if.then3, label %if.else
@@ -21130,7 +22553,7 @@ entry:
   %sub.ptr.lhs.cast = ptrtoint i8* %4 to i64
   %sub.ptr.rhs.cast = ptrtoint i8* %6 to i64
   %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast
-  %call = call i64 @__stdio_READ(%struct.__STDIO_FILE_STRUCT.568* %0, i8* %2, i64 %sub.ptr.sub) #18
+  %call = call i64 @__stdio_READ(%struct.__STDIO_FILE_STRUCT.568* %0, i8* %2, i64 %sub.ptr.sub) #19
   store i64 %call, i64* %rv, align 8
   %7 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %__bufstart2 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %7, i32 0, i32 3
@@ -21222,7 +22645,7 @@ if.end19:                                         ; preds = %if.end9
 
 if.then24:                                        ; preds = %if.end19
   %14 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %14) #18
+  %call = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %14) #19
   %tobool25 = icmp ne i64 %call, 0
   br i1 %tobool25, label %ERROR, label %if.end27
 
@@ -21321,7 +22744,7 @@ if.end7:                                          ; preds = %while.cond, %if.the
 
 if.then9:                                         ; preds = %if.end7
   %16 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call = call i32 @fflush_unlocked(%struct.__STDIO_FILE_STRUCT.568* %16) #18
+  %call = call i32 @fflush_unlocked(%struct.__STDIO_FILE_STRUCT.568* %16) #19
   store i32 %call, i32* %rv, align 4
   br label %if.end10
 
@@ -21329,7 +22752,7 @@ if.end10:                                         ; preds = %if.then9, %if.end7
   %17 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %__filedes = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %17, i32 0, i32 2
   %18 = load i32, i32* %__filedes, align 4
-  %call11 = call i32 @close(i32 %18) #18
+  %call11 = call i32 @close(i32 %18) #19
   %cmp12 = icmp slt i32 %call11, 0
   br i1 %cmp12, label %if.then14, label %if.end15
 
@@ -21367,7 +22790,7 @@ if.then28:                                        ; preds = %if.end15
   %26 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %__bufstart = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %26, i32 0, i32 3
   %27 = load i8*, i8** %__bufstart, align 8
-  call void @free(i8* %27) #19
+  call void @free(i8* %27) #20
   br label %do.body30
 
 do.body30:                                        ; preds = %if.then28, %if.end15
@@ -21382,12 +22805,25 @@ do.body30:                                        ; preds = %if.then28, %if.end1
 if.then35:                                        ; preds = %do.body30
   %30 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %31 = bitcast %struct.__STDIO_FILE_STRUCT.568* %30 to i8*
-  call void @free(i8* %31) #19
+  call void @free(i8* %31) #20
   br label %do.end37
 
 do.end37:                                         ; preds = %do.body30, %if.then35
   %32 = load i32, i32* %rv, align 4
   ret i32 %32
+}
+
+; Function Attrs: noinline nounwind uwtable
+define i32 @feof_unlocked(%struct.__STDIO_FILE_STRUCT.590* %stream) #0 {
+entry:
+  %stream.addr = alloca %struct.__STDIO_FILE_STRUCT.590*, align 8
+  store %struct.__STDIO_FILE_STRUCT.590* %stream, %struct.__STDIO_FILE_STRUCT.590** %stream.addr, align 8
+  %0 = load %struct.__STDIO_FILE_STRUCT.590*, %struct.__STDIO_FILE_STRUCT.590** %stream.addr, align 8
+  %__modeflags = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.590, %struct.__STDIO_FILE_STRUCT.590* %0, i32 0, i32 0
+  %1 = load i16, i16* %__modeflags, align 8
+  %conv = zext i16 %1 to i32
+  %and = and i32 %conv, 4
+  ret i32 %and
 }
 
 ; Function Attrs: noinline nounwind uwtable
@@ -21460,7 +22896,7 @@ if.then5:                                         ; preds = %while.body
 
 if.then11:                                        ; preds = %if.then5
   %9 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %9) #18
+  %call = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %9) #19
   %tobool12 = icmp ne i64 %call, 0
   br i1 %tobool12, label %if.else, label %if.then13
 
@@ -21502,7 +22938,7 @@ if.else21:                                        ; preds = %if.end
 
 if.then26:                                        ; preds = %if.else21
   %19 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call27 = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %19) #18
+  %call27 = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %19) #19
   %tobool28 = icmp ne i64 %call27, 0
   br i1 %tobool28, label %if.else36, label %if.then29
 
@@ -21570,7 +23006,7 @@ entry:
   %0 = load i8*, i8** %filename.addr, align 8
   %1 = ptrtoint i8* %0 to i64
   %2 = load i8*, i8** %mode.addr, align 8
-  %call = call %struct.__STDIO_FILE_STRUCT.612* bitcast (%struct.__STDIO_FILE_STRUCT.568* (i64, i8*, %struct.__STDIO_FILE_STRUCT.568*, i32)* @_stdio_fopen to %struct.__STDIO_FILE_STRUCT.612* (i64, i8*, %struct.__STDIO_FILE_STRUCT.612*, i32)*)(i64 %1, i8* %2, %struct.__STDIO_FILE_STRUCT.612* null, i32 -1) #18
+  %call = call %struct.__STDIO_FILE_STRUCT.612* bitcast (%struct.__STDIO_FILE_STRUCT.568* (i64, i8*, %struct.__STDIO_FILE_STRUCT.568*, i32)* @_stdio_fopen to %struct.__STDIO_FILE_STRUCT.612* (i64, i8*, %struct.__STDIO_FILE_STRUCT.612*, i32)*)(i64 %1, i8* %2, %struct.__STDIO_FILE_STRUCT.612* null, i32 -1) #19
   ret %struct.__STDIO_FILE_STRUCT.612* %call
 }
 
@@ -21600,7 +23036,7 @@ lor.lhs.false:                                    ; preds = %entry
 if.then:                                          ; preds = %lor.lhs.false, %entry
   %4 = load i8*, i8** %format.addr, align 8
   %arraydecay3 = getelementptr inbounds [1 x %struct.__va_list_tag.0], [1 x %struct.__va_list_tag.0]* %arg, i64 0, i64 0
-  %call = call i32 @vprintf(i8* %4, %struct.__va_list_tag.0* %arraydecay3) #18
+  %call = call i32 @vprintf(i8* %4, %struct.__va_list_tag.0* %arraydecay3) #19
   store i32 %call, i32* %rv, align 4
   br label %if.end
 
@@ -21608,7 +23044,7 @@ if.else:                                          ; preds = %lor.lhs.false
   %5 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %6 = load i8*, i8** %format.addr, align 8
   %arraydecay4 = getelementptr inbounds [1 x %struct.__va_list_tag.0], [1 x %struct.__va_list_tag.0]* %arg, i64 0, i64 0
-  %call5 = call i32 @vfprintf(%struct.__STDIO_FILE_STRUCT.568* %5, i8* %6, %struct.__va_list_tag.0* %arraydecay4) #18
+  %call5 = call i32 @vfprintf(%struct.__STDIO_FILE_STRUCT.568* %5, i8* %6, %struct.__va_list_tag.0* %arraydecay4) #19
   store i32 %call5, i32* %rv, align 4
   br label %if.end
 
@@ -21620,7 +23056,7 @@ if.end:                                           ; preds = %if.else, %if.then
   ret i32 %7
 }
 
-declare i32 @vprintf(i8*, %struct.__va_list_tag.0*) #17
+declare i32 @vprintf(i8*, %struct.__va_list_tag.0*) #18
 
 ; Function Attrs: noinline nounwind uwtable
 define i32 @__fputc_unlocked(i32 %c, %struct.__STDIO_FILE_STRUCT.568* %stream) #0 {
@@ -21666,7 +23102,7 @@ if.end:                                           ; preds = %entry
 
 lor.lhs.false:                                    ; preds = %if.end
   %10 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call = call i32 @__stdio_trans2w_o(%struct.__STDIO_FILE_STRUCT.568* %10, i32 128) #18
+  %call = call i32 @__stdio_trans2w_o(%struct.__STDIO_FILE_STRUCT.568* %10, i32 128) #19
   %tobool = icmp ne i32 %call, 0
   br i1 %tobool, label %BAD, label %if.then7
 
@@ -21712,7 +23148,7 @@ if.then15:                                        ; preds = %if.end13
 
 land.lhs.true:                                    ; preds = %if.then15
   %22 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call22 = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %22) #18
+  %call22 = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %22) #19
   %tobool23 = icmp ne i64 %call22, 0
   br i1 %tobool23, label %BAD, label %if.end25
 
@@ -21742,7 +23178,7 @@ if.then33:                                        ; preds = %if.end25
 
 land.lhs.true38:                                  ; preds = %if.then33
   %29 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call39 = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %29) #18
+  %call39 = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %29) #19
   %tobool40 = icmp ne i64 %call39, 0
   br i1 %tobool40, label %if.then41, label %if.end51
 
@@ -21759,7 +23195,7 @@ if.else:                                          ; preds = %if.end13
   %conv46 = trunc i32 %32 to i8
   store i8 %conv46, i8* %uc, align 1
   %33 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call47 = call i64 @__stdio_WRITE(%struct.__STDIO_FILE_STRUCT.568* %33, i8* %uc, i64 1) #18
+  %call47 = call i64 @__stdio_WRITE(%struct.__STDIO_FILE_STRUCT.568* %33, i8* %uc, i64 1) #19
   %tobool48 = icmp ne i64 %call47, 0
   br i1 %tobool48, label %if.end51, label %BAD
 
@@ -21788,18 +23224,224 @@ entry:
   store i8* %s, i8** %s.addr, align 8
   store %struct.__STDIO_FILE_STRUCT.621* %stream, %struct.__STDIO_FILE_STRUCT.621** %stream.addr, align 8
   %0 = load i8*, i8** %s.addr, align 8
-  %call = call i64 @strlen(i8* %0) #20
+  %call = call i64 @strlen(i8* %0) #21
   store i64 %call, i64* %n, align 8
   %1 = load i8*, i8** %s.addr, align 8
   %2 = load i64, i64* %n, align 8
   %3 = load %struct.__STDIO_FILE_STRUCT.621*, %struct.__STDIO_FILE_STRUCT.621** %stream.addr, align 8
-  %call1 = call i64 bitcast (i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fwrite_unlocked to i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.621*)*)(i8* %1, i64 1, i64 %2, %struct.__STDIO_FILE_STRUCT.621* %3) #18
+  %call1 = call i64 bitcast (i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.568*)* @fwrite_unlocked to i64 (i8*, i64, i64, %struct.__STDIO_FILE_STRUCT.621*)*)(i8* %1, i64 1, i64 %2, %struct.__STDIO_FILE_STRUCT.621* %3) #19
   %4 = load i64, i64* %n, align 8
   %cmp = icmp eq i64 %call1, %4
   %5 = load i64, i64* %n, align 8
   %cond = select i1 %cmp, i64 %5, i64 -1
   %conv = trunc i64 %cond to i32
   ret i32 %conv
+}
+
+; Function Attrs: noinline nounwind uwtable
+define i64 @fread_unlocked(i8* noalias %ptr, i64 %size, i64 %nmemb, %struct.__STDIO_FILE_STRUCT.568* noalias %stream) #0 {
+entry:
+  %retval = alloca i64, align 8
+  %ptr.addr = alloca i8*, align 8
+  %size.addr = alloca i64, align 8
+  %nmemb.addr = alloca i64, align 8
+  %stream.addr = alloca %struct.__STDIO_FILE_STRUCT.568*, align 8
+  %buffer = alloca i8*, align 8
+  %todo = alloca i64, align 8
+  %bytes = alloca i64, align 8
+  %avail = alloca i64, align 8
+  store i8* %ptr, i8** %ptr.addr, align 8
+  store i64 %size, i64* %size.addr, align 8
+  store i64 %nmemb, i64* %nmemb.addr, align 8
+  store %struct.__STDIO_FILE_STRUCT.568* %stream, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %0 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %__modeflags = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %0, i32 0, i32 0
+  %1 = load i16, i16* %__modeflags, align 8
+  %conv = zext i16 %1 to i32
+  %and = and i32 %conv, 131
+  %cmp = icmp ugt i32 %and, 128
+  br i1 %cmp, label %land.lhs.true, label %lor.lhs.false
+
+lor.lhs.false:                                    ; preds = %entry
+  %2 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %call = call i32 @__stdio_trans2r_o(%struct.__STDIO_FILE_STRUCT.568* %2, i32 128) #19
+  %tobool = icmp ne i32 %call, 0
+  br i1 %tobool, label %if.end60, label %land.lhs.true
+
+land.lhs.true:                                    ; preds = %lor.lhs.false, %entry
+  %3 = load i64, i64* %size.addr, align 8
+  %tobool2 = icmp ne i64 %3, 0
+  %4 = load i64, i64* %nmemb.addr, align 8
+  %tobool4 = icmp ne i64 %4, 0
+  %or.cond = and i1 %tobool2, %tobool4
+  br i1 %or.cond, label %if.then, label %if.end60
+
+if.then:                                          ; preds = %land.lhs.true
+  %5 = load i64, i64* %nmemb.addr, align 8
+  %6 = load i64, i64* %size.addr, align 8
+  %div = udiv i64 -1, %6
+  %cmp5 = icmp ule i64 %5, %div
+  br i1 %cmp5, label %if.then7, label %if.end56
+
+if.then7:                                         ; preds = %if.then
+  %7 = load i8*, i8** %ptr.addr, align 8
+  store i8* %7, i8** %buffer, align 8
+  %8 = load i64, i64* %size.addr, align 8
+  %9 = load i64, i64* %nmemb.addr, align 8
+  %mul = mul i64 %8, %9
+  store i64 %mul, i64* %bytes, align 8
+  store i64 %mul, i64* %todo, align 8
+  br label %while.cond
+
+while.cond:                                       ; preds = %while.body, %if.then7
+  %10 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %__modeflags8 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %10, i32 0, i32 0
+  %11 = load i16, i16* %__modeflags8, align 8
+  %conv9 = zext i16 %11 to i32
+  %and10 = and i32 %conv9, 2
+  %tobool11 = icmp ne i32 %and10, 0
+  %12 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  br i1 %tobool11, label %while.body, label %while.end
+
+while.body:                                       ; preds = %while.cond
+  %__ungot = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %12, i32 0, i32 10
+  %13 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %__modeflags12 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %13, i32 0, i32 0
+  %14 = load i16, i16* %__modeflags12, align 8
+  %dec = add i16 %14, -1
+  store i16 %dec, i16* %__modeflags12, align 8
+  %conv13 = zext i16 %14 to i32
+  %and14 = and i32 %conv13, 1
+  %idxprom = sext i32 %and14 to i64
+  %arrayidx = getelementptr inbounds [2 x i32], [2 x i32]* %__ungot, i64 0, i64 %idxprom
+  %15 = load i32, i32* %arrayidx, align 4
+  %conv15 = trunc i32 %15 to i8
+  %16 = load i8*, i8** %buffer, align 8
+  %incdec.ptr = getelementptr inbounds i8, i8* %16, i32 1
+  store i8* %incdec.ptr, i8** %buffer, align 8
+  store i8 %conv15, i8* %16, align 1
+  %17 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %__ungot16 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %17, i32 0, i32 10
+  %arrayidx17 = getelementptr inbounds [2 x i32], [2 x i32]* %__ungot16, i64 0, i64 1
+  store i32 0, i32* %arrayidx17, align 4
+  %18 = load i64, i64* %todo, align 8
+  %dec18 = add i64 %18, -1
+  store i64 %dec18, i64* %todo, align 8
+  %tobool19 = icmp ne i64 %dec18, 0
+  br i1 %tobool19, label %while.cond, label %DONE
+
+while.end:                                        ; preds = %while.cond
+  %__bufread = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %12, i32 0, i32 6
+  %19 = load i8*, i8** %__bufread, align 8
+  %20 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %__bufpos = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %20, i32 0, i32 5
+  %21 = load i8*, i8** %__bufpos, align 8
+  %sub.ptr.lhs.cast = ptrtoint i8* %19 to i64
+  %sub.ptr.rhs.cast = ptrtoint i8* %21 to i64
+  %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast
+  store i64 %sub.ptr.sub, i64* %avail, align 8
+  %cmp21 = icmp ugt i64 %sub.ptr.sub, 0
+  br i1 %cmp21, label %if.then23, label %if.end35
+
+if.then23:                                        ; preds = %while.end
+  %22 = load i64, i64* %avail, align 8
+  %23 = load i64, i64* %todo, align 8
+  %cmp24 = icmp ugt i64 %22, %23
+  br i1 %cmp24, label %if.then26, label %if.end27
+
+if.then26:                                        ; preds = %if.then23
+  %24 = load i64, i64* %todo, align 8
+  store i64 %24, i64* %avail, align 8
+  br label %if.end27
+
+if.end27:                                         ; preds = %if.then26, %if.then23
+  %25 = load i8*, i8** %buffer, align 8
+  %26 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %__bufpos28 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %26, i32 0, i32 5
+  %27 = load i8*, i8** %__bufpos28, align 8
+  %28 = load i64, i64* %avail, align 8
+  %call29 = call i8* @memcpy(i8* %25, i8* %27, i64 %28) #20
+  %29 = load i64, i64* %avail, align 8
+  %30 = load i8*, i8** %buffer, align 8
+  %add.ptr = getelementptr inbounds i8, i8* %30, i64 %29
+  store i8* %add.ptr, i8** %buffer, align 8
+  %31 = load i64, i64* %avail, align 8
+  %32 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %__bufpos30 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %32, i32 0, i32 5
+  %33 = load i8*, i8** %__bufpos30, align 8
+  %add.ptr31 = getelementptr inbounds i8, i8* %33, i64 %31
+  store i8* %add.ptr31, i8** %__bufpos30, align 8
+  %34 = load i64, i64* %avail, align 8
+  %35 = load i64, i64* %todo, align 8
+  %sub = sub i64 %35, %34
+  store i64 %sub, i64* %todo, align 8
+  %tobool32 = icmp ne i64 %sub, 0
+  br i1 %tobool32, label %if.end35, label %DONE
+
+if.end35:                                         ; preds = %if.end27, %while.end
+  %36 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %__modeflags36 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %36, i32 0, i32 0
+  %37 = load i16, i16* %__modeflags36, align 8
+  %conv37 = zext i16 %37 to i32
+  %and38 = and i32 %conv37, 768
+  %tobool39 = icmp ne i32 %and38, 0
+  br i1 %tobool39, label %if.then40, label %if.end42
+
+if.then40:                                        ; preds = %if.end35
+  %call41 = call i32 @fflush_unlocked(%struct.__STDIO_FILE_STRUCT.568* bitcast (%struct.__STDIO_FILE_STRUCT.568** @_stdio_openlist to %struct.__STDIO_FILE_STRUCT.568*)) #19
+  br label %if.end42
+
+if.end42:                                         ; preds = %if.then40, %if.end35
+  br label %while.cond43
+
+while.cond43:                                     ; preds = %while.body47, %if.end42
+  %38 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %39 = load i8*, i8** %buffer, align 8
+  %40 = load i64, i64* %todo, align 8
+  %call44 = call i64 @__stdio_READ(%struct.__STDIO_FILE_STRUCT.568* %38, i8* %39, i64 %40) #19
+  store i64 %call44, i64* %avail, align 8
+  %cmp45 = icmp ugt i64 %call44, 0
+  br i1 %cmp45, label %while.body47, label %DONE
+
+while.body47:                                     ; preds = %while.cond43
+  %41 = load i64, i64* %avail, align 8
+  %42 = load i8*, i8** %buffer, align 8
+  %add.ptr48 = getelementptr inbounds i8, i8* %42, i64 %41
+  store i8* %add.ptr48, i8** %buffer, align 8
+  %43 = load i64, i64* %avail, align 8
+  %44 = load i64, i64* %todo, align 8
+  %sub49 = sub i64 %44, %43
+  store i64 %sub49, i64* %todo, align 8
+  %tobool50 = icmp ne i64 %sub49, 0
+  br i1 %tobool50, label %while.cond43, label %DONE
+
+DONE:                                             ; preds = %while.cond43, %while.body47, %if.end27, %while.body
+  %45 = load i64, i64* %bytes, align 8
+  %46 = load i64, i64* %todo, align 8
+  %sub54 = sub i64 %45, %46
+  %47 = load i64, i64* %size.addr, align 8
+  %div55 = udiv i64 %sub54, %47
+  store i64 %div55, i64* %retval, align 8
+  br label %return
+
+if.end56:                                         ; preds = %if.then
+  %48 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
+  %__modeflags57 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %48, i32 0, i32 0
+  %49 = load i16, i16* %__modeflags57, align 8
+  %conv58 = zext i16 %49 to i32
+  %or = or i32 %conv58, 8
+  %conv59 = trunc i32 %or to i16
+  store i16 %conv59, i16* %__modeflags57, align 8
+  store i32 22, i32* @errno, align 4
+  br label %if.end60
+
+if.end60:                                         ; preds = %if.end56, %land.lhs.true, %lor.lhs.false
+  store i64 0, i64* %retval, align 8
+  br label %return
+
+return:                                           ; preds = %if.end60, %DONE
+  %50 = load i64, i64* %retval, align 8
+  ret i64 %50
 }
 
 ; Function Attrs: noinline nounwind uwtable
@@ -21814,7 +23456,7 @@ entry:
   %0 = load %struct.__STDIO_FILE_STRUCT.636*, %struct.__STDIO_FILE_STRUCT.636** %stream.addr, align 8
   %1 = load i64, i64* %offset.addr, align 8
   %2 = load i32, i32* %whence.addr, align 4
-  %call = call i32 @fseeko64(%struct.__STDIO_FILE_STRUCT.636* %0, i64 %1, i32 %2) #18
+  %call = call i32 @fseeko64(%struct.__STDIO_FILE_STRUCT.636* %0, i64 %1, i32 %2) #19
   ret i32 %call
 }
 
@@ -21840,7 +23482,7 @@ entry:
 
 lor.lhs.false:                                    ; preds = %entry
   %2 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call = call i32 @__stdio_trans2w_o(%struct.__STDIO_FILE_STRUCT.568* %2, i32 128) #18
+  %call = call i32 @__stdio_trans2w_o(%struct.__STDIO_FILE_STRUCT.568* %2, i32 128) #19
   %tobool = icmp ne i32 %call, 0
   br i1 %tobool, label %if.end13, label %land.lhs.true
 
@@ -21865,7 +23507,7 @@ if.then7:                                         ; preds = %if.then
   %9 = load i64, i64* %nmemb.addr, align 8
   %mul = mul i64 %8, %9
   %10 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call8 = call i64 @__stdio_fwrite(i8* %7, i64 %mul, %struct.__STDIO_FILE_STRUCT.568* %10) #18
+  %call8 = call i64 @__stdio_fwrite(i8* %7, i64 %mul, %struct.__STDIO_FILE_STRUCT.568* %10) #19
   %11 = load i64, i64* %size.addr, align 8
   %div9 = udiv i64 %call8, %11
   store i64 %div9, i64* %retval, align 8
@@ -21889,45 +23531,6 @@ if.end13:                                         ; preds = %if.end, %land.lhs.t
 return:                                           ; preds = %if.end13, %if.then7
   %14 = load i64, i64* %retval, align 8
   ret i64 %14
-}
-
-; Function Attrs: noinline nounwind uwtable
-define i32 @putchar_unlocked(i32 %c) #0 {
-entry:
-  %c.addr = alloca i32, align 4
-  %stream = alloca %struct.__STDIO_FILE_STRUCT.568*, align 8
-  store i32 %c, i32* %c.addr, align 4
-  %0 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** @stdout, align 8
-  store %struct.__STDIO_FILE_STRUCT.568* %0, %struct.__STDIO_FILE_STRUCT.568** %stream, align 8
-  %1 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream, align 8
-  %__bufpos = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %1, i32 0, i32 5
-  %2 = load i8*, i8** %__bufpos, align 8
-  %3 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream, align 8
-  %__bufputc_u = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %3, i32 0, i32 8
-  %4 = load i8*, i8** %__bufputc_u, align 8
-  %cmp = icmp ult i8* %2, %4
-  %5 = load i32, i32* %c.addr, align 4
-  br i1 %cmp, label %cond.true, label %cond.false
-
-cond.true:                                        ; preds = %entry
-  %conv = trunc i32 %5 to i8
-  %6 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream, align 8
-  %__bufpos1 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %6, i32 0, i32 5
-  %7 = load i8*, i8** %__bufpos1, align 8
-  %incdec.ptr = getelementptr inbounds i8, i8* %7, i32 1
-  store i8* %incdec.ptr, i8** %__bufpos1, align 8
-  store i8 %conv, i8* %7, align 1
-  %conv2 = zext i8 %conv to i32
-  br label %cond.end
-
-cond.false:                                       ; preds = %entry
-  %8 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream, align 8
-  %call = call i32 @__fputc_unlocked(i32 %5, %struct.__STDIO_FILE_STRUCT.568* %8) #18
-  br label %cond.end
-
-cond.end:                                         ; preds = %cond.false, %cond.true
-  %cond = phi i32 [ %conv2, %cond.true ], [ %call, %cond.false ]
-  ret i32 %cond
 }
 
 ; Function Attrs: noinline nounwind uwtable
@@ -21994,7 +23597,7 @@ if.end:                                           ; preds = %if.then, %entry
   store i8* %10, i8** %__bufputc_u, align 8
   %11 = load i8*, i8** %format.addr, align 8
   %12 = load %struct.__va_list_tag.0*, %struct.__va_list_tag.0** %arg.addr, align 8
-  %call = call i32 @vfprintf(%struct.__STDIO_FILE_STRUCT.568* %f, i8* %11, %struct.__va_list_tag.0* %12) #18
+  %call = call i32 @vfprintf(%struct.__STDIO_FILE_STRUCT.568* %f, i8* %11, %struct.__va_list_tag.0* %12) #19
   store i32 %call, i32* %rv, align 4
   %13 = load i64, i64* %size.addr, align 8
   %tobool = icmp ne i64 %13, 0
@@ -22041,7 +23644,7 @@ cond.false:                                       ; preds = %entry
 
 cond.end:                                         ; preds = %entry, %cond.false
   %cond = phi i8* [ %2, %cond.false ], [ null, %entry ]
-  %call = call i32 @__cxa_atexit(void (i8*)* %1, i8* null, i8* %cond) #18
+  %call = call i32 @__cxa_atexit(void (i8*)* %1, i8* null, i8* %cond) #19
   ret i32 %call
 }
 
@@ -22083,7 +23686,7 @@ if.then3:                                         ; preds = %if.end
 
 if.end4:                                          ; preds = %if.end
   %3 = load i8*, i8** %path.addr, align 8
-  %call = call i64 @strlen(i8* %3) #20
+  %call = call i64 @strlen(i8* %3) #21
   store i64 %call, i64* %path_len, align 8
   %4 = load i64, i64* %path_len, align 8
   %cmp5 = icmp uge i64 %4, 4094
@@ -22101,7 +23704,7 @@ if.end8:                                          ; preds = %if.end4
   %idx.neg = sub i64 0, %5
   %add.ptr9 = getelementptr inbounds i8, i8* %add.ptr, i64 %idx.neg
   %6 = load i8*, i8** %path.addr, align 8
-  %call10 = call i8* @strcpy(i8* %add.ptr9, i8* %6) #19
+  %call10 = call i8* @strcpy(i8* %add.ptr9, i8* %6) #20
   %arraydecay11 = getelementptr inbounds [4096 x i8], [4096 x i8]* %copy_path, i64 0, i64 0
   %add.ptr12 = getelementptr inbounds i8, i8* %arraydecay11, i64 4095
   %7 = load i64, i64* %path_len, align 8
@@ -22122,7 +23725,7 @@ if.end8:                                          ; preds = %if.end4
   br i1 %cmp18, label %if.then20, label %if.else
 
 if.then20:                                        ; preds = %if.end8
-  %call21 = call i8* @getcwd(i8* %12, i64 4095) #19
+  %call21 = call i8* @getcwd(i8* %12, i64 4095) #20
   %tobool = icmp ne i8* %call21, null
   br i1 %tobool, label %if.end23, label %if.then22
 
@@ -22132,7 +23735,7 @@ if.then22:                                        ; preds = %if.then20
 
 if.end23:                                         ; preds = %if.then20
   %13 = load i8*, i8** %new_path, align 8
-  %call24 = call i64 @strlen(i8* %13) #20
+  %call24 = call i64 @strlen(i8* %13) #21
   %14 = load i8*, i8** %new_path, align 8
   %add.ptr25 = getelementptr inbounds i8, i8* %14, i64 %call24
   store i8* %add.ptr25, i8** %new_path, align 8
@@ -22307,13 +23910,13 @@ if.then106:                                       ; preds = %while.end103
 
 if.end107:                                        ; preds = %while.end103
   %51 = load i8*, i8** %path.addr, align 8
-  %call108 = call i64 @strlen(i8* %51) #20
+  %call108 = call i64 @strlen(i8* %51) #21
   store i64 %call108, i64* %path_len, align 8
   %52 = load i8*, i8** %new_path, align 8
   store i8 0, i8* %52, align 1
   %53 = load i8*, i8** %got_path.addr, align 8
   %arraydecay109 = getelementptr inbounds [4096 x i8], [4096 x i8]* %copy_path, i64 0, i64 0
-  %call110 = call i64 @readlink(i8* %53, i8* %arraydecay109, i64 4095) #19
+  %call110 = call i64 @readlink(i8* %53, i8* %arraydecay109, i64 4095) #20
   %conv111 = trunc i64 %call110 to i32
   store i32 %conv111, i32* %link_len, align 4
   %54 = load i32, i32* %link_len, align 4
@@ -22376,7 +23979,7 @@ if.end138:                                        ; preds = %while.cond131, %if.
   %arraydecay145 = getelementptr inbounds [4096 x i8], [4096 x i8]* %copy_path, i64 0, i64 0
   %64 = load i32, i32* %link_len, align 4
   %conv146 = sext i32 %64 to i64
-  %call147 = call i8* @memmove(i8* %add.ptr144, i8* %arraydecay145, i64 %conv146) #19
+  %call147 = call i8* @memmove(i8* %add.ptr144, i8* %arraydecay145, i64 %conv146) #20
   %arraydecay148 = getelementptr inbounds [4096 x i8], [4096 x i8]* %copy_path, i64 0, i64 0
   %add.ptr149 = getelementptr inbounds i8, i8* %arraydecay148, i64 4095
   %65 = load i32, i32* %link_len, align 4
@@ -22441,8 +24044,60 @@ entry:
   %0 = load i8*, i8** %str.addr, align 8
   %1 = load i8**, i8*** %endptr.addr, align 8
   %2 = load i32, i32* %base.addr, align 4
-  %call = call i64 @_stdlib_strto_l(i8* %0, i8** %1, i32 %2, i32 0) #18
+  %call = call i64 @_stdlib_strto_l(i8* %0, i8** %1, i32 %2, i32 0) #19
   ret i64 %call
+}
+
+; Function Attrs: noinline nounwind readonly uwtable
+define i8* @memchr(i8* nonnull %s, i32 %c, i64 %n) #14 {
+entry:
+  %retval = alloca i8*, align 8
+  %s.addr = alloca i8*, align 8
+  %c.addr = alloca i32, align 4
+  %n.addr = alloca i64, align 8
+  %r = alloca i8*, align 8
+  store i8* %s, i8** %s.addr, align 8
+  store i32 %c, i32* %c.addr, align 4
+  store i64 %n, i64* %n.addr, align 8
+  %0 = load i8*, i8** %s.addr, align 8
+  store i8* %0, i8** %r, align 8
+  br label %while.cond
+
+while.cond:                                       ; preds = %if.end, %entry
+  %1 = load i64, i64* %n.addr, align 8
+  %tobool = icmp ne i64 %1, 0
+  br i1 %tobool, label %while.body, label %while.end
+
+while.body:                                       ; preds = %while.cond
+  %2 = load i8*, i8** %r, align 8
+  %3 = load i8, i8* %2, align 1
+  %conv = zext i8 %3 to i32
+  %4 = load i32, i32* %c.addr, align 4
+  %conv1 = trunc i32 %4 to i8
+  %conv2 = zext i8 %conv1 to i32
+  %cmp = icmp eq i32 %conv, %conv2
+  %5 = load i8*, i8** %r, align 8
+  br i1 %cmp, label %if.then, label %if.end
+
+if.then:                                          ; preds = %while.body
+  store i8* %5, i8** %retval, align 8
+  br label %return
+
+if.end:                                           ; preds = %while.body
+  %incdec.ptr = getelementptr inbounds i8, i8* %5, i32 1
+  store i8* %incdec.ptr, i8** %r, align 8
+  %6 = load i64, i64* %n.addr, align 8
+  %dec = add i64 %6, -1
+  store i64 %dec, i64* %n.addr, align 8
+  br label %while.cond
+
+while.end:                                        ; preds = %while.cond
+  store i8* null, i8** %retval, align 8
+  br label %return
+
+return:                                           ; preds = %while.end, %if.then
+  %7 = load i8*, i8** %retval, align 8
+  ret i8* %7
 }
 
 ; Function Attrs: noinline nounwind readonly uwtable
@@ -22543,7 +24198,7 @@ entry:
   store i32 %fd, i32* %fd.addr, align 4
   store %struct.termios* %termios_p, %struct.termios** %termios_p.addr, align 8
   %0 = load i32, i32* %fd.addr, align 4
-  %call = call i32 (i32, i64, ...) @ioctl(i32 %0, i64 21505, %struct.__kernel_termios* %k_termios) #19
+  %call = call i32 (i32, i64, ...) @ioctl(i32 %0, i64 21505, %struct.__kernel_termios* %k_termios) #20
   store i32 %call, i32* %retval1, align 4
   %c_iflag = getelementptr inbounds %struct.__kernel_termios, %struct.__kernel_termios* %k_termios, i32 0, i32 0
   %1 = load i32, i32* %c_iflag, align 4
@@ -22575,8 +24230,8 @@ entry:
   %arrayidx = getelementptr inbounds [32 x i8], [32 x i8]* %c_cc, i64 0, i64 0
   %c_cc7 = getelementptr inbounds %struct.__kernel_termios, %struct.__kernel_termios* %k_termios, i32 0, i32 5
   %arrayidx8 = getelementptr inbounds [19 x i8], [19 x i8]* %c_cc7, i64 0, i64 0
-  %call9 = call i8* @mempcpy(i8* %arrayidx, i8* %arrayidx8, i64 19) #19
-  %call10 = call i8* @memset(i8* %call9, i32 0, i64 13) #19
+  %call9 = call i8* @mempcpy(i8* %arrayidx, i8* %arrayidx8, i64 19) #20
+  %call10 = call i8* @memset(i8* %call9, i32 0, i64 13) #20
   %12 = load i32, i32* %retval1, align 4
   ret i32 %12
 }
@@ -22607,7 +24262,7 @@ entry:
   %5 = load %struct.option*, %struct.option** %longopts.addr, align 8
   %6 = load i32*, i32** %longind.addr, align 8
   %7 = load i32, i32* %long_only.addr, align 4
-  %call = call i32 @_getopt_internal_r(i32 %2, i8** %3, i8* %4, %struct.option* %5, i32* %6, i32 %7, %struct._getopt_data* @getopt_data) #18
+  %call = call i32 @_getopt_internal_r(i32 %2, i8** %3, i8* %4, %struct.option* %5, i32* %6, i32 %7, %struct._getopt_data* @getopt_data) #19
   store i32 %call, i32* %result, align 4
   %8 = load i32, i32* getelementptr inbounds (%struct._getopt_data, %struct._getopt_data* @getopt_data, i32 0, i32 0), align 8
   store i32 %8, i32* @optind, align 4
@@ -22701,7 +24356,7 @@ if.end14:                                         ; preds = %if.then12, %if.then
   %14 = load i8**, i8*** %argv.addr, align 8
   %15 = load i8*, i8** %optstring.addr, align 8
   %16 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
-  %call = call i8* @_getopt_initialize(i32 %13, i8** %14, i8* %15, %struct._getopt_data* %16) #18
+  %call = call i8* @_getopt_initialize(i32 %13, i8** %14, i8* %15, %struct._getopt_data* %16) #19
   store i8* %call, i8** %optstring.addr, align 8
   %17 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__initialized15 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %17, i32 0, i32 4
@@ -22792,7 +24447,7 @@ land.lhs.true:                                    ; preds = %if.then41
 if.then50:                                        ; preds = %land.lhs.true
   %47 = load i8**, i8*** %argv.addr, align 8
   %48 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
-  call void @exchange(i8** %47, %struct._getopt_data* %48) #18
+  call void @exchange(i8** %47, %struct._getopt_data* %48) #19
   br label %if.end59
 
 if.else:                                          ; preds = %land.lhs.true, %if.then41
@@ -22887,7 +24542,7 @@ land.lhs.true83:                                  ; preds = %if.end79
   %idxprom85 = sext i32 %78 to i64
   %arrayidx86 = getelementptr inbounds i8*, i8** %76, i64 %idxprom85
   %79 = load i8*, i8** %arrayidx86, align 8
-  %call87 = call i32 @strcmp(i8* %79, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.307, i64 0, i64 0)) #20
+  %call87 = call i32 @strcmp(i8* %79, i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.311, i64 0, i64 0)) #21
   %tobool88 = icmp ne i32 %call87, 0
   br i1 %tobool88, label %if.end114, label %if.then89
 
@@ -22919,7 +24574,7 @@ land.lhs.true96:                                  ; preds = %if.then89
 if.then101:                                       ; preds = %land.lhs.true96
   %90 = load i8**, i8*** %argv.addr, align 8
   %91 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
-  call void @exchange(i8** %90, %struct._getopt_data* %91) #18
+  call void @exchange(i8** %90, %struct._getopt_data* %91) #19
   br label %if.end111
 
 if.else102:                                       ; preds = %land.lhs.true96, %if.then89
@@ -23125,7 +24780,7 @@ lor.lhs.false191:                                 ; preds = %land.lhs.true184
   %arrayidx195 = getelementptr inbounds i8, i8* %158, i64 1
   %159 = load i8, i8* %arrayidx195, align 1
   %conv196 = sext i8 %159 to i32
-  %call197 = call i8* @strchr(i8* %154, i32 %conv196) #20
+  %call197 = call i8* @strchr(i8* %154, i32 %conv196) #21
   %tobool198 = icmp ne i8* %call197, null
   br i1 %tobool198, label %if.end418, label %if.then199
 
@@ -23187,7 +24842,7 @@ for.body211:                                      ; preds = %for.cond209
   %sub.ptr.lhs.cast = ptrtoint i8* %174 to i64
   %sub.ptr.rhs.cast = ptrtoint i8* %176 to i64
   %sub.ptr.sub = sub i64 %sub.ptr.lhs.cast, %sub.ptr.rhs.cast
-  %call215 = call i32 @strncmp(i8* %171, i8* %173, i64 %sub.ptr.sub) #20
+  %call215 = call i32 @strncmp(i8* %171, i8* %173, i64 %sub.ptr.sub) #21
   %tobool216 = icmp ne i32 %call215, 0
   br i1 %tobool216, label %for.inc252, label %if.then217
 
@@ -23203,7 +24858,7 @@ if.then217:                                       ; preds = %for.body211
   %180 = load %struct.option*, %struct.option** %p, align 8
   %name223 = getelementptr inbounds %struct.option, %struct.option* %180, i32 0, i32 0
   %181 = load i8*, i8** %name223, align 8
-  %call224 = call i64 @strlen(i8* %181) #20
+  %call224 = call i64 @strlen(i8* %181) #21
   %conv225 = trunc i64 %call224 to i32
   %cmp226 = icmp eq i32 %conv222, %conv225
   br i1 %cmp226, label %if.then228, label %if.else229
@@ -23301,14 +24956,14 @@ if.then261:                                       ; preds = %if.then259
   %idxprom264 = sext i32 %210 to i64
   %arrayidx265 = getelementptr inbounds i8*, i8** %208, i64 %idxprom264
   %211 = load i8*, i8** %arrayidx265, align 8
-  %call266 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %205, i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.str.1.308, i64 0, i64 0), i8* %207, i8* %211) #18
+  %call266 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %205, i8* getelementptr inbounds ([30 x i8], [30 x i8]* @.str.1.312, i64 0, i64 0), i8* %207, i8* %211) #19
   br label %if.end267
 
 if.end267:                                        ; preds = %if.then261, %if.then259
   %212 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar268 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %212, i32 0, i32 5
   %213 = load i8*, i8** %__nextchar268, align 8
-  %call269 = call i64 @strlen(i8* %213) #20
+  %call269 = call i64 @strlen(i8* %213) #21
   %214 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar270 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %214, i32 0, i32 5
   %215 = load i8*, i8** %__nextchar270, align 8
@@ -23386,7 +25041,7 @@ if.then297:                                       ; preds = %if.then289
   %238 = load %struct.option*, %struct.option** %pfound, align 8
   %name299 = getelementptr inbounds %struct.option, %struct.option* %238, i32 0, i32 0
   %239 = load i8*, i8** %name299, align 8
-  %call300 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %235, i8* getelementptr inbounds ([45 x i8], [45 x i8]* @.str.2.309, i64 0, i64 0), i8* %237, i8* %239) #18
+  %call300 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %235, i8* getelementptr inbounds ([45 x i8], [45 x i8]* @.str.2.313, i64 0, i64 0), i8* %237, i8* %239) #19
   br label %if.end312
 
 if.else301:                                       ; preds = %if.then289
@@ -23404,14 +25059,14 @@ if.else301:                                       ; preds = %if.then289
   %245 = load %struct.option*, %struct.option** %pfound, align 8
   %name309 = getelementptr inbounds %struct.option, %struct.option* %245, i32 0, i32 0
   %246 = load i8*, i8** %name309, align 8
-  %call310 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %235, i8* getelementptr inbounds ([45 x i8], [45 x i8]* @.str.3.310, i64 0, i64 0), i8* %237, i32 %conv308, i8* %246) #18
+  %call310 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %235, i8* getelementptr inbounds ([45 x i8], [45 x i8]* @.str.3.314, i64 0, i64 0), i8* %237, i32 %conv308, i8* %246) #19
   br label %if.end312
 
 if.end312:                                        ; preds = %if.then297, %if.else301, %if.else287
   %247 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar313 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %247, i32 0, i32 5
   %248 = load i8*, i8** %__nextchar313, align 8
-  %call314 = call i64 @strlen(i8* %248) #20
+  %call314 = call i64 @strlen(i8* %248) #21
   %249 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar315 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %249, i32 0, i32 5
   %250 = load i8*, i8** %__nextchar315, align 8
@@ -23471,14 +25126,14 @@ if.then336:                                       ; preds = %if.else334
   %idxprom340 = sext i32 %sub339 to i64
   %arrayidx341 = getelementptr inbounds i8*, i8** %266, i64 %idxprom340
   %269 = load i8*, i8** %arrayidx341, align 8
-  %call342 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %263, i8* getelementptr inbounds ([38 x i8], [38 x i8]* @.str.4.311, i64 0, i64 0), i8* %265, i8* %269) #18
+  %call342 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %263, i8* getelementptr inbounds ([38 x i8], [38 x i8]* @.str.4.315, i64 0, i64 0), i8* %265, i8* %269) #19
   br label %if.end343
 
 if.end343:                                        ; preds = %if.then336, %if.else334
   %270 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar344 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %270, i32 0, i32 5
   %271 = load i8*, i8** %__nextchar344, align 8
-  %call345 = call i64 @strlen(i8* %271) #20
+  %call345 = call i64 @strlen(i8* %271) #21
   %272 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar346 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %272, i32 0, i32 5
   %273 = load i8*, i8** %__nextchar346, align 8
@@ -23504,7 +25159,7 @@ if.end356:                                        ; preds = %if.else320, %if.the
   %280 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar357 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %280, i32 0, i32 5
   %281 = load i8*, i8** %__nextchar357, align 8
-  %call358 = call i64 @strlen(i8* %281) #20
+  %call358 = call i64 @strlen(i8* %281) #21
   %282 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar359 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %282, i32 0, i32 5
   %283 = load i8*, i8** %__nextchar359, align 8
@@ -23568,7 +25223,7 @@ lor.lhs.false382:                                 ; preds = %lor.lhs.false374
   %301 = load i8*, i8** %__nextchar383, align 8
   %302 = load i8, i8* %301, align 1
   %conv384 = sext i8 %302 to i32
-  %call385 = call i8* @strchr(i8* %299, i32 %conv384) #20
+  %call385 = call i8* @strchr(i8* %299, i32 %conv384) #21
   %cmp386 = icmp eq i8* %call385, null
   br i1 %cmp386, label %if.then388, label %if.end418
 
@@ -23599,7 +25254,7 @@ if.then398:                                       ; preds = %if.then390
   %312 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar400 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %312, i32 0, i32 5
   %313 = load i8*, i8** %__nextchar400, align 8
-  %call401 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %309, i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.5.312, i64 0, i64 0), i8* %311, i8* %313) #18
+  %call401 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %309, i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.5.316, i64 0, i64 0), i8* %311, i8* %313) #19
   br label %if.end412
 
 if.else402:                                       ; preds = %if.then390
@@ -23616,13 +25271,13 @@ if.else402:                                       ; preds = %if.then390
   %319 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar409 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %319, i32 0, i32 5
   %320 = load i8*, i8** %__nextchar409, align 8
-  %call410 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %309, i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.6.313, i64 0, i64 0), i8* %311, i32 %conv408, i8* %320) #18
+  %call410 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %309, i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str.6.317, i64 0, i64 0), i8* %311, i32 %conv408, i8* %320) #19
   br label %if.end412
 
 if.end412:                                        ; preds = %if.then398, %if.else402, %if.then388
   %321 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar413 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %321, i32 0, i32 5
-  store i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.7.314, i64 0, i64 0), i8** %__nextchar413, align 8
+  store i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.7.318, i64 0, i64 0), i8** %__nextchar413, align 8
   %322 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %optind414 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %322, i32 0, i32 0
   %323 = load i32, i32* %optind414, align 8
@@ -23645,7 +25300,7 @@ if.end418:                                        ; preds = %lor.lhs.false382, %
   %328 = load i8*, i8** %optstring.addr, align 8
   %329 = load i8, i8* %c, align 1
   %conv421 = sext i8 %329 to i32
-  %call422 = call i8* @strchr(i8* %328, i32 %conv421) #20
+  %call422 = call i8* @strchr(i8* %328, i32 %conv421) #21
   store i8* %call422, i8** %temp, align 8
   %330 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar423 = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %330, i32 0, i32 5
@@ -23693,11 +25348,11 @@ if.then439:                                       ; preds = %if.then437
   br i1 %tobool440, label %if.then441, label %if.else445
 
 if.then441:                                       ; preds = %if.then439
-  %call444 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %340, i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str.8.315, i64 0, i64 0), i8* %342, i32 %conv443) #18
+  %call444 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %340, i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str.8.319, i64 0, i64 0), i8* %342, i32 %conv443) #19
   br label %if.end450
 
 if.else445:                                       ; preds = %if.then439
-  %call448 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %340, i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str.9.316, i64 0, i64 0), i8* %342, i32 %conv443) #18
+  %call448 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %340, i8* getelementptr inbounds ([26 x i8], [26 x i8]* @.str.9.320, i64 0, i64 0), i8* %342, i32 %conv443) #19
   br label %if.end450
 
 if.end450:                                        ; preds = %if.then441, %if.else445, %if.then437
@@ -23794,7 +25449,7 @@ if.then493:                                       ; preds = %if.then491
   %368 = load i8*, i8** %arrayidx494, align 8
   %369 = load i8, i8* %c, align 1
   %conv495 = sext i8 %369 to i32
-  %call496 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %366, i8* getelementptr inbounds ([39 x i8], [39 x i8]* @.str.10.317, i64 0, i64 0), i8* %368, i32 %conv495) #18
+  %call496 = call i32 (%struct.__STDIO_FILE_STRUCT.568*, i8*, ...) @fprintf(%struct.__STDIO_FILE_STRUCT.568* %366, i8* getelementptr inbounds ([39 x i8], [39 x i8]* @.str.10.321, i64 0, i64 0), i8* %368, i32 %conv495) #19
   br label %if.end497
 
 if.end497:                                        ; preds = %if.then493, %if.then491
@@ -23873,7 +25528,7 @@ entry:
   %4 = load %struct._getopt_data*, %struct._getopt_data** %d.addr, align 8
   %__nextchar = getelementptr inbounds %struct._getopt_data, %struct._getopt_data* %4, i32 0, i32 5
   store i8* null, i8** %__nextchar, align 8
-  %call = call i8* @getenv(i8* getelementptr inbounds ([16 x i8], [16 x i8]* @.str.11.318, i64 0, i64 0)) #19
+  %call = call i8* @getenv(i8* getelementptr inbounds ([16 x i8], [16 x i8]* @.str.11.322, i64 0, i64 0)) #20
   %tobool = icmp ne i8* %call, null
   %lnot = xor i1 %tobool, true
   %lnot1 = xor i1 %lnot, true
@@ -24143,7 +25798,7 @@ entry:
   %0 = load i32, i32* %argc.addr, align 4
   %1 = load i8**, i8*** %argv.addr, align 8
   %2 = load i8*, i8** %optstring.addr, align 8
-  %call = call i32 @_getopt_internal(i32 %0, i8** %1, i8* %2, %struct.option* null, i32* null, i32 0) #18
+  %call = call i32 @_getopt_internal(i32 %0, i8** %1, i8* %2, %struct.option* null, i32* null, i32 0) #19
   ret i32 %call
 }
 
@@ -24165,7 +25820,7 @@ entry:
   %2 = load i8*, i8** %options.addr, align 8
   %3 = load %struct.option*, %struct.option** %long_options.addr, align 8
   %4 = load i32*, i32** %opt_index.addr, align 8
-  %call = call i32 @_getopt_internal(i32 %0, i8** %1, i8* %2, %struct.option* %3, i32* %4, i32 0) #18
+  %call = call i32 @_getopt_internal(i32 %0, i8** %1, i8* %2, %struct.option* %3, i32* %4, i32 0) #19
   ret i32 %call
 }
 
@@ -24187,7 +25842,7 @@ entry:
   %2 = load i8*, i8** %options.addr, align 8
   %3 = load %struct.option*, %struct.option** %long_options.addr, align 8
   %4 = load i32*, i32** %opt_index.addr, align 8
-  %call = call i32 @_getopt_internal(i32 %0, i8** %1, i8* %2, %struct.option* %3, i32* %4, i32 1) #18
+  %call = call i32 @_getopt_internal(i32 %0, i8** %1, i8* %2, %struct.option* %3, i32* %4, i32 1) #19
   ret i32 %call
 }
 
@@ -24234,8 +25889,8 @@ if.end3:                                          ; preds = %if.end
   %4 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
   %cur_locale = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %4, i32 0, i32 6
   %arraydecay5 = getelementptr inbounds [14 x i8], [14 x i8]* %cur_locale, i64 0, i64 0
-  %cond = select i1 %tobool4, i8* %arraydecay5, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.323, i64 0, i64 0)
-  %call = call i8* @strcpy(i8* %arraydecay, i8* %cond) #19
+  %cond = select i1 %tobool4, i8* %arraydecay5, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @.str.327, i64 0, i64 0)
+  %call = call i8* @strcpy(i8* %arraydecay, i8* %cond) #20
   %5 = load i8*, i8** %locale.addr, align 8
   %6 = load i8, i8* %5, align 1
   %tobool6 = icmp ne i8 %6, 0
@@ -24284,7 +25939,7 @@ do.body12:                                        ; preds = %land.rhs, %lor.rhs,
 
 land.rhs:                                         ; preds = %do.body12
   %16 = load i8*, i8** %p, align 8
-  %call17 = call i8* @getenv(i8* %16) #19
+  %call17 = call i8* @getenv(i8* %16) #20
   store i8* %call17, i8** %p, align 8
   %tobool18 = icmp ne i8* %call17, null
   br i1 %tobool18, label %lor.rhs, label %do.body12
@@ -24300,7 +25955,7 @@ do.end:                                           ; preds = %do.body12, %lor.rhs
   %19 = load i32, i32* %i, align 4
   %20 = load i8*, i8** %p, align 8
   %arraydecay20 = getelementptr inbounds [14 x i8], [14 x i8]* %new_selector, i64 0, i64 0
-  %call21 = call i32 @find_locale(i32 %19, i8* %20, i8* %arraydecay20) #18
+  %call21 = call i32 @find_locale(i32 %19, i8* %20, i8* %arraydecay20) #19
   %tobool22 = icmp ne i32 %call21, 0
   br i1 %tobool22, label %if.end25, label %INVALID
 
@@ -24319,7 +25974,7 @@ if.else:                                          ; preds = %if.end3
   %24 = load i32, i32* %category_mask.addr, align 4
   %25 = load i8*, i8** %locale.addr, align 8
   %arraydecay31 = getelementptr inbounds [14 x i8], [14 x i8]* %new_selector, i64 0, i64 0
-  %call32 = call i8* @composite_locale(i32 %24, i8* %25, i8* %arraydecay31) #18
+  %call32 = call i8* @composite_locale(i32 %24, i8* %25, i8* %arraydecay31) #19
   %tobool33 = icmp ne i8* %call32, null
   br i1 %tobool33, label %if.end36, label %INVALID
 
@@ -24329,7 +25984,7 @@ if.end36:                                         ; preds = %if.else, %if.end25
   br i1 %tobool37, label %if.end44, label %if.then38
 
 if.then38:                                        ; preds = %if.end36
-  %call39 = call noalias i8* @calloc(i64 1, i64 3320) #19
+  %call39 = call noalias i8* @calloc(i64 1, i64 3320) #20
   %27 = bitcast i8* %call39 to %struct.__uclibc_locale_struct.201*
   store %struct.__uclibc_locale_struct.201* %27, %struct.__uclibc_locale_struct.201** %base.addr, align 8
   %cmp40 = icmp eq %struct.__uclibc_locale_struct.201* %27, null
@@ -24341,13 +25996,13 @@ if.then42:                                        ; preds = %if.then38
   br label %return
 
 if.end43:                                         ; preds = %if.then38
-  call void @_locale_init_l(%struct.__uclibc_locale_struct.201* %28) #18
+  call void @_locale_init_l(%struct.__uclibc_locale_struct.201* %28) #19
   br label %if.end44
 
 if.end44:                                         ; preds = %if.end43, %if.end36
   %arraydecay45 = getelementptr inbounds [14 x i8], [14 x i8]* %new_selector, i64 0, i64 0
   %29 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
-  %call46 = call i32 @_locale_set_l(i8* %arraydecay45, %struct.__uclibc_locale_struct.201* %29) #18
+  %call46 = call i32 @_locale_set_l(i8* %arraydecay45, %struct.__uclibc_locale_struct.201* %29) #19
   %30 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** %base.addr, align 8
   store %struct.__uclibc_locale_struct.201* %30, %struct.__uclibc_locale_struct.201** %retval, align 8
   br label %return
@@ -24375,7 +26030,7 @@ entry:
   store i8* %p, i8** %p.addr, align 8
   store i8* %new_locale, i8** %new_locale.addr, align 8
   %0 = load i8*, i8** %p.addr, align 8
-  %call = call i8* @strchr(i8* %0, i32 64) #20
+  %call = call i8* @strchr(i8* %0, i32 64) #21
   store i8* %call, i8** %q, align 8
   %cmp = icmp ne i8* %call, null
   br i1 %cmp, label %if.then, label %if.end27
@@ -24414,7 +26069,7 @@ do.body:                                          ; preds = %if.end8, %if.end
   %add.ptr = getelementptr inbounds i8, i8* %6, i64 2
   %7 = load i8*, i8** %q, align 8
   %add.ptr5 = getelementptr inbounds i8, i8* %7, i64 1
-  %call6 = call i32 @strcmp(i8* %add.ptr, i8* %add.ptr5) #20
+  %call6 = call i32 @strcmp(i8* %add.ptr, i8* %add.ptr5) #21
   %tobool = icmp ne i32 %call6, 0
   br i1 %tobool, label %if.end8, label %do.end
 
@@ -24450,7 +26105,7 @@ if.end14:                                         ; preds = %do.end
   %sub.ptr.lhs.cast16 = ptrtoint i8* %16 to i64
   %sub.ptr.rhs.cast17 = ptrtoint i8* %17 to i64
   %sub.ptr.sub18 = sub i64 %sub.ptr.lhs.cast16, %sub.ptr.rhs.cast17
-  %call19 = call i8* @memcpy(i8* %arraydecay15, i8* %15, i64 %sub.ptr.sub18) #19
+  %call19 = call i8* @memcpy(i8* %arraydecay15, i8* %15, i64 %sub.ptr.sub18) #20
   %18 = load i8*, i8** %q, align 8
   %19 = load i8*, i8** %p.addr, align 8
   %sub.ptr.lhs.cast20 = ptrtoint i8* %18 to i64
@@ -24485,13 +26140,13 @@ land.lhs.true:                                    ; preds = %if.end27
 
 lor.lhs.false33:                                  ; preds = %land.lhs.true, %if.end27
   %26 = load i8*, i8** %p.addr, align 8
-  %call34 = call i32 @strcmp(i8* %26, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @posix, i64 0, i64 0)) #20
+  %call34 = call i32 @strcmp(i8* %26, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @posix, i64 0, i64 0)) #21
   %tobool35 = icmp ne i32 %call34, 0
   br i1 %tobool35, label %if.end37, label %FIND_LOCALE
 
 if.end37:                                         ; preds = %lor.lhs.false33
   %27 = load i8*, i8** %p.addr, align 8
-  %call38 = call i64 @strlen(i8* %27) #20
+  %call38 = call i64 @strlen(i8* %27) #21
   %cmp39 = icmp ugt i64 %call38, 5
   br i1 %cmp39, label %land.lhs.true41, label %FIND_LANG_CULT
 
@@ -24507,7 +26162,7 @@ if.then46:                                        ; preds = %land.lhs.true41
   store i8 2, i8* %codeset, align 1
   %30 = load i8*, i8** %p.addr, align 8
   %add.ptr47 = getelementptr inbounds i8, i8* %30, i64 6
-  %call48 = call i32 @strcmp(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @utf8.326, i64 0, i64 0), i8* %add.ptr47) #20
+  %call48 = call i32 @strcmp(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @utf8.330, i64 0, i64 0), i8* %add.ptr47) #21
   %cmp49 = icmp ne i32 %call48, 0
   br i1 %cmp49, label %if.then51, label %FIND_LANG_CULT
 
@@ -24532,7 +26187,7 @@ do.body53:                                        ; preds = %do.cond64, %if.then
   %add.ptr58 = getelementptr inbounds i8, i8* %arraydecay55, i64 %idx.ext57
   %36 = load i8*, i8** %p.addr, align 8
   %add.ptr59 = getelementptr inbounds i8, i8* %36, i64 6
-  %call60 = call i32 @strcmp(i8* %add.ptr58, i8* %add.ptr59) #20
+  %call60 = call i32 @strcmp(i8* %add.ptr58, i8* %add.ptr59) #21
   %tobool61 = icmp ne i32 %call60, 0
   br i1 %tobool61, label %do.cond64, label %FIND_LANG_CULT
 
@@ -24561,7 +26216,7 @@ do.body70:                                        ; preds = %if.end75, %FIND_LAN
   store i8 %inc71, i8* %lang_cult, align 1
   %41 = load i8*, i8** %s, align 8
   %42 = load i8*, i8** %p.addr, align 8
-  %call72 = call i32 @strncmp(i8* %41, i8* %42, i64 5) #20
+  %call72 = call i32 @strncmp(i8* %41, i8* %42, i64 5) #21
   %tobool73 = icmp ne i32 %call72, 0
   br i1 %tobool73, label %if.end75, label %FIND_LOCALE
 
@@ -24702,7 +26357,7 @@ entry:
   store i8* %locale, i8** %locale.addr, align 8
   store i8* %new_locale, i8** %new_locale.addr, align 8
   %0 = load i8*, i8** %locale.addr, align 8
-  %call = call i8* @strchr(i8* %0, i32 61) #20
+  %call = call i8* @strchr(i8* %0, i32 61) #21
   %tobool = icmp ne i8* %call, null
   br i1 %tobool, label %if.end4, label %if.then
 
@@ -24710,7 +26365,7 @@ if.then:                                          ; preds = %entry
   %1 = load i32, i32* %category_mask.addr, align 4
   %2 = load i8*, i8** %locale.addr, align 8
   %3 = load i8*, i8** %new_locale.addr, align 8
-  %call1 = call i32 @find_locale(i32 %1, i8* %2, i8* %3) #18
+  %call1 = call i32 @find_locale(i32 %1, i8* %2, i8* %3) #19
   %tobool2 = icmp ne i32 %call1, 0
   br i1 %tobool2, label %if.end, label %if.then3
 
@@ -24725,7 +26380,7 @@ if.end:                                           ; preds = %if.then
 
 if.end4:                                          ; preds = %entry
   %5 = load i8*, i8** %locale.addr, align 8
-  %call5 = call i64 @strlen(i8* %5) #20
+  %call5 = call i64 @strlen(i8* %5) #21
   %cmp = icmp uge i64 %call5, 256
   br i1 %cmp, label %if.then6, label %if.end7
 
@@ -24736,10 +26391,10 @@ if.then6:                                         ; preds = %if.end4
 if.end7:                                          ; preds = %if.end4
   %arraydecay = getelementptr inbounds [256 x i8], [256 x i8]* %buf, i64 0, i64 0
   %6 = load i8*, i8** %locale.addr, align 8
-  %call8 = call i8* @stpcpy(i8* %arraydecay, i8* %6) #19
+  %call8 = call i8* @stpcpy(i8* %arraydecay, i8* %6) #20
   store i32 0, i32* %component_mask, align 4
   %arraydecay9 = getelementptr inbounds [256 x i8], [256 x i8]* %buf, i64 0, i64 0
-  %call10 = call i8* @strtok_r(i8* %arraydecay9, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3.324, i64 0, i64 0), i8** %e) #19
+  %call10 = call i8* @strtok_r(i8* %arraydecay9, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3.328, i64 0, i64 0), i8** %e) #20
   store i8* %call10, i8** %t, align 8
   br label %do.body
 
@@ -24761,7 +26416,7 @@ while.cond:                                       ; preds = %while.body, %do.bod
   %idx.ext = sext i32 %conv to i64
   %add.ptr = getelementptr inbounds i8, i8* %arraydecay11, i64 %idx.ext
   %11 = load i8*, i8** %t, align 8
-  %call13 = call i32 @strcmp(i8* %add.ptr, i8* %11) #20
+  %call13 = call i32 @strcmp(i8* %add.ptr, i8* %11) #21
   %tobool14 = icmp ne i32 %call13, 0
   br i1 %tobool14, label %while.body, label %while.end
 
@@ -24777,7 +26432,7 @@ if.then17:                                        ; preds = %while.body
   br label %return
 
 while.end:                                        ; preds = %while.cond
-  %call19 = call i8* @strtok_r(i8* null, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.4.325, i64 0, i64 0), i8** %e) #19
+  %call19 = call i8* @strtok_r(i8* null, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.4.329, i64 0, i64 0), i8** %e) #20
   store i8* %call19, i8** %t, align 8
   %13 = load i32, i32* %c, align 4
   %shl = shl i32 1, %13
@@ -24812,7 +26467,7 @@ lor.lhs.false:                                    ; preds = %land.lhs.true
   %21 = load i32, i32* %c, align 4
   %22 = load i8*, i8** %t, align 8
   %23 = load i8*, i8** %new_locale.addr, align 8
-  %call26 = call i32 @find_locale(i32 %21, i8* %22, i8* %23) #18
+  %call26 = call i32 @find_locale(i32 %21, i8* %22, i8* %23) #19
   %tobool27 = icmp ne i32 %call26, 0
   br i1 %tobool27, label %do.cond, label %if.then28
 
@@ -24821,7 +26476,7 @@ if.then28:                                        ; preds = %lor.lhs.false, %lan
   br label %return
 
 do.cond:                                          ; preds = %if.end22, %lor.lhs.false
-  %call30 = call i8* @strtok_r(i8* null, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3.324, i64 0, i64 0), i8** %e) #19
+  %call30 = call i8* @strtok_r(i8* null, i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.3.328, i64 0, i64 0), i8** %e) #20
   store i8* %call30, i8** %t, align 8
   %cmp31 = icmp ne i8* %call30, null
   br i1 %cmp31, label %do.body, label %do.end
@@ -24946,7 +26601,7 @@ if.then2:                                         ; preds = %entry
   %5 = load i8**, i8*** %src.addr, align 8
   %6 = load i64, i64* %NMC.addr, align 8
   %7 = load %struct.__mbstate_t.512*, %struct.__mbstate_t.512** %ps.addr, align 8
-  %call = call i64 @_wchar_utf8sntowcs(i32* %3, i64 %4, i8** %5, i64 %6, %struct.__mbstate_t.512* %7, i32 1) #18
+  %call = call i64 @_wchar_utf8sntowcs(i32* %3, i64 %4, i8** %5, i64 %6, %struct.__mbstate_t.512* %7, i32 1) #19
   store i64 %call, i64* %r, align 8
   %cmp3 = icmp ne i64 %call, -2
   %8 = load i64, i64* %r, align 8
@@ -25169,7 +26824,7 @@ entry:
   %0 = load i32, i32* %wc.addr, align 4
   %1 = load i32, i32* %desc.addr, align 4
   %2 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** @__curlocale_var, align 8
-  %call = call i32 @iswctype_l(i32 %0, i32 %1, %struct.__uclibc_locale_struct.201* %2) #19
+  %call = call i32 @iswctype_l(i32 %0, i32 %1, %struct.__uclibc_locale_struct.201* %2) #20
   ret i32 %call
 }
 
@@ -25228,7 +26883,7 @@ do.body:                                          ; preds = %if.end62, %DO_EINVA
 if.then13:                                        ; preds = %do.body
   %9 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %10 = bitcast %struct.__STDIO_FILE_STRUCT.568* %9 to i8*
-  call void @free(i8* %10) #19
+  call void @free(i8* %10) #20
   br label %if.end14
 
 if.end14:                                         ; preds = %if.then13, %do.body, %DO_EINVAL
@@ -25275,7 +26930,7 @@ if.end29:                                         ; preds = %if.then27, %if.end2
   br i1 %tobool30, label %if.end37, label %if.then31
 
 if.then31:                                        ; preds = %if.end29
-  %call = call noalias i8* @malloc(i64 88) #19
+  %call = call noalias i8* @malloc(i64 88) #20
   %20 = bitcast i8* %call to %struct.__STDIO_FILE_STRUCT.568*
   store %struct.__STDIO_FILE_STRUCT.568* %20, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %cmp32 = icmp eq %struct.__STDIO_FILE_STRUCT.568* %20, null
@@ -25329,7 +26984,7 @@ lor.lhs.false:                                    ; preds = %if.then40
 
 land.lhs.true:                                    ; preds = %lor.lhs.false
   %32 = load i32, i32* %filedes.addr, align 4
-  %call52 = call i32 (i32, i32, ...) @fcntl(i32 %32, i32 4, i32 1024) #18
+  %call52 = call i32 (i32, i32, ...) @fcntl(i32 %32, i32 4, i32 1024) #19
   %tobool53 = icmp ne i32 %call52, 0
   br i1 %tobool53, label %DO_EINVAL, label %if.end55
 
@@ -25355,7 +27010,7 @@ if.end62:                                         ; preds = %if.then61, %if.else
   %36 = load i64, i64* %fname_or_mode.addr, align 8
   %37 = inttoptr i64 %36 to i8*
   %38 = load i32, i32* %open_mode, align 4
-  %call63 = call i32 (i8*, i32, ...) @open(i8* %37, i32 %38, i32 438) #18
+  %call63 = call i32 (i8*, i32, ...) @open(i8* %37, i32 %38, i32 438) #19
   %39 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %__filedes64 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %39, i32 0, i32 2
   store i32 %call63, i32* %__filedes64, align 4
@@ -25390,7 +27045,7 @@ if.end69:                                         ; preds = %if.end62, %if.end55
   %47 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %__filedes82 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %47, i32 0, i32 2
   %48 = load i32, i32* %__filedes82, align 4
-  %call83 = call i32 @isatty(i32 %48) #19
+  %call83 = call i32 @isatty(i32 %48) #20
   %mul84 = mul i32 %call83, 256
   %49 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %__modeflags85 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %49, i32 0, i32 0
@@ -25408,7 +27063,7 @@ if.end69:                                         ; preds = %if.end62, %if.end55
   br i1 %tobool90, label %if.end106, label %if.then91
 
 if.then91:                                        ; preds = %if.end69
-  %call92 = call noalias i8* @malloc(i64 4096) #19
+  %call92 = call noalias i8* @malloc(i64 4096) #20
   %54 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %__bufstart93 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %54, i32 0, i32 3
   store i8* %call92, i8** %__bufstart93, align 8
@@ -25537,7 +27192,7 @@ if.end:                                           ; preds = %if.then5, %if.then2
   %12 = load i8*, i8** %__bufpos6, align 8
   %13 = load i8*, i8** %buffer.addr, align 8
   %14 = load i64, i64* %pending, align 8
-  %call = call i8* @memcpy(i8* %12, i8* %13, i64 %14) #19
+  %call = call i8* @memcpy(i8* %12, i8* %13, i64 %14) #20
   %15 = load i64, i64* %pending, align 8
   %16 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %__bufpos7 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %16, i32 0, i32 5
@@ -25568,7 +27223,7 @@ if.end8:                                          ; preds = %if.then
 if.then16:                                        ; preds = %if.end8
   %26 = load i8*, i8** %buffer.addr, align 8
   %27 = load i64, i64* %bytes.addr, align 8
-  %call18 = call i8* @memcpy(i8* %25, i8* %26, i64 %27) #19
+  %call18 = call i8* @memcpy(i8* %25, i8* %26, i64 %27) #20
   %28 = load i64, i64* %bytes.addr, align 8
   %29 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %__bufpos19 = getelementptr inbounds %struct.__STDIO_FILE_STRUCT.568, %struct.__STDIO_FILE_STRUCT.568* %29, i32 0, i32 5
@@ -25586,13 +27241,13 @@ if.then16:                                        ; preds = %if.end8
 land.lhs.true:                                    ; preds = %if.then16
   %33 = load i8*, i8** %buffer.addr, align 8
   %34 = load i64, i64* %bytes.addr, align 8
-  %call25 = call i8* @memrchr(i8* %33, i32 10, i64 %34) #20
+  %call25 = call i8* @memrchr(i8* %33, i32 10, i64 %34) #21
   %tobool26 = icmp ne i8* %call25, null
   br i1 %tobool26, label %if.then27, label %if.end50
 
 if.then27:                                        ; preds = %land.lhs.true
   %35 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call28 = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %35) #18
+  %call28 = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %35) #19
   store i64 %call28, i64* %pending, align 8
   %cmp29 = icmp ugt i64 %call28, 0
   br i1 %cmp29, label %if.then31, label %if.end50
@@ -25617,7 +27272,7 @@ if.end35:                                         ; preds = %if.then34, %if.then
   store i8* %add.ptr36, i8** %buffer.addr, align 8
   %42 = load i8*, i8** %buffer.addr, align 8
   %43 = load i64, i64* %pending, align 8
-  %call37 = call i8* @memchr(i8* %42, i32 10, i64 %43) #20
+  %call37 = call i8* @memchr(i8* %42, i32 10, i64 %43) #21
   store i8* %call37, i8** %p, align 8
   %cmp38 = icmp ne i8* %call37, null
   br i1 %cmp38, label %if.then40, label %if.end50
@@ -25661,7 +27316,7 @@ if.end51:                                         ; preds = %if.end8
 
 if.then57:                                        ; preds = %if.end51
   %55 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call58 = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %55) #18
+  %call58 = call i64 @__stdio_wcommit(%struct.__STDIO_FILE_STRUCT.568* %55) #19
   %tobool59 = icmp ne i64 %call58, 0
   br i1 %tobool59, label %if.then60, label %if.end63
 
@@ -25673,7 +27328,7 @@ if.end63:                                         ; preds = %if.end51, %if.then5
   %56 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %57 = load i8*, i8** %buffer.addr, align 8
   %58 = load i64, i64* %bytes.addr, align 8
-  %call64 = call i64 @__stdio_WRITE(%struct.__STDIO_FILE_STRUCT.568* %56, i8* %57, i64 %58) #18
+  %call64 = call i64 @__stdio_WRITE(%struct.__STDIO_FILE_STRUCT.568* %56, i8* %57, i64 %58) #19
   store i64 %call64, i64* %retval, align 8
   br label %return
 
@@ -25793,7 +27448,7 @@ land.lhs.true:                                    ; preds = %lor.lhs.false, %if.
   %tobool38 = icmp ne i32 %and37, 0
   %25 = zext i1 %tobool38 to i64
   %cond = select i1 %tobool38, i32 2, i32 1
-  %call = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.636*, i64, i32)* @fseek to i32 (%struct.__STDIO_FILE_STRUCT.568*, i64, i32)*)(%struct.__STDIO_FILE_STRUCT.568* %22, i64 0, i32 %cond) #18
+  %call = call i32 bitcast (i32 (%struct.__STDIO_FILE_STRUCT.636*, i64, i32)* @fseek to i32 (%struct.__STDIO_FILE_STRUCT.568*, i64, i32)*)(%struct.__STDIO_FILE_STRUCT.568* %22, i64 0, i32 %cond) #19
   %tobool39 = icmp ne i32 %call, 0
   br i1 %tobool39, label %ERROR, label %if.end42
 
@@ -25889,7 +27544,7 @@ if.else:                                          ; preds = %entry
 
 lor.lhs.false:                                    ; preds = %if.else
   %4 = load %struct.__STDIO_FILE_STRUCT.636*, %struct.__STDIO_FILE_STRUCT.636** %stream.addr, align 8
-  %call = call i64 bitcast (i64 (%struct.__STDIO_FILE_STRUCT.568*)* @__stdio_wcommit to i64 (%struct.__STDIO_FILE_STRUCT.636*)*)(%struct.__STDIO_FILE_STRUCT.636* %4) #18
+  %call = call i64 bitcast (i64 (%struct.__STDIO_FILE_STRUCT.568*)* @__stdio_wcommit to i64 (%struct.__STDIO_FILE_STRUCT.636*)*)(%struct.__STDIO_FILE_STRUCT.636* %4) #19
   %tobool2 = icmp ne i64 %call, 0
   br i1 %tobool2, label %if.end20, label %land.lhs.true
 
@@ -25900,14 +27555,14 @@ land.lhs.true:                                    ; preds = %lor.lhs.false, %if.
 
 lor.lhs.false5:                                   ; preds = %land.lhs.true
   %6 = load %struct.__STDIO_FILE_STRUCT.636*, %struct.__STDIO_FILE_STRUCT.636** %stream.addr, align 8
-  %call6 = call i32 @__stdio_adjust_position(%struct.__STDIO_FILE_STRUCT.636* %6, i64* %pos) #18
+  %call6 = call i32 @__stdio_adjust_position(%struct.__STDIO_FILE_STRUCT.636* %6, i64* %pos) #19
   %cmp7 = icmp sge i32 %call6, 0
   br i1 %cmp7, label %land.lhs.true9, label %if.end20
 
 land.lhs.true9:                                   ; preds = %lor.lhs.false5, %land.lhs.true
   %7 = load %struct.__STDIO_FILE_STRUCT.636*, %struct.__STDIO_FILE_STRUCT.636** %stream.addr, align 8
   %8 = load i32, i32* %whence.addr, align 4
-  %call10 = call i32 @__stdio_seek(%struct.__STDIO_FILE_STRUCT.636* %7, i64* %pos, i32 %8) #18
+  %call10 = call i32 @__stdio_seek(%struct.__STDIO_FILE_STRUCT.636* %7, i64* %pos, i32 %8) #19
   %cmp11 = icmp sge i32 %call10, 0
   br i1 %cmp11, label %if.then13, label %if.end20
 
@@ -25982,7 +27637,7 @@ entry:
 
 land.lhs.true:                                    ; preds = %entry
   %3 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call = call i32 @__stdio_trans2w_o(%struct.__STDIO_FILE_STRUCT.568* %3, i32 128) #18
+  %call = call i32 @__stdio_trans2w_o(%struct.__STDIO_FILE_STRUCT.568* %3, i32 128) #19
   %tobool = icmp ne i32 %call, 0
   br i1 %tobool, label %if.then, label %if.else
 
@@ -25992,14 +27647,14 @@ if.then:                                          ; preds = %land.lhs.true
 
 if.else:                                          ; preds = %land.lhs.true, %entry
   %4 = load i8*, i8** %format.addr, align 8
-  %call2 = call i32 @_ppfs_init(%struct.ppfs_t.722* %ppfs, i8* %4) #18
+  %call2 = call i32 @_ppfs_init(%struct.ppfs_t.722* %ppfs, i8* %4) #19
   %cmp3 = icmp slt i32 %call2, 0
   br i1 %cmp3, label %if.then5, label %if.else13
 
 if.then5:                                         ; preds = %if.else
   %fmtpos = getelementptr inbounds %struct.ppfs_t.722, %struct.ppfs_t.722* %ppfs, i32 0, i32 0
   %5 = load i8*, i8** %fmtpos, align 8
-  %call6 = call i64 @strlen(i8* %5) #20
+  %call6 = call i64 @strlen(i8* %5) #21
   %cmp7 = icmp ugt i64 %call6, 0
   br i1 %cmp7, label %cond.true, label %cond.end
 
@@ -26008,9 +27663,9 @@ cond.true:                                        ; preds = %if.then5
   %6 = load i8*, i8** %fmtpos9, align 8
   %fmtpos10 = getelementptr inbounds %struct.ppfs_t.722, %struct.ppfs_t.722* %ppfs, i32 0, i32 0
   %7 = load i8*, i8** %fmtpos10, align 8
-  %call11 = call i64 @strlen(i8* %7) #20
+  %call11 = call i64 @strlen(i8* %7) #21
   %8 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call12 = call i64 @__stdio_fwrite(i8* %6, i64 %call11, %struct.__STDIO_FILE_STRUCT.568* %8) #18
+  %call12 = call i64 @__stdio_fwrite(i8* %6, i64 %call11, %struct.__STDIO_FILE_STRUCT.568* %8) #19
   br label %cond.end
 
 cond.end:                                         ; preds = %if.then5, %cond.true
@@ -26020,7 +27675,7 @@ cond.end:                                         ; preds = %if.then5, %cond.tru
 
 if.else13:                                        ; preds = %if.else
   %9 = load %struct.__va_list_tag.0*, %struct.__va_list_tag.0** %arg.addr, align 8
-  call void @_ppfs_prepargs(%struct.ppfs_t.722* %ppfs, %struct.__va_list_tag.0* %9) #18
+  call void @_ppfs_prepargs(%struct.ppfs_t.722* %ppfs, %struct.__va_list_tag.0* %9) #19
   br label %do.body
 
 do.body:                                          ; preds = %do.cond, %if.else13
@@ -26075,7 +27730,7 @@ cond.true26:                                      ; preds = %if.then20
   %sub.ptr.rhs.cast28 = ptrtoint i8* %21 to i64
   %sub.ptr.sub29 = sub i64 %sub.ptr.lhs.cast27, %sub.ptr.rhs.cast28
   %22 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call30 = call i64 @__stdio_fwrite(i8* %19, i64 %sub.ptr.sub29, %struct.__STDIO_FILE_STRUCT.568* %22) #18
+  %call30 = call i64 @__stdio_fwrite(i8* %19, i64 %sub.ptr.sub29, %struct.__STDIO_FILE_STRUCT.568* %22) #19
   br label %cond.end32
 
 cond.end32:                                       ; preds = %if.then20, %cond.true26
@@ -26123,7 +27778,7 @@ if.then49:                                        ; preds = %if.end45
   %fmtpos51 = getelementptr inbounds %struct.ppfs_t.722, %struct.ppfs_t.722* %ppfs, i32 0, i32 0
   store i8* %incdec.ptr50, i8** %fmtpos51, align 8
   %32 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call52 = call i32 @_do_one_spec(%struct.__STDIO_FILE_STRUCT.568* %32, %struct.ppfs_t.722* %ppfs, i32* %count) #18
+  %call52 = call i32 @_do_one_spec(%struct.__STDIO_FILE_STRUCT.568* %32, %struct.ppfs_t.722* %ppfs, i32* %count) #19
   store i32 %call52, i32* %r, align 4
   %cmp53 = icmp slt i32 %call52, 0
   br i1 %cmp53, label %if.then55, label %if.end56
@@ -26194,9 +27849,9 @@ entry:
   store i32 11, i32* %prefix_num, align 4
   store i8 32, i8* %padchar, align 1
   %0 = load %struct.ppfs_t.722*, %struct.ppfs_t.722** %ppfs.addr, align 8
-  %call = call i32 @_ppfs_parsespec(%struct.ppfs_t.722* %0) #18
+  %call = call i32 @_ppfs_parsespec(%struct.ppfs_t.722* %0) #19
   %1 = load %struct.ppfs_t.722*, %struct.ppfs_t.722** %ppfs.addr, align 8
-  call void @_ppfs_setargs(%struct.ppfs_t.722* %1) #18
+  call void @_ppfs_setargs(%struct.ppfs_t.722* %1) #19
   %2 = load %struct.ppfs_t.722*, %struct.ppfs_t.722** %ppfs.addr, align 8
   %argtype1 = getelementptr inbounds %struct.ppfs_t.722, %struct.ppfs_t.722* %2, i32 0, i32 6
   %arraydecay = getelementptr inbounds [9 x i32], [9 x i32]* %argtype1, i64 0, i64 0
@@ -26279,7 +27934,7 @@ if.then15:                                        ; preds = %for.end
   %25 = load i32*, i32** %count.addr, align 8
   %26 = load i32, i32* %25, align 4
   %conv17 = sext i32 %26 to i64
-  call void @_store_inttype(i8* %22, i32 %and, i64 %conv17) #18
+  call void @_store_inttype(i8* %22, i32 %and, i64 %conv17) #19
   store i32 0, i32* %retval, align 4
   br label %return
 
@@ -26405,10 +28060,10 @@ cond.end:                                         ; preds = %if.end66, %cond.fal
   %arraydecay74 = getelementptr inbounds [1 x i8*], [1 x i8*]* %argptr, i64 0, i64 0
   %52 = load i8*, i8** %arraydecay74, align 8
   %53 = load i32, i32* %base, align 4
-  %call75 = call i64 @_load_inttype(i32 %cond, i8* %52, i32 %53) #18
+  %call75 = call i64 @_load_inttype(i32 %cond, i8* %52, i32 %53) #19
   %54 = load i32, i32* %base, align 4
   %55 = load i32, i32* %alphacase, align 4
-  %call76 = call i8* @_uintmaxtostr(i8* %add.ptr69, i64 %call75, i32 %54, i32 %55) #18
+  %call76 = call i8* @_uintmaxtostr(i8* %add.ptr69, i64 %call75, i32 %54, i32 %55) #19
   store i8* %call76, i8** %s, align 8
   %56 = load %struct.ppfs_t.722*, %struct.ppfs_t.722** %ppfs.addr, align 8
   %conv_num77 = getelementptr inbounds %struct.ppfs_t.722, %struct.ppfs_t.722* %56, i32 0, i32 4
@@ -26564,7 +28219,7 @@ if.end157:                                        ; preds = %if.then156, %if.the
   br i1 %cmp159, label %if.then161, label %if.else162
 
 if.then161:                                       ; preds = %if.end157
-  store i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.345, i64 0, i64 0), i8** %s, align 8
+  store i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.349, i64 0, i64 0), i8** %s, align 8
   store i64 5, i64* %slen, align 8
   store i32 0, i32* %numfill, align 4
   br label %if.end168
@@ -26607,7 +28262,7 @@ if.then183:                                       ; preds = %if.else179
   %98 = load double, double* %97, align 8
   %99 = load %struct.ppfs_t.722*, %struct.ppfs_t.722** %ppfs.addr, align 8
   %info194 = getelementptr inbounds %struct.ppfs_t.722, %struct.ppfs_t.722* %99, i32 0, i32 1
-  %call195 = call i64 @_fpmaxtostr(%struct.__STDIO_FILE_STRUCT.568* %95, double %98, %struct.printf_info.720* %info194, i64 (%struct.__STDIO_FILE_STRUCT.568*, i64, i64, i64)* @_fp_out_narrow) #18
+  %call195 = call i64 @_fpmaxtostr(%struct.__STDIO_FILE_STRUCT.568* %95, double %98, %struct.printf_info.720* %info194, i64 (%struct.__STDIO_FILE_STRUCT.568*, i64, i64, i64)* @_fp_out_narrow) #19
   store i64 %call195, i64* %nf, align 8
   %100 = load i64, i64* %nf, align 8
   %cmp196 = icmp slt i64 %100, 0
@@ -26672,7 +28327,7 @@ cond.true220:                                     ; preds = %if.end215
 
 cond.end225:                                      ; preds = %if.end215, %cond.true220
   %cond226 = phi i64 [ %conv223, %cond.true220 ], [ -1, %if.end215 ]
-  %call227 = call i64 @wcsrtombs(i8* %111, i32** %ws, i64 %cond226, %struct.__mbstate_t.512* %mbstate) #19
+  %call227 = call i64 @wcsrtombs(i8* %111, i32** %ws, i64 %cond226, %struct.__mbstate_t.512* %mbstate) #20
   store i64 %call227, i64* %slen, align 8
   %cmp228 = icmp eq i64 %call227, -1
   br i1 %cmp228, label %if.then230, label %if.end278
@@ -26689,7 +28344,7 @@ if.else232:                                       ; preds = %if.then207
   %117 = load i8*, i8** %arraydecay234, align 8
   %118 = bitcast i8* %117 to i32*
   %119 = load i32, i32* %118, align 4
-  %call235 = call i64 @wcrtomb(i8* %116, i32 %119, %struct.__mbstate_t.512* %mbstate) #19
+  %call235 = call i64 @wcrtomb(i8* %116, i32 %119, %struct.__mbstate_t.512* %mbstate) #20
   store i64 %call235, i64* %slen, align 8
   %120 = load i64, i64* %slen, align 8
   %cmp236 = icmp eq i64 %120, -1
@@ -26749,12 +28404,12 @@ cond.true258:                                     ; preds = %if.then253
 
 cond.end263:                                      ; preds = %if.then253, %cond.true258
   %cond264 = phi i64 [ %conv261, %cond.true258 ], [ -1, %if.then253 ]
-  %call265 = call i64 @strnlen(i8* %131, i64 %cond264) #20
+  %call265 = call i64 @strnlen(i8* %131, i64 %cond264) #21
   store i64 %call265, i64* %slen, align 8
   br label %if.end278
 
 NULL_STRING:                                      ; preds = %if.then250, %if.then211
-  store i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.1.346, i64 0, i64 0), i8** %s, align 8
+  store i8* getelementptr inbounds ([7 x i8], [7 x i8]* @.str.1.350, i64 0, i64 0), i8** %s, align 8
   store i64 6, i64* %slen, align 8
   br label %if.end278
 
@@ -26859,7 +28514,7 @@ if.then318:                                       ; preds = %if.end313
   %162 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %163 = load i32, i32* %numpad, align 4
   %conv319 = sext i32 %163 to i64
-  %call320 = call i64 @_charpad(%struct.__STDIO_FILE_STRUCT.568* %162, i32 32, i64 %conv319) #18
+  %call320 = call i64 @_charpad(%struct.__STDIO_FILE_STRUCT.568* %162, i32 32, i64 %conv319) #19
   %164 = load i32, i32* %numpad, align 4
   %conv321 = sext i32 %164 to i64
   %cmp322 = icmp ne i64 %call320, %conv321
@@ -26878,11 +28533,11 @@ if.end326:                                        ; preds = %if.end325, %if.end3
   %idx.ext327 = sext i32 %165 to i64
   %add.ptr328 = getelementptr inbounds i8, i8* getelementptr inbounds ([12 x i8], [12 x i8]* @_do_one_spec.prefix, i64 0, i64 0), i64 %idx.ext327
   %166 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call329 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct.__STDIO_FILE_STRUCT.568*)*)(i8* %add.ptr328, %struct.__STDIO_FILE_STRUCT.568* %166) #18
+  %call329 = call i32 bitcast (i32 (i8*, %struct.__STDIO_FILE_STRUCT.621*)* @fputs_unlocked to i32 (i8*, %struct.__STDIO_FILE_STRUCT.568*)*)(i8* %add.ptr328, %struct.__STDIO_FILE_STRUCT.568* %166) #19
   %167 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %168 = load i32, i32* %numfill, align 4
   %conv330 = sext i32 %168 to i64
-  %call331 = call i64 @_charpad(%struct.__STDIO_FILE_STRUCT.568* %167, i32 48, i64 %conv330) #18
+  %call331 = call i64 @_charpad(%struct.__STDIO_FILE_STRUCT.568* %167, i32 48, i64 %conv330) #19
   %169 = load i32, i32* %numfill, align 4
   %conv332 = sext i32 %169 to i64
   %cmp333 = icmp ne i64 %call331, %conv332
@@ -26906,7 +28561,7 @@ cond.true341:                                     ; preds = %if.then338
   %172 = load i8*, i8** %s, align 8
   %173 = load i64, i64* %slen, align 8
   %174 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call342 = call i64 @__stdio_fwrite(i8* %172, i64 %173, %struct.__STDIO_FILE_STRUCT.568* %174) #18
+  %call342 = call i64 @__stdio_fwrite(i8* %172, i64 %173, %struct.__STDIO_FILE_STRUCT.568* %174) #19
   br label %cond.end344
 
 cond.end344:                                      ; preds = %if.then338, %cond.true341
@@ -26937,7 +28592,7 @@ while.body:                                       ; preds = %while.cond
   store i64 %cond359, i64* %t351, align 8
   %arraydecay360 = getelementptr inbounds [128 x i8], [128 x i8]* %buf, i64 0, i64 0
   %179 = load i64, i64* %t351, align 8
-  %call361 = call i64 @wcsrtombs(i8* %arraydecay360, i32** %ws, i64 %179, %struct.__mbstate_t.512* %mbstate) #19
+  %call361 = call i64 @wcsrtombs(i8* %arraydecay360, i32** %ws, i64 %179, %struct.__mbstate_t.512* %mbstate) #20
   store i64 %call361, i64* %t351, align 8
   %180 = load i64, i64* %t351, align 8
   %cmp362 = icmp ugt i64 %180, 0
@@ -26947,7 +28602,7 @@ cond.true364:                                     ; preds = %while.body
   %arraydecay365 = getelementptr inbounds [128 x i8], [128 x i8]* %buf, i64 0, i64 0
   %181 = load i64, i64* %t351, align 8
   %182 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call366 = call i64 @__stdio_fwrite(i8* %arraydecay365, i64 %181, %struct.__STDIO_FILE_STRUCT.568* %182) #18
+  %call366 = call i64 @__stdio_fwrite(i8* %arraydecay365, i64 %181, %struct.__STDIO_FILE_STRUCT.568* %182) #19
   br label %cond.end368
 
 cond.end368:                                      ; preds = %while.body, %cond.true364
@@ -26971,7 +28626,7 @@ if.end375:                                        ; preds = %while.cond, %cond.e
   %186 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
   %187 = load i32, i32* %numpad, align 4
   %conv376 = sext i32 %187 to i64
-  %call377 = call i64 @_charpad(%struct.__STDIO_FILE_STRUCT.568* %186, i32 32, i64 %conv376) #18
+  %call377 = call i64 @_charpad(%struct.__STDIO_FILE_STRUCT.568* %186, i32 32, i64 %conv376) #19
   %188 = load i32, i32* %numpad, align 4
   %conv378 = sext i32 %188 to i64
   %cmp379 = icmp ne i64 %call377, %conv378
@@ -27013,7 +28668,7 @@ entry:
 if.then:                                          ; preds = %entry
   %1 = load i64, i64* %buf.addr, align 8
   %2 = inttoptr i64 %1 to i8*
-  %call = call i64 @strlen(i8* %2) #20
+  %call = call i64 @strlen(i8* %2) #21
   %conv = trunc i64 %call to i32
   store i32 %conv, i32* %buflen, align 4
   %3 = load i32, i32* %buflen, align 4
@@ -27030,7 +28685,7 @@ if.then3:                                         ; preds = %if.then
   %and4 = and i64 %6, 127
   %conv5 = trunc i64 %and4 to i32
   %7 = load i64, i64* %len.addr, align 8
-  %call6 = call i64 @_charpad(%struct.__STDIO_FILE_STRUCT.568* %5, i32 %conv5, i64 %7) #18
+  %call6 = call i64 @_charpad(%struct.__STDIO_FILE_STRUCT.568* %5, i32 %conv5, i64 %7) #19
   store i64 %call6, i64* %r, align 8
   %8 = load i64, i64* %len.addr, align 8
   %cmp7 = icmp ne i64 %call6, %8
@@ -27058,7 +28713,7 @@ cond.true:                                        ; preds = %if.end12
   %14 = inttoptr i64 %13 to i8*
   %15 = load i64, i64* %len.addr, align 8
   %16 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %fp.addr, align 8
-  %call15 = call i64 @__stdio_fwrite(i8* %14, i64 %15, %struct.__STDIO_FILE_STRUCT.568* %16) #18
+  %call15 = call i64 @__stdio_fwrite(i8* %14, i64 %15, %struct.__STDIO_FILE_STRUCT.568* %16) #19
   br label %cond.end
 
 cond.end:                                         ; preds = %if.end12, %cond.true
@@ -27099,7 +28754,7 @@ while.cond:                                       ; preds = %while.body, %entry
 land.rhs:                                         ; preds = %while.cond
   %arraydecay1 = getelementptr inbounds [1 x i8], [1 x i8]* %pad, i64 0, i64 0
   %3 = load %struct.__STDIO_FILE_STRUCT.568*, %struct.__STDIO_FILE_STRUCT.568** %stream.addr, align 8
-  %call = call i64 @__stdio_fwrite(i8* %arraydecay1, i64 1, %struct.__STDIO_FILE_STRUCT.568* %3) #18
+  %call = call i64 @__stdio_fwrite(i8* %arraydecay1, i64 1, %struct.__STDIO_FILE_STRUCT.568* %3) #19
   %cmp = icmp eq i64 %call, 1
   br i1 %cmp, label %while.body, label %while.end
 
@@ -27136,7 +28791,7 @@ if.then:                                          ; preds = %entry
   br label %return
 
 if.end:                                           ; preds = %entry
-  %call = call %struct.exit_function* @__new_exitfn() #18
+  %call = call %struct.exit_function* @__new_exitfn() #19
   store %struct.exit_function* %call, %struct.exit_function** %efp, align 8
   %1 = load %struct.exit_function*, %struct.exit_function** %efp, align 8
   %cmp1 = icmp eq %struct.exit_function* %1, null
@@ -27192,7 +28847,7 @@ entry:
   %2 = load i32, i32* %base.addr, align 4
   %3 = load i32, i32* %sflag.addr, align 4
   %4 = load %struct.__uclibc_locale_struct.201*, %struct.__uclibc_locale_struct.201** @__curlocale_var, align 8
-  %call = call i64 @_stdlib_strto_l_l(i8* %0, i8** %1, i32 %2, i32 %3, %struct.__uclibc_locale_struct.201* %4) #18
+  %call = call i64 @_stdlib_strto_l_l(i8* %0, i8** %1, i32 %2, i32 %3, %struct.__uclibc_locale_struct.201* %4) #19
   ret i64 %call
 }
 
@@ -27215,7 +28870,7 @@ if.then:                                          ; preds = %entry
 
 if.end:                                           ; preds = %entry
   %1 = load i8*, i8** %var.addr, align 8
-  %call = call i64 @strlen(i8* %1) #20
+  %call = call i64 @strlen(i8* %1) #21
   %conv = trunc i64 %call to i32
   store i32 %conv, i32* %len, align 4
   br label %while.cond
@@ -27232,7 +28887,7 @@ while.body:                                       ; preds = %while.cond
   %6 = load i8*, i8** %5, align 8
   %7 = load i32, i32* %len, align 4
   %conv2 = sext i32 %7 to i64
-  %call3 = call i32 @memcmp(i8* %4, i8* %6, i64 %conv2) #20
+  %call3 = call i32 @memcmp(i8* %4, i8* %6, i64 %conv2) #21
   %cmp = icmp eq i32 %call3, 0
   br i1 %cmp, label %land.lhs.true, label %if.end10
 
@@ -27442,12 +29097,12 @@ entry:
   %l = alloca i64, align 8
   store i8* %s1, i8** %s1.addr, align 8
   %0 = load i8*, i8** %s1.addr, align 8
-  %call = call i64 @strlen(i8* %0) #20
+  %call = call i64 @strlen(i8* %0) #21
   %add = add i64 %call, 1
   %mul = mul i64 %add, 1
   store i64 %mul, i64* %l, align 8
   %1 = load i64, i64* %l, align 8
-  %call1 = call noalias i8* @malloc(i64 %1) #19
+  %call1 = call noalias i8* @malloc(i64 %1) #20
   store i8* %call1, i8** %s, align 8
   %cmp = icmp ne i8* %call1, null
   br i1 %cmp, label %if.then, label %if.end
@@ -27456,7 +29111,7 @@ if.then:                                          ; preds = %entry
   %2 = load i8*, i8** %s, align 8
   %3 = load i8*, i8** %s1.addr, align 8
   %4 = load i64, i64* %l, align 8
-  %call2 = call i8* @memcpy(i8* %2, i8* %3, i64 %4) #19
+  %call2 = call i8* @memcpy(i8* %2, i8* %3, i64 %4) #20
   br label %if.end
 
 if.end:                                           ; preds = %if.then, %entry
@@ -27470,7 +29125,7 @@ entry:
   %errnum.addr = alloca i32, align 4
   store i32 %errnum, i32* %errnum.addr, align 4
   %0 = load i32, i32* %errnum.addr, align 4
-  %call = call i32 @__xpg_strerror_r(i32 %0, i8* getelementptr inbounds ([50 x i8], [50 x i8]* @strerror.buf, i64 0, i64 0), i64 50) #18
+  %call = call i32 @__xpg_strerror_r(i32 %0, i8* getelementptr inbounds ([50 x i8], [50 x i8]* @strerror.buf, i64 0, i64 0), i64 50) #19
   ret i8* getelementptr inbounds ([50 x i8], [50 x i8]* @strerror.buf, i64 0, i64 0)
 }
 
@@ -27505,7 +29160,7 @@ if.end:                                           ; preds = %if.then, %entry
   store i32 %1, i32* %arrayidx, align 4
   %2 = load i8*, i8** %s.addr, align 8
   %3 = load %struct.__mbstate_t.512*, %struct.__mbstate_t.512** %ps.addr, align 8
-  %call = call i64 @wcsnrtombs(i8* %2, i32** %pwc, i64 1, i64 16, %struct.__mbstate_t.512* %3) #19
+  %call = call i64 @wcsnrtombs(i8* %2, i32** %pwc, i64 1, i64 16, %struct.__mbstate_t.512* %3) #20
   store i64 %call, i64* %r, align 8
   %4 = load i64, i64* %r, align 8
   %cmp = icmp ne i64 %4, 0
@@ -27529,7 +29184,7 @@ entry:
   %1 = load i32**, i32*** %src.addr, align 8
   %2 = load i64, i64* %len.addr, align 8
   %3 = load %struct.__mbstate_t.512*, %struct.__mbstate_t.512** %ps.addr, align 8
-  %call = call i64 @wcsnrtombs(i8* %0, i32** %1, i64 -1, i64 %2, %struct.__mbstate_t.512* %3) #19
+  %call = call i64 @wcsnrtombs(i8* %0, i32** %1, i64 -1, i64 %2, %struct.__mbstate_t.512* %3) #20
   ret i64 %call
 }
 
@@ -27885,7 +29540,7 @@ entry:
   %2 = load i64*, i64** %pos.addr, align 8
   %3 = load i64, i64* %2, align 8
   %4 = load i32, i32* %whence.addr, align 4
-  %call = call i64 @lseek64(i32 %1, i64 %3, i32 %4) #19
+  %call = call i64 @lseek64(i32 %1, i64 %3, i32 %4) #20
   store i64 %call, i64* %res, align 8
   %5 = load i64, i64* %res, align 8
   %cmp = icmp sge i64 %5, 0
@@ -28297,7 +29952,7 @@ if.then142:                                       ; preds = %if.end138
 
 if.then146:                                       ; preds = %if.then142
   %arraydecay147 = getelementptr inbounds [21 x i8], [21 x i8]* %buf, i64 0, i64 0
-  %call = call i8* @memset(i8* %arraydecay147, i32 48, i64 17) #19
+  %call = call i8* @memset(i8* %arraydecay147, i32 48, i64 17) #20
   store i32 -1, i32* %exp, align 4
   store i32 -1, i32* %round, align 4
   br label %if.end149
@@ -28906,7 +30561,7 @@ do.body410:                                       ; preds = %if.end418, %if.end4
   %227 = load i64*, i64** %ppc, align 8
   %arrayidx412 = getelementptr inbounds i64, i64* %227, i64 2
   %228 = load i64, i64* %arrayidx412, align 8
-  %call413 = call i64 %221(%struct.__STDIO_FILE_STRUCT.568* %222, i64 %224, i64 %226, i64 %228) #18
+  %call413 = call i64 %221(%struct.__STDIO_FILE_STRUCT.568* %222, i64 %224, i64 %226, i64 %228) #19
   %229 = load i64*, i64** %ppc, align 8
   %arrayidx414 = getelementptr inbounds i64, i64* %229, i64 1
   %230 = load i64, i64* %arrayidx414, align 8
@@ -29069,7 +30724,7 @@ entry:
   store i8* %fmt0, i8** %fmt0.addr, align 8
   %0 = load %struct.ppfs_t.722*, %struct.ppfs_t.722** %ppfs.addr, align 8
   %1 = bitcast %struct.ppfs_t.722* %0 to i8*
-  %call = call i8* @memset(i8* %1, i32 0, i64 176) #19
+  %call = call i8* @memset(i8* %1, i32 0, i64 176) #20
   %2 = load %struct.ppfs_t.722*, %struct.ppfs_t.722** %ppfs.addr, align 8
   %maxposarg = getelementptr inbounds %struct.ppfs_t.722, %struct.ppfs_t.722* %2, i32 0, i32 2
   %3 = load i32, i32* %maxposarg, align 4
@@ -29091,7 +30746,7 @@ if.then:                                          ; preds = %entry
   store i32 0, i32* %__mask, align 4
   %8 = load i8*, i8** %fmt0.addr, align 8
   store i8* %8, i8** %p, align 8
-  %call2 = call i64 @mbsrtowcs(i32* null, i8** %p, i64 -1, %struct.__mbstate_t.512* %mbstate) #19
+  %call2 = call i64 @mbsrtowcs(i32* null, i8** %p, i64 -1, %struct.__mbstate_t.512* %mbstate) #20
   %cmp3 = icmp eq i64 %call2, -1
   br i1 %cmp3, label %if.then5, label %if.end7
 
@@ -29154,7 +30809,7 @@ if.then18:                                        ; preds = %land.lhs.true
   %fmtpos19 = getelementptr inbounds %struct.ppfs_t.722, %struct.ppfs_t.722* %21, i32 0, i32 0
   store i8* %20, i8** %fmtpos19, align 8
   %22 = load %struct.ppfs_t.722*, %struct.ppfs_t.722** %ppfs.addr, align 8
-  %call20 = call i32 @_ppfs_parsespec(%struct.ppfs_t.722* %22) #18
+  %call20 = call i32 @_ppfs_parsespec(%struct.ppfs_t.722* %22) #19
   store i32 %call20, i32* %r, align 4
   %cmp21 = icmp slt i32 %call20, 0
   br i1 %cmp21, label %if.then23, label %if.end24
@@ -29325,7 +30980,7 @@ if.end28:                                         ; preds = %if.then24, %width_p
   br label %while.cond
 
 while.cond:                                       ; preds = %if.end40, %if.end28
-  %call = call i16** @__ctype_b_loc() #21
+  %call = call i16** @__ctype_b_loc() #22
   %24 = load i16*, i16** %call, align 8
   %25 = load i8*, i8** %fmt, align 8
   %26 = load i8, i8* %25, align 1
@@ -29837,7 +31492,7 @@ if.end243:                                        ; preds = %if.then238, %cond.e
   %idxprom247 = sext i32 %148 to i64
   %arrayidx248 = getelementptr inbounds [3 x i32], [3 x i32]* %argtype, i64 0, i64 %idxprom247
   %149 = load i32, i32* %arrayidx248, align 4
-  %call249 = call i32 @_is_equal_or_bigger_arg(i32 %147, i32 %149) #18
+  %call249 = call i32 @_is_equal_or_bigger_arg(i32 %147, i32 %149) #19
   %tobool250 = icmp ne i32 %call249, 0
   br i1 %tobool250, label %if.then251, label %do.cond258
 
@@ -29882,7 +31537,7 @@ if.else265:                                       ; preds = %if.end218
   %162 = load i32, i32* %num_data_args272, align 8
   %conv273 = sext i32 %162 to i64
   %mul274 = mul i64 %conv273, 4
-  %call275 = call i8* @memcpy(i8* %159, i8* %160, i64 %mul274) #19
+  %call275 = call i8* @memcpy(i8* %159, i8* %160, i64 %mul274) #20
   br label %if.end276
 
 if.end276:                                        ; preds = %do.cond258, %if.else265
@@ -29971,9 +31626,9 @@ if.then3:                                         ; preds = %lor.lhs.false, %if.
 
 if.end4:                                          ; preds = %lor.lhs.false
   %4 = load i32, i32* %curtype.addr, align 4
-  %call = call i32 @_promoted_size(i32 %4) #18
+  %call = call i32 @_promoted_size(i32 %4) #19
   %5 = load i32, i32* %newtype.addr, align 4
-  %call5 = call i32 @_promoted_size(i32 %5) #18
+  %call5 = call i32 @_promoted_size(i32 %5) #19
   %cmp6 = icmp sle i32 %call, %call5
   %conv = zext i1 %cmp6 to i32
   store i32 %conv, i32* %retval, align 4
@@ -30069,7 +31724,7 @@ if.then:                                          ; preds = %entry
   %width = getelementptr inbounds %struct.printf_info.720, %struct.printf_info.720* %info3, i32 0, i32 1
   store i32 0, i32* %width, align 4
   %18 = load %struct.ppfs_t.722*, %struct.ppfs_t.722** %ppfs.addr, align 8
-  call void @_ppfs_setargs(%struct.ppfs_t.722* %18) #18
+  call void @_ppfs_setargs(%struct.ppfs_t.722* %18) #19
   %19 = load i32, i32* %i, align 4
   %20 = load %struct.ppfs_t.722*, %struct.ppfs_t.722** %ppfs.addr, align 8
   %maxposarg4 = getelementptr inbounds %struct.ppfs_t.722, %struct.ppfs_t.722* %20, i32 0, i32 2
@@ -30781,7 +32436,7 @@ if.then18:                                        ; preds = %do.body
   %thousands_sep_len19 = getelementptr inbounds %struct.__uclibc_locale_struct.201, %struct.__uclibc_locale_struct.201* %28, i32 0, i32 27
   %29 = load i32, i32* %thousands_sep_len19, align 4
   %conv20 = sext i32 %29 to i64
-  %call = call i8* @memcpy(i8* %25, i8* %27, i64 %conv20) #19
+  %call = call i8* @memcpy(i8* %25, i8* %27, i64 %conv20) #20
   %30 = load i8*, i8** %g, align 8
   %arrayidx = getelementptr inbounds i8, i8* %30, i64 1
   %31 = load i8, i8* %arrayidx, align 1
@@ -30898,7 +32553,7 @@ if.then53:                                        ; preds = %if.end45
   %arrayidx63 = getelementptr inbounds [10 x i8], [10 x i8]* %outdigit_length61, i64 0, i64 %idxprom62
   %68 = load i8, i8* %arrayidx63, align 1
   %conv64 = zext i8 %68 to i64
-  %call65 = call i8* @memcpy(i8* %62, i8* %65, i64 %conv64) #19
+  %call65 = call i8* @memcpy(i8* %62, i8* %65, i64 %conv64) #20
   br label %do.cond
 
 if.else66:                                        ; preds = %if.end45
@@ -30957,7 +32612,7 @@ if.then:                                          ; preds = %entry
   %add1 = add nsw i32 %4, 20
   %conv = sext i32 %add1 to i64
   %mul = mul i64 %conv, 32
-  %call = call noalias i8* @realloc(i8* %3, i64 %mul) #19
+  %call = call noalias i8* @realloc(i8* %3, i64 %mul) #20
   %5 = bitcast i8* %call to %struct.exit_function*
   store %struct.exit_function* %5, %struct.exit_function** %efp, align 8
   %6 = load %struct.exit_function*, %struct.exit_function** %efp, align 8
@@ -31050,7 +32705,7 @@ if.then:                                          ; preds = %sw.bb
   %on_exit6 = bitcast %union.anon.772* %funcs5 to %struct.anon.779*
   %arg = getelementptr inbounds %struct.anon.779, %struct.anon.779* %on_exit6, i32 0, i32 1
   %11 = load i8*, i8** %arg, align 8
-  call void %8(i32 %9, i8* %11) #18
+  call void %8(i32 %9, i8* %11) #19
   br label %sw.epilog
 
 sw.bb7:                                           ; preds = %NodeBlock
@@ -31073,7 +32728,7 @@ if.then11:                                        ; preds = %sw.bb7
   %cxa_atexit16 = bitcast %union.anon.772* %funcs15 to %struct.anon.0.771*
   %arg17 = getelementptr inbounds %struct.anon.0.771, %struct.anon.0.771* %cxa_atexit16, i32 0, i32 1
   %17 = load i8*, i8** %arg17, align 8
-  call void %15(i8* %17) #18
+  call void %15(i8* %17) #19
   br label %sw.epilog
 
 newDefault:                                       ; preds = %NodeBlock
@@ -31089,7 +32744,7 @@ while.end:                                        ; preds = %while.cond
 if.then20:                                        ; preds = %while.end
   %18 = load %struct.exit_function*, %struct.exit_function** @__exit_function_table, align 8
   %19 = bitcast %struct.exit_function* %18 to i8*
-  call void @free(i8* %19) #19
+  call void @free(i8* %19) #20
   br label %if.end21
 
 if.end21:                                         ; preds = %if.then20, %while.end
@@ -31431,11 +33086,11 @@ if.end7:                                          ; preds = %for.end, %entry
   %add.ptr8 = getelementptr inbounds i8, i8* %add.ptr, i64 -1
   %7 = load i32, i32* %errnum.addr, align 4
   %conv = sext i32 %7 to i64
-  %call = call i8* @_uintmaxtostr(i8* %add.ptr8, i64 %conv, i32 -10, i32 0) #18
+  %call = call i8* @_uintmaxtostr(i8* %add.ptr8, i64 %conv, i32 -10, i32 0) #19
   %add.ptr9 = getelementptr inbounds i8, i8* %call, i64 -14
   store i8* %add.ptr9, i8** %s, align 8
   %8 = load i8*, i8** %s, align 8
-  %call10 = call i8* @memcpy(i8* %8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @__xpg_strerror_r.unknown, i64 0, i64 0), i64 14) #19
+  %call10 = call i8* @memcpy(i8* %8, i8* getelementptr inbounds ([14 x i8], [14 x i8]* @__xpg_strerror_r.unknown, i64 0, i64 0), i64 14) #20
   br label %GOT_MESG
 
 GOT_MESG:                                         ; preds = %if.end7, %if.then5
@@ -31449,7 +33104,7 @@ if.then12:                                        ; preds = %GOT_MESG
 
 if.end13:                                         ; preds = %if.then12, %GOT_MESG
   %10 = load i8*, i8** %s, align 8
-  %call14 = call i64 @strlen(i8* %10) #20
+  %call14 = call i64 @strlen(i8* %10) #21
   %add = add i64 %call14, 1
   %conv15 = trunc i64 %add to i32
   store i32 %conv15, i32* %i, align 4
@@ -31476,7 +33131,7 @@ if.then23:                                        ; preds = %if.end21
   %16 = load i8*, i8** %s, align 8
   %17 = load i32, i32* %i, align 4
   %conv24 = sext i32 %17 to i64
-  %call25 = call i8* @memcpy(i8* %15, i8* %16, i64 %conv24) #19
+  %call25 = call i8* @memcpy(i8* %15, i8* %16, i64 %conv24) #20
   %18 = load i8*, i8** %strerrbuf.addr, align 8
   %19 = load i32, i32* %i, align 4
   %sub = sub nsw i32 %19, 1
@@ -31498,58 +33153,6 @@ if.then28:                                        ; preds = %if.end26
 if.end29:                                         ; preds = %if.then28, %if.end26
   %22 = load i32, i32* %retval1, align 4
   ret i32 %22
-}
-
-; Function Attrs: noinline nounwind readonly uwtable
-define i8* @memchr(i8* nonnull %s, i32 %c, i64 %n) #14 {
-entry:
-  %retval = alloca i8*, align 8
-  %s.addr = alloca i8*, align 8
-  %c.addr = alloca i32, align 4
-  %n.addr = alloca i64, align 8
-  %r = alloca i8*, align 8
-  store i8* %s, i8** %s.addr, align 8
-  store i32 %c, i32* %c.addr, align 4
-  store i64 %n, i64* %n.addr, align 8
-  %0 = load i8*, i8** %s.addr, align 8
-  store i8* %0, i8** %r, align 8
-  br label %while.cond
-
-while.cond:                                       ; preds = %if.end, %entry
-  %1 = load i64, i64* %n.addr, align 8
-  %tobool = icmp ne i64 %1, 0
-  br i1 %tobool, label %while.body, label %while.end
-
-while.body:                                       ; preds = %while.cond
-  %2 = load i8*, i8** %r, align 8
-  %3 = load i8, i8* %2, align 1
-  %conv = zext i8 %3 to i32
-  %4 = load i32, i32* %c.addr, align 4
-  %conv1 = trunc i32 %4 to i8
-  %conv2 = zext i8 %conv1 to i32
-  %cmp = icmp eq i32 %conv, %conv2
-  %5 = load i8*, i8** %r, align 8
-  br i1 %cmp, label %if.then, label %if.end
-
-if.then:                                          ; preds = %while.body
-  store i8* %5, i8** %retval, align 8
-  br label %return
-
-if.end:                                           ; preds = %while.body
-  %incdec.ptr = getelementptr inbounds i8, i8* %5, i32 1
-  store i8* %incdec.ptr, i8** %r, align 8
-  %6 = load i64, i64* %n.addr, align 8
-  %dec = add i64 %6, -1
-  store i64 %dec, i64* %n.addr, align 8
-  br label %while.cond
-
-while.end:                                        ; preds = %while.cond
-  store i8* null, i8** %retval, align 8
-  br label %return
-
-return:                                           ; preds = %while.end, %if.then
-  %7 = load i8*, i8** %retval, align 8
-  ret i8* %7
 }
 
 ; Function Attrs: noinline nounwind readonly uwtable
@@ -31677,7 +33280,7 @@ lor.lhs.false:                                    ; preds = %entry
 if.then:                                          ; preds = %lor.lhs.false, %entry
   %3 = load i8*, i8** %s, align 8
   %4 = load i8*, i8** %s2.addr, align 8
-  %call = call i64 @strspn(i8* %3, i8* %4) #20
+  %call = call i64 @strspn(i8* %3, i8* %4) #21
   %5 = load i8*, i8** %s, align 8
   %add.ptr = getelementptr inbounds i8, i8* %5, i64 %call
   store i8* %add.ptr, i8** %s, align 8
@@ -31688,7 +33291,7 @@ if.then:                                          ; preds = %lor.lhs.false, %ent
 if.then2:                                         ; preds = %if.then
   %7 = load i8*, i8** %s, align 8
   %8 = load i8*, i8** %s2.addr, align 8
-  %call3 = call i8* @strpbrk(i8* %7, i8* %8) #20
+  %call3 = call i8* @strpbrk(i8* %7, i8* %8) #21
   store i8* %call3, i8** %p, align 8
   %cmp4 = icmp ne i8* %call3, null
   br i1 %cmp4, label %if.then5, label %if.end6
@@ -31734,7 +33337,7 @@ entry:
   %cmp = icmp ne %struct.__mbstate_t.512* %3, null
   %4 = load %struct.__mbstate_t.512*, %struct.__mbstate_t.512** %ps.addr, align 8
   %cond = select i1 %cmp, %struct.__mbstate_t.512* %4, %struct.__mbstate_t.512* @mbsrtowcs.mbstate
-  %call = call i64 @mbsnrtowcs(i32* %0, i8** %1, i64 -1, i64 %2, %struct.__mbstate_t.512* %cond) #19
+  %call = call i64 @mbsnrtowcs(i32* %0, i8** %1, i64 -1, i64 %2, %struct.__mbstate_t.512* %cond) #20
   ret i64 %call
 }
 
@@ -31770,7 +33373,7 @@ if.then:                                          ; preds = %entry
   %3 = load i64, i64* %len.addr, align 8
   %4 = load i32**, i32*** %src.addr, align 8
   %5 = load i64, i64* %NWC.addr, align 8
-  %call = call i64 @_wchar_wcsntoutf8s(i8* %2, i64 %3, i32** %4, i64 %5) #18
+  %call = call i64 @_wchar_wcsntoutf8s(i8* %2, i64 %3, i32** %4, i64 %5) #19
   store i64 %call, i64* %retval, align 8
   br label %return
 
@@ -32370,22 +33973,23 @@ attributes #11 = { nounwind }
 attributes #12 = { noinline nounwind readnone uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-builtins" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #13 = { noreturn "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "no-builtins" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #14 = { noinline nounwind readonly uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-builtins" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #15 = { noinline nounwind readonly uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #16 = { noinline nounwind returns_twice uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #17 = { "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "no-builtins" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #18 = { nobuiltin "no-builtins" }
-attributes #19 = { nobuiltin nounwind "no-builtins" }
-attributes #20 = { nobuiltin nounwind readonly "no-builtins" }
-attributes #21 = { nobuiltin nounwind readnone "no-builtins" }
-attributes #22 = { nobuiltin noreturn nounwind "no-builtins" }
-attributes #23 = { nounwind readonly }
-attributes #24 = { noreturn }
-attributes #25 = { nounwind readnone }
-attributes #26 = { noreturn nounwind }
-attributes #27 = { nobuiltin noreturn "no-builtins" }
+attributes #15 = { noinline nounwind readnone uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #16 = { noinline nounwind readonly uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #17 = { noinline nounwind returns_twice uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #18 = { "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "no-builtins" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #19 = { nobuiltin "no-builtins" }
+attributes #20 = { nobuiltin nounwind "no-builtins" }
+attributes #21 = { nobuiltin nounwind readonly "no-builtins" }
+attributes #22 = { nobuiltin nounwind readnone "no-builtins" }
+attributes #23 = { nobuiltin noreturn nounwind "no-builtins" }
+attributes #24 = { nounwind readonly }
+attributes #25 = { noreturn }
+attributes #26 = { nounwind readnone }
+attributes #27 = { noreturn nounwind }
+attributes #28 = { nobuiltin noreturn "no-builtins" }
 
 !llvm.module.flags = !{!0, !1}
-!llvm.ident = !{!2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2}
+!llvm.ident = !{!2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2, !2}
 
 !0 = !{i32 1, !"wchar_size", i32 4}
 !1 = !{i32 7, !"PIC Level", i32 2}
